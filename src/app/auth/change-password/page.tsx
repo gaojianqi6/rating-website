@@ -18,9 +18,10 @@ const LoginPage = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    // Perform login logic with username/email and password
+    // Perform login logic with username and password
     // You can make an API request to your backend here
     // If login is successful, redirect to the dashboard or home page
+    window.history.pushState({}, '', '/');
     router.push('/');
   };
 
@@ -33,11 +34,11 @@ const LoginPage = () => {
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <Box className="w-full max-w-md p-6 bg-white rounded shadow">
         <Typography variant="h4" align="center" gutterBottom>
-          Login
+          Change password
         </Typography>
         <form onSubmit={handleLogin}>
           <TextField
-            label="Email/Username"
+            label="Username"
             fullWidth
             margin="normal"
             value={username}
