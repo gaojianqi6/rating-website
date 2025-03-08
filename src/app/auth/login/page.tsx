@@ -1,32 +1,36 @@
-
-
 "use client";
-import { useState } from 'react';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import Link from '@mui/material/Link';
+import { useState } from "react";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Link from "@mui/material/Link";
 // import { signIn } from 'next-auth/client';
 
-import { Google as GoogleIcon } from '@mui/icons-material';
-import { Button, TextField } from '@mui/material';
-import { useRouter } from 'next/navigation';
+import { Google as GoogleIcon } from "@mui/icons-material";
+import { Button, TextField } from "@mui/material";
+import { useRouter } from "next/navigation";
+import { login } from "@/api/user";
 
 const LoginPage = () => {
   const router = useRouter();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    // Perform login logic with username/email and password
-    // You can make an API request to your backend here
-    // If login is successful, redirect to the dashboard or home page
-    router.push('/');
+    try {
+      const response = await login(username, password);
+
+      if (response.access_token) {
+        localStorage.setItem('accessToken', response.access_token);
+        router.push('/');
+      }
+    } catch (error) {
+      console.error('Login failed:', error);
+    }
   };
 
   const handleGoogleLogin = async () => {
-    // Perform Google login using next-auth
-    // await signIn('google');
+    window.location.href = `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/google`;
   };
 
   return (
@@ -51,7 +55,13 @@ const LoginPage = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Button type="submit" variant="contained" color="primary" fullWidth className="mt-4">
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            fullWidth
+            className="mt-4"
+          >
             Login
           </Button>
         </form>

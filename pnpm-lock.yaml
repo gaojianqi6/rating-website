@@ -17,7 +17,6 @@ specifiers:
   eslint-config-next: 15.2.1
   ky: ^1.7.5
   next: 15.2.1
-  next-auth: 5.0.0-beta.25
   react: ^19.0.0
   react-dom: ^19.0.0
   tailwindcss: ^4
@@ -33,7 +32,6 @@ dependencies:
   '@mui/material-nextjs': registry.npmjs.org/@mui/material-nextjs/6.4.3_m646etdhuuelxkrmk3j3p3wdni
   ky: registry.npmjs.org/ky/1.7.5
   next: registry.npmjs.org/next/15.2.1_upmzqgzhjrquwzo2dphtigtdgi
-  next-auth: registry.npmjs.org/next-auth/5.0.0-beta.25_next@15.2.1+react@19.0.0
   react: registry.npmjs.org/react/19.0.0
   react-dom: registry.npmjs.org/react-dom/19.0.0_react@19.0.0
 
@@ -56,31 +54,6 @@ packages:
     version: 5.2.0
     engines: {node: '>=10'}
     dev: true
-
-  registry.npmjs.org/@auth/core/0.37.2:
-    resolution: {integrity: sha512-kUvzyvkcd6h1vpeMAojK2y7+PAV5H+0Cc9+ZlKYDFhDY31AlvsB+GW5vNO4qE3Y07KeQgvNO9U0QUx/fN62kBw==, registry: https://registry.yarnpkg.com/, tarball: https://registry.npmjs.org/@auth/core/-/core-0.37.2.tgz}
-    name: '@auth/core'
-    version: 0.37.2
-    peerDependencies:
-      '@simplewebauthn/browser': ^9.0.1
-      '@simplewebauthn/server': ^9.0.2
-      nodemailer: ^6.8.0
-    peerDependenciesMeta:
-      '@simplewebauthn/browser':
-        optional: true
-      '@simplewebauthn/server':
-        optional: true
-      nodemailer:
-        optional: true
-    dependencies:
-      '@panva/hkdf': registry.npmjs.org/@panva/hkdf/1.2.1
-      '@types/cookie': registry.npmjs.org/@types/cookie/0.6.0
-      cookie: registry.npmjs.org/cookie/0.7.1
-      jose: registry.npmjs.org/jose/5.10.0
-      oauth4webapi: registry.npmjs.org/oauth4webapi/3.3.0
-      preact: registry.npmjs.org/preact/10.11.3
-      preact-render-to-string: registry.npmjs.org/preact-render-to-string/5.2.3_preact@10.11.3
-    dev: false
 
   registry.npmjs.org/@babel/code-frame/7.26.2:
     resolution: {integrity: sha512-RJlIHRueQgwWitWgF8OdFYGZX328Ax5BCemNGlqHfplnRT9ESi8JkFlvaVYbS+UubVY6dpv87Fs2u5M29iNFVQ==, registry: https://registry.yarnpkg.com/, tarball: https://registry.npmjs.org/@babel/code-frame/-/code-frame-7.26.2.tgz}
@@ -1094,12 +1067,6 @@ packages:
     engines: {node: '>=12.4.0'}
     dev: true
 
-  registry.npmjs.org/@panva/hkdf/1.2.1:
-    resolution: {integrity: sha512-6oclG6Y3PiDFcoyk8srjLfVKyMfVCKJ27JwNPViuXziFpmdz+MZnZN/aKY0JGXgYuO/VghU0jcOAZgWXZ1Dmrw==, registry: https://registry.yarnpkg.com/, tarball: https://registry.npmjs.org/@panva/hkdf/-/hkdf-1.2.1.tgz}
-    name: '@panva/hkdf'
-    version: 1.2.1
-    dev: false
-
   registry.npmjs.org/@popperjs/core/2.11.8:
     resolution: {integrity: sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==, registry: https://registry.yarnpkg.com/, tarball: https://registry.npmjs.org/@popperjs/core/-/core-2.11.8.tgz}
     name: '@popperjs/core'
@@ -1294,12 +1261,6 @@ packages:
       postcss: registry.npmjs.org/postcss/8.5.3
       tailwindcss: registry.npmjs.org/tailwindcss/4.0.12
     dev: true
-
-  registry.npmjs.org/@types/cookie/0.6.0:
-    resolution: {integrity: sha512-4Kh9a6B2bQciAhf7FSuMRRkUWecJgJu9nPnx3yzpsfXX/c50REIqpHY4C82bXP90qrLtXtkDxTZosYO3UpOwlA==, registry: https://registry.yarnpkg.com/, tarball: https://registry.npmjs.org/@types/cookie/-/cookie-0.6.0.tgz}
-    name: '@types/cookie'
-    version: 0.6.0
-    dev: false
 
   registry.npmjs.org/@types/estree/1.0.6:
     resolution: {integrity: sha512-AYnb1nQyY49te+VRAVgmzfcgjYS91mY5P0TKUDCLEM+gNnA+3T6rWITXRLYCpahpqSQbN5cE+gHpnPyXjHWxcw==, registry: https://registry.yarnpkg.com/, tarball: https://registry.npmjs.org/@types/estree/-/estree-1.0.6.tgz}
@@ -1860,13 +1821,6 @@ packages:
     resolution: {integrity: sha512-ASFBup0Mz1uyiIjANan1jzLQami9z1PoYSZCiiYW2FczPbenXc45FZdBZLzOT+r6+iciuEModtmCti+hjaAk0A==, registry: https://registry.yarnpkg.com/, tarball: https://registry.npmjs.org/convert-source-map/-/convert-source-map-1.9.0.tgz}
     name: convert-source-map
     version: 1.9.0
-    dev: false
-
-  registry.npmjs.org/cookie/0.7.1:
-    resolution: {integrity: sha512-6DnInpx7SJ2AK3+CTUE/ZM0vWTUboZCegxhC2xiIydHR9jNuTAASBrfEpHhiGOZw/nX51bHt6YQl8jsGo4y/0w==, registry: https://registry.yarnpkg.com/, tarball: https://registry.npmjs.org/cookie/-/cookie-0.7.1.tgz}
-    name: cookie
-    version: 0.7.1
-    engines: {node: '>= 0.6'}
     dev: false
 
   registry.npmjs.org/cosmiconfig/7.1.0:
@@ -3158,12 +3112,6 @@ packages:
     hasBin: true
     dev: true
 
-  registry.npmjs.org/jose/5.10.0:
-    resolution: {integrity: sha512-s+3Al/p9g32Iq+oqXxkW//7jk2Vig6FF1CFqzVXoTUXt2qz89YWbL+OwS17NFYEvxC35n0FKeGO2LGYSxeM2Gg==, registry: https://registry.yarnpkg.com/, tarball: https://registry.npmjs.org/jose/-/jose-5.10.0.tgz}
-    name: jose
-    version: 5.10.0
-    dev: false
-
   registry.npmjs.org/js-tokens/4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==, registry: https://registry.yarnpkg.com/, tarball: https://registry.npmjs.org/js-tokens/-/js-tokens-4.0.0.tgz}
     name: js-tokens
@@ -3495,30 +3443,6 @@ packages:
     version: 1.4.0
     dev: true
 
-  registry.npmjs.org/next-auth/5.0.0-beta.25_next@15.2.1+react@19.0.0:
-    resolution: {integrity: sha512-2dJJw1sHQl2qxCrRk+KTQbeH+izFbGFPuJj5eGgBZFYyiYYtvlrBeUw1E/OJJxTRjuxbSYGnCTkUIRsIIW0bog==, registry: https://registry.yarnpkg.com/, tarball: https://registry.npmjs.org/next-auth/-/next-auth-5.0.0-beta.25.tgz}
-    id: registry.npmjs.org/next-auth/5.0.0-beta.25
-    name: next-auth
-    version: 5.0.0-beta.25
-    peerDependencies:
-      '@simplewebauthn/browser': ^9.0.1
-      '@simplewebauthn/server': ^9.0.2
-      next: ^14.0.0-0 || ^15.0.0-0
-      nodemailer: ^6.6.5
-      react: ^18.2.0 || ^19.0.0-0
-    peerDependenciesMeta:
-      '@simplewebauthn/browser':
-        optional: true
-      '@simplewebauthn/server':
-        optional: true
-      nodemailer:
-        optional: true
-    dependencies:
-      '@auth/core': registry.npmjs.org/@auth/core/0.37.2
-      next: registry.npmjs.org/next/15.2.1_upmzqgzhjrquwzo2dphtigtdgi
-      react: registry.npmjs.org/react/19.0.0
-    dev: false
-
   registry.npmjs.org/next/15.2.1_upmzqgzhjrquwzo2dphtigtdgi:
     resolution: {integrity: sha512-zxbsdQv3OqWXybK5tMkPCBKyhIz63RstJ+NvlfkaLMc/m5MwXgz2e92k+hSKcyBpyADhMk2C31RIiaDjUZae7g==, registry: https://registry.yarnpkg.com/, tarball: https://registry.npmjs.org/next/-/next-15.2.1.tgz}
     id: registry.npmjs.org/next/15.2.1
@@ -3565,12 +3489,6 @@ packages:
     transitivePeerDependencies:
       - '@babel/core'
       - babel-plugin-macros
-    dev: false
-
-  registry.npmjs.org/oauth4webapi/3.3.0:
-    resolution: {integrity: sha512-ZlozhPlFfobzh3hB72gnBFLjXpugl/dljz1fJSRdqaV2r3D5dmi5lg2QWI0LmUYuazmE+b5exsloEv6toUtw9g==, registry: https://registry.yarnpkg.com/, tarball: https://registry.npmjs.org/oauth4webapi/-/oauth4webapi-3.3.0.tgz}
-    name: oauth4webapi
-    version: 3.3.0
     dev: false
 
   registry.npmjs.org/object-assign/4.1.1:
@@ -3790,36 +3708,12 @@ packages:
       source-map-js: registry.npmjs.org/source-map-js/1.2.1
     dev: true
 
-  registry.npmjs.org/preact-render-to-string/5.2.3_preact@10.11.3:
-    resolution: {integrity: sha512-aPDxUn5o3GhWdtJtW0svRC2SS/l8D9MAgo2+AWml+BhDImb27ALf04Q2d+AHqUUOc6RdSXFIBVa2gxzgMKgtZA==, registry: https://registry.yarnpkg.com/, tarball: https://registry.npmjs.org/preact-render-to-string/-/preact-render-to-string-5.2.3.tgz}
-    id: registry.npmjs.org/preact-render-to-string/5.2.3
-    name: preact-render-to-string
-    version: 5.2.3
-    peerDependencies:
-      preact: '>=10'
-    dependencies:
-      preact: registry.npmjs.org/preact/10.11.3
-      pretty-format: registry.npmjs.org/pretty-format/3.8.0
-    dev: false
-
-  registry.npmjs.org/preact/10.11.3:
-    resolution: {integrity: sha512-eY93IVpod/zG3uMF22Unl8h9KkrcKIRs2EGar8hwLZZDU1lkjph303V9HZBwufh2s736U6VXuhD109LYqPoffg==, registry: https://registry.yarnpkg.com/, tarball: https://registry.npmjs.org/preact/-/preact-10.11.3.tgz}
-    name: preact
-    version: 10.11.3
-    dev: false
-
   registry.npmjs.org/prelude-ls/1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==, registry: https://registry.yarnpkg.com/, tarball: https://registry.npmjs.org/prelude-ls/-/prelude-ls-1.2.1.tgz}
     name: prelude-ls
     version: 1.2.1
     engines: {node: '>= 0.8.0'}
     dev: true
-
-  registry.npmjs.org/pretty-format/3.8.0:
-    resolution: {integrity: sha512-WuxUnVtlWL1OfZFQFuqvnvs6MiAGk9UNsBostyBOB0Is9wb5uRESevA6rnl/rkksXaGX3GzZhPup5d6Vp1nFew==, registry: https://registry.yarnpkg.com/, tarball: https://registry.npmjs.org/pretty-format/-/pretty-format-3.8.0.tgz}
-    name: pretty-format
-    version: 3.8.0
-    dev: false
 
   registry.npmjs.org/prop-types/15.8.1:
     resolution: {integrity: sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==, registry: https://registry.yarnpkg.com/, tarball: https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz}
