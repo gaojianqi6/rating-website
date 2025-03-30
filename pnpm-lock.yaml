@@ -10,6 +10,7 @@ specifiers:
   '@mui/material': ^6.4.7
   '@mui/material-nextjs': ^6.4.3
   '@tailwindcss/postcss': ^4
+  '@tanstack/react-query': ^5.70.0
   '@types/node': ^20
   '@types/react': ^19
   '@types/react-dom': ^19
@@ -31,6 +32,7 @@ dependencies:
   '@mui/icons-material': registry.npmjs.org/@mui/icons-material/6.4.7_wq2wvurbvbdhypbvmrypjntrcu
   '@mui/material': registry.npmjs.org/@mui/material/6.4.7_qt3atnl77o3jbq6w3aveu2kdwi
   '@mui/material-nextjs': registry.npmjs.org/@mui/material-nextjs/6.4.3_m646etdhuuelxkrmk3j3p3wdni
+  '@tanstack/react-query': registry.npmjs.org/@tanstack/react-query/5.70.0_react@19.0.0
   ky: registry.npmjs.org/ky/1.7.5
   next: registry.npmjs.org/next/15.2.1_upmzqgzhjrquwzo2dphtigtdgi
   react: registry.npmjs.org/react/19.0.0
@@ -1263,6 +1265,24 @@ packages:
       postcss: registry.npmjs.org/postcss/8.5.3
       tailwindcss: registry.npmjs.org/tailwindcss/4.0.12
     dev: true
+
+  registry.npmjs.org/@tanstack/query-core/5.70.0:
+    resolution: {integrity: sha512-ZkkjQAZjI6nS5OyAmaSQafQXK180Xvp0lZYk4BzrnskkTV8On3zSJUxOIXnh0h/8EgqRkCA9i879DiJovA1kGw==, registry: https://registry.yarnpkg.com/, tarball: https://registry.npmjs.org/@tanstack/query-core/-/query-core-5.70.0.tgz}
+    name: '@tanstack/query-core'
+    version: 5.70.0
+    dev: false
+
+  registry.npmjs.org/@tanstack/react-query/5.70.0_react@19.0.0:
+    resolution: {integrity: sha512-z0tx1zz2CQ6nTm+fCaOp93FqsFjNgXtOy+4mC5ifQ4B+rJiMD0AGfJrYSGh/OuefhrzTYDAbkGUAGw6JzkWy8g==, registry: https://registry.yarnpkg.com/, tarball: https://registry.npmjs.org/@tanstack/react-query/-/react-query-5.70.0.tgz}
+    id: registry.npmjs.org/@tanstack/react-query/5.70.0
+    name: '@tanstack/react-query'
+    version: 5.70.0
+    peerDependencies:
+      react: ^18 || ^19
+    dependencies:
+      '@tanstack/query-core': registry.npmjs.org/@tanstack/query-core/5.70.0
+      react: registry.npmjs.org/react/19.0.0
+    dev: false
 
   registry.npmjs.org/@types/estree/1.0.6:
     resolution: {integrity: sha512-AYnb1nQyY49te+VRAVgmzfcgjYS91mY5P0TKUDCLEM+gNnA+3T6rWITXRLYCpahpqSQbN5cE+gHpnPyXjHWxcw==, registry: https://registry.yarnpkg.com/, tarball: https://registry.npmjs.org/@types/estree/-/estree-1.0.6.tgz}
