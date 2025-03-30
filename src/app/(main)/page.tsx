@@ -1,17 +1,9 @@
 "use client";
 import { getProfile } from "@/api/user";
-import { Button } from "@mui/material";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function Home() {
-  const router = useRouter();
-
-  const handleLogout = () => {
-    localStorage.removeItem("accessToken");
-    router.push("/auth/login");
-  };
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -29,9 +21,6 @@ export default function Home() {
 
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <Button variant="outlined" onClick={handleLogout}>
-        Logout
-      </Button>
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
         <Image
           className="dark:invert"
@@ -50,12 +39,7 @@ export default function Home() {
             .
           </li>
         </ol>
-
-        
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        footer
-      </footer>
     </div>
   );
 }

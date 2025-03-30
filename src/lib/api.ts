@@ -1,9 +1,18 @@
+import { toLogin } from '@/utils/auth';
 import ky from 'ky';
 
 const api = ky.create({
   prefixUrl: process.env.NEXT_PUBLIC_API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
+  },
+  // Override the default JSON parser to check the `code` field.
+  parseJson: (text: string) => {
+    const json = JSON.parse(text);
+    if (json.code !== "200") {
+      throw new Error(json.message || 'API request error');
+    }
+    return json.data;
   },
   hooks: {
     beforeRequest: [
@@ -16,17 +25,14 @@ const api = ky.create({
         }
       }
     ],
-    // afterResponse: [
-    //   async (request, options, response) => {
-    //     // Handle unauthorized responses
-    //     if (response.status === 401) {
-    //       if (typeof window !== 'undefined') {
-    //         localStorage.removeItem('accessToken');
-    //         window.location.href = '/auto/login';
-    //       }
-    //     }
-    //   }
-    // ]
+    afterResponse: [
+      async (request, options, response) => {
+        // Handle unauthorized responses
+        if (response.status === 401) {
+          toLogin();
+        }
+      }
+    ]
   }
 });
 
