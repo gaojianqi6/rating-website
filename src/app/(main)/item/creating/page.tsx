@@ -34,7 +34,7 @@ import {
 } from '@mui/material';
 
 import StarIcon from '@mui/icons-material/Star';
-import { getTemplate, getTemplates } from '@/api/item/create';
+import { createItem, getTemplate, getTemplates } from '@/api/item/create';
 
 // Types
 interface Template {
@@ -483,42 +483,27 @@ const CreateItemPage = () => {
 
     setIsLoading(true);
     setAlertMessage(null);
-    
+
     try {
       // API call to submit the form
-      const response = await fetch('/api/ratings', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          templateId: selectedTemplate?.id,
-          rating: userRating,
-          fields: formValues
-        }),
+      const response = await createItem({
+        templateId: selectedTemplate?.id,
+        formValues
       });
 
-      const data = await response.json();
-      
-      if (data.code === '200' && data.data) {
-        setAlertMessage({
-          type: 'success',
-          message: 'Rating created successfully!'
-        });
-        setTimeout(() => {
-          router.push('/user/ratings');
-        }, 2000);
-      } else {
-        setAlertMessage({
-          type: 'error',
-          message: `Failed to create rating: ${data.message || 'Unknown error'}`
-        });
-      }
+      await response.json();
+      setAlertMessage({
+        type: 'success',
+        message: 'Rating created successfully!'
+      });
+      setTimeout(() => {
+        router.push('/user/ratings');
+      }, 1000);
     } catch (error) {
       console.error('Error submitting form:', error);
       setAlertMessage({
         type: 'error',
-        message: 'Failed to create rating. Please try again later.'
+        message: error?.message || 'Failed to create rating. Please try again later.'
       });
     } finally {
       setIsLoading(false);
