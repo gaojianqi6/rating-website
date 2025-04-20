@@ -1,4 +1,3 @@
-// app/item/creating/page.tsx
 "use client";
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
@@ -34,7 +33,7 @@ import {
 } from '@mui/material';
 
 import StarIcon from '@mui/icons-material/Star';
-import { createItem, getTemplate, getTemplates } from '@/api/item/create';
+import { createItem, getTemplate, getTemplates, uploadImage } from '@/api/item/create';
 
 // Types
 interface Template {
@@ -53,7 +52,7 @@ interface TemplateField {
   name: string;
   displayName: string;
   description: string;
-  fieldType: string;
+  fieldType: 'text' | 'textarea' | 'number' | 'select' | 'multiselect' | 'img';
   isRequired: boolean;
   isSearchable: boolean;
   isFilterable: boolean;
@@ -166,6 +165,9 @@ const TemplateForm = ({
   userRating: number;
   setUserRating: (rating: number) => void;
 }) => {
+  const [files, setFiles] = useState<{ [key: string]: File | null }>({}); // Store selected files
+  const [previews, setPreviews] = useState<{ [key: string]: string }>({}); // Store local preview URLs
+
   const handleInputChange = (field: TemplateField, value: any) => {
     setFormValues({ ...formValues, [field.name]: value });
     
@@ -176,6 +178,47 @@ const TemplateForm = ({
       setFormErrors(newErrors);
     }
   };
+
+  const handleImageSelect = (field: TemplateField, event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    // Validate file type (jpg, jpeg, png)
+    const validTypes = ['image/jpeg', 'image/png'];
+    if (!validTypes.includes(file.type)) {
+      setFormErrors({
+        ...formErrors,
+        [field.name]: 'Only JPG, JPEG, or PNG files are allowed.',
+      });
+      return;
+    }
+
+    // Validate file size (e.g., max 5MB)
+    const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+    if (file.size > maxSize) {
+      setFormErrors({
+        ...formErrors,
+        [field.name]: 'File size must be less than 5MB.',
+      });
+      return;
+    }
+
+    // Store the file and generate a local preview URL
+    setFiles({ ...files, [field.name]: file });
+    const previewUrl = URL.createObjectURL(file);
+    setPreviews({ ...previews, [field.name]: previewUrl });
+    handleInputChange(field, null); // Clear publicUrl until submission
+  };
+
+  const handleRemoveImage = (field: TemplateField) => {
+    setFiles({ ...files, [field.name]: null });
+    if (previews[field.name]) {
+      URL.revokeObjectURL(previews[field.name]); // Clean up preview URL
+    }
+    setPreviews({ ...previews, [field.name]: '' });
+    handleInputChange(field, null);
+  };
+
   const sortedFields = (template.fields ?? []).sort((a, b) => a.displayOrder - b.displayOrder);
 
   return (
@@ -303,6 +346,52 @@ const TemplateForm = ({
                 <FormHelperText>{formErrors[field.name] || field.description}</FormHelperText>
               </FormControl>
             )}
+            {field.fieldType === 'img' && (
+              <Box>
+                <input
+                  accept="image/jpeg,image/png"
+                  style={{ display: 'none' }}
+                  id={`upload-${field.id}`}
+                  type="file"
+                  onChange={(e) => handleImageSelect(field, e)}
+                />
+                <label htmlFor={`upload-${field.id}`}>
+                  <Button
+                    variant="contained"
+                    component="span"
+                  >
+                    Select Image
+                  </Button>
+                </label>
+                {previews[field.name] && (
+                  <Box sx={{ mt: 2 }}>
+                    <img
+                      src={previews[field.name]}
+                      alt="Image Preview"
+                      style={{ maxWidth: '200px', maxHeight: '200px', objectFit: 'contain' }}
+                    />
+                    <Box sx={{ mt: 1 }}>
+                      <Button
+                        variant="outlined"
+                        color="error"
+                        size="small"
+                        onClick={() => handleRemoveImage(field)}
+                      >
+                        Remove
+                      </Button>
+                    </Box>
+                  </Box>
+                )}
+                {formErrors[field.name] && (
+                  <Typography color="error" variant="body2" sx={{ mt: 1 }}>
+                    {formErrors[field.name]}
+                  </Typography>
+                )}
+                <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+                  {field.description}
+                </Typography>
+              </Box>
+            )}
           </Grid>
         ))}
       </Grid>
@@ -323,7 +412,8 @@ const CreateItemPage = () => {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [confirmAction, setConfirmAction] = useState<'reset' | 'submit' | null>(null);
   const [alertMessage, setAlertMessage] = useState<{type: 'success' | 'error', message: string} | null>(null);
-  
+  const [files, setFiles] = useState<{ [key: string]: File | null }>({}); // Store files in parent component
+
   useEffect(() => {
     // Fetch templates
     const fetchTemplates = async () => {
@@ -343,42 +433,6 @@ const CreateItemPage = () => {
     };
 
     fetchTemplates();
-
-    // For demo purposes, let's add mock data
-    if (process.env.NODE_ENV === 'development') {
-      // This is just for development/preview - would be removed in production
-      const mockTemplates = [
-        {
-          id: 1,
-          name: 'movie',
-          displayName: 'Movies',
-          description: 'Template for movie ratings including feature films, documentaries, and shorts',
-          fullMarks: 10,
-          isPublished: true,
-          fields: [] // Would be populated by the actual API
-        },
-        {
-          id: 2,
-          name: 'book',
-          displayName: 'Books',
-          description: 'Template for rating books, novels, and publications',
-          fullMarks: 5,
-          isPublished: true,
-          fields: []
-        },
-        {
-          id: 3,
-          name: 'music',
-          displayName: 'Music',
-          description: 'Template for rating songs, albums, and musical performances',
-          fullMarks: 10,
-          isPublished: true,
-          fields: []
-        }
-      ];
-      setTemplates(mockTemplates);
-      setIsLoading(false);
-    }
   }, []);
 
   const handleSelectTemplate = async (template: Template) => {
@@ -389,7 +443,7 @@ const CreateItemPage = () => {
       const data = await getTemplate(template.id);
       
       setSelectedTemplate(data);
-        setStep(1);
+      setStep(1);
     } catch (error) {
       console.error('Error fetching template details:', error);
       setAlertMessage({
@@ -429,9 +483,11 @@ const CreateItemPage = () => {
       if (field.isRequired) {
         const value = formValues[field.name];
         
-        if (!value || 
-            (Array.isArray(value) && value.length === 0) ||
-            (typeof value === 'string' && value.trim() === '')) {
+        if (!value && field.fieldType !== 'img') {
+          errors[field.name] = `${field.displayName} is required`;
+          isValid = false;
+        }
+        if (field.fieldType === 'img' && !files[field.name] && !value) {
           errors[field.name] = `${field.displayName} is required`;
           isValid = false;
         }
@@ -454,6 +510,7 @@ const CreateItemPage = () => {
     setFormValues({});
     setFormErrors({});
     setUserRating(0);
+    setFiles({});
     handleConfirmClose();
     
     setAlertMessage({
@@ -476,16 +533,36 @@ const CreateItemPage = () => {
     setAlertMessage(null);
 
     try {
-      // API call to submit the form
+      // Upload images to S3
+      const updatedFormValues = { ...formValues };
+      for (const field of selectedTemplate!.fields) {
+        if (field.fieldType === 'img' && files[field.name]) {
+          const file = files[field.name]!;
+          const type = selectedTemplate!.name.toLowerCase() || "images";
+          
+          const { presignedUrl, publicUrl } = await uploadImage(file, type);
+          await fetch(presignedUrl, {
+            method: 'PUT',
+            body: file,
+            headers: {
+              'Content-Type': file.type,
+            },
+          });
+          updatedFormValues[field.name] = publicUrl;
+        }
+      }
+
+      // Submit the form with updated formValues
       const response = await createItem({
         templateId: selectedTemplate?.id,
-        formValues
+        formValues: updatedFormValues,
+        userRating,
       });
 
       await response.json();
       setAlertMessage({
         type: 'success',
-        message: 'Rating created successfully!'
+        message: 'Rating created successfully!',
       });
       setTimeout(() => {
         router.push('/user/ratings');
@@ -494,27 +571,11 @@ const CreateItemPage = () => {
       console.error('Error submitting form:', error);
       setAlertMessage({
         type: 'error',
-        message: error?.message || 'Failed to create rating. Please try again later.'
+        message: error?.message || 'Failed to create rating. Please try again later.',
       });
     } finally {
       setIsLoading(false);
       handleConfirmClose();
-    }
-
-    // For demo purposes
-    if (process.env.NODE_ENV === 'development') {
-      setTimeout(() => {
-        setAlertMessage({
-          type: 'success',
-          message: 'Rating created successfully! (Demo mode)'
-        });
-        handleConfirmClose();
-        setIsLoading(false);
-        
-        setTimeout(() => {
-          setAlertMessage(null);
-        }, 3000);
-      }, 1000);
     }
   };
 
