@@ -3,10 +3,8 @@ import { useState } from "react";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
-// import { signIn } from 'next-auth/client';
-
 import { Google as GoogleIcon } from "@mui/icons-material";
-import { Button, TextField } from "@mui/material";
+import { Button, TextField, Snackbar, Alert } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { login } from "@/api/user";
 
@@ -14,23 +12,39 @@ const LoginPage = () => {
   const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [toast, setToast] = useState({
+    open: false,
+    message: "",
+  });
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await login(username, password);
-
-      if (response.access_token) {
-        localStorage.setItem('accessToken', response.access_token);
-        router.push('/');
+      const { access_token } = await login(username, password);
+      if (access_token) {
+        localStorage.setItem("accessToken", access_token);
+        router.push("/");
+        return;
       }
+      throw new Error("Not have access token");
     } catch (error) {
-      console.error('Login failed:', error);
+      // Handle network errors or unexpected issues
+      const errorMessage =
+        error.message ||
+        "An unexpected error occurred. Please try again.";
+      setToast({
+        open: true,
+        message: errorMessage,
+      });
     }
   };
 
   const handleGoogleLogin = async () => {
     window.location.href = `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/google`;
+  };
+
+  const handleToastClose = () => {
+    setToast({ ...toast, open: false });
   };
 
   return (
@@ -81,6 +95,22 @@ const LoginPage = () => {
           </Button>
         </Box>
       </Box>
+
+      {/* Toast Notification */}
+      <Snackbar
+        open={toast.open}
+        autoHideDuration={1000} // Toast disappears after 6 seconds
+        onClose={handleToastClose}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }} // Position at top-center
+      >
+        <Alert
+          onClose={handleToastClose}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          {toast.message}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

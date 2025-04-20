@@ -6,6 +6,7 @@ const api = ky.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  throwHttpErrors: false, // Prevent ky from throwing HTTPError for non-2xx status codes
   // Override the default JSON parser to check the `code` field.
   parseJson: (text: string) => {
     const json = JSON.parse(text);

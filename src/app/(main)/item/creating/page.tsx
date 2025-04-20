@@ -553,20 +553,19 @@ const CreateItemPage = () => {
       }
 
       // Submit the form with updated formValues
-      const response = await createItem({
+      await createItem({
         templateId: selectedTemplate?.id,
         formValues: updatedFormValues,
         userRating,
       });
 
-      await response.json();
       setAlertMessage({
         type: 'success',
         message: 'Rating created successfully!',
       });
-      setTimeout(() => {
-        router.push('/user/ratings');
-      }, 1000);
+      // setTimeout(() => {
+      //   router.push('/user/ratings');
+      // }, 1000);
     } catch (error) {
       console.error('Error submitting form:', error);
       setAlertMessage({

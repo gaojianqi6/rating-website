@@ -9,7 +9,7 @@ export const createItem = (data) => {
   const fieldValues = Object.entries(formValues).map((arr) => ({ fieldName: arr[0], value: arr[1] }));
   return api.post("items", {
     json: { templateId, title, fieldValues, userRating }
-  });
+  }).json();
 };
 
 export const uploadImage = async (file: File, type: string) => {
