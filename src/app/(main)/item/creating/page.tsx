@@ -29,7 +29,7 @@ import {
   Rating,
   Stack,
   Grid,
-  Alert
+  Alert,
 } from '@mui/material';
 
 import StarIcon from '@mui/icons-material/Star';
@@ -156,6 +156,10 @@ const TemplateForm = ({
   setFormErrors,
   userRating,
   setUserRating,
+  files,
+  setFiles,
+  previews,
+  setPreviews,
 }: { 
   template: Template;
   formValues: any;
@@ -164,14 +168,15 @@ const TemplateForm = ({
   setFormErrors: (errors: any) => void;
   userRating: number;
   setUserRating: (rating: number) => void;
+  files: { [key: string]: File | null };
+  setFiles: (files: { [key: string]: File | null }) => void;
+  previews: { [key: string]: string };
+  setPreviews: (previews: { [key: string]: string }) => void;
 }) => {
-  const [files, setFiles] = useState<{ [key: string]: File | null }>({}); // Store selected files
-  const [previews, setPreviews] = useState<{ [key: string]: string }>({}); // Store local preview URLs
-
   const handleInputChange = (field: TemplateField, value: any) => {
     setFormValues({ ...formValues, [field.name]: value });
     
-    // Clear error if value is provided
+    // Clear error if value is provided for required fields
     if (field.isRequired && value) {
       const newErrors = { ...formErrors };
       delete newErrors[field.name];
@@ -203,6 +208,11 @@ const TemplateForm = ({
       return;
     }
 
+    // Clear any existing preview URL for this field
+    if (previews[field.name]) {
+      URL.revokeObjectURL(previews[field.name]);
+    }
+
     // Store the file and generate a local preview URL
     setFiles({ ...files, [field.name]: file });
     const previewUrl = URL.createObjectURL(file);
@@ -211,10 +221,11 @@ const TemplateForm = ({
   };
 
   const handleRemoveImage = (field: TemplateField) => {
-    setFiles({ ...files, [field.name]: null });
+    // Clean up the preview URL
     if (previews[field.name]) {
-      URL.revokeObjectURL(previews[field.name]); // Clean up preview URL
+      URL.revokeObjectURL(previews[field.name]);
     }
+    setFiles({ ...files, [field.name]: null });
     setPreviews({ ...previews, [field.name]: '' });
     handleInputChange(field, null);
   };
@@ -411,21 +422,30 @@ const CreateItemPage = () => {
   const [userRating, setUserRating] = useState<number>(0);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [confirmAction, setConfirmAction] = useState<'reset' | 'submit' | null>(null);
-  const [alertMessage, setAlertMessage] = useState<{type: 'success' | 'error', message: string} | null>(null);
-  const [files, setFiles] = useState<{ [key: string]: File | null }>({}); // Store files in parent component
+  const [alertMessage, setAlertMessage] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
+  const [files, setFiles] = useState<{ [key: string]: File | null }>({});
+  const [previews, setPreviews] = useState<{ [key: string]: string }>({});
 
+  // Clean up preview URLs on component unmount
   useEffect(() => {
-    // Fetch templates
+    return () => {
+      Object.values(previews).forEach((url) => {
+        if (url) URL.revokeObjectURL(url);
+      });
+    };
+  }, [previews]);
+
+  // Fetch templates on mount
+  useEffect(() => {
     const fetchTemplates = async () => {
       try {
         const data = await getTemplates();
-        
         setTemplates(data);
       } catch (error) {
         console.error('Error fetching templates:', error);
         setAlertMessage({
           type: 'error',
-          message: 'Error loading templates. Please try again later.'
+          message: 'Error loading templates. Please try again later.',
         });
       } finally {
         setIsLoading(false);
@@ -438,17 +458,16 @@ const CreateItemPage = () => {
   const handleSelectTemplate = async (template: Template) => {
     setIsLoading(true);
     setAlertMessage(null);
-    
+
     try {
       const data = await getTemplate(template.id);
-      
       setSelectedTemplate(data);
       setStep(1);
     } catch (error) {
       console.error('Error fetching template details:', error);
       setAlertMessage({
         type: 'error',
-        message: 'Error loading template details. Please try again later.'
+        message: 'Error loading template details. Please try again later.',
       });
     } finally {
       setIsLoading(false);
@@ -474,15 +493,15 @@ const CreateItemPage = () => {
     if (userRating <= 0) {
       setAlertMessage({
         type: 'error',
-        message: 'Please provide your rating before submitting.'
+        message: 'Please provide your rating before submitting.',
       });
       return false;
     }
 
-    selectedTemplate.fields.forEach(field => {
+    selectedTemplate.fields.forEach((field) => {
       if (field.isRequired) {
         const value = formValues[field.name];
-        
+
         if (!value && field.fieldType !== 'img') {
           errors[field.name] = `${field.displayName} is required`;
           isValid = false;
@@ -495,29 +514,35 @@ const CreateItemPage = () => {
     });
 
     setFormErrors(errors);
-    
+
     if (!isValid) {
       setAlertMessage({
         type: 'error',
-        message: 'Please fill in all required fields.'
+        message: 'Please fill in all required fields.',
       });
     }
-    
+
     return isValid;
   };
 
   const handleReset = () => {
+    // Clean up preview URLs
+    Object.values(previews).forEach((url) => {
+      if (url) URL.revokeObjectURL(url);
+    });
+
     setFormValues({});
     setFormErrors({});
     setUserRating(0);
     setFiles({});
+    setPreviews({});
     handleConfirmClose();
-    
+
     setAlertMessage({
       type: 'success',
-      message: 'Form has been reset.'
+      message: 'Form has been reset.',
     });
-    
+
     setTimeout(() => {
       setAlertMessage(null);
     }, 3000);
@@ -538,8 +563,8 @@ const CreateItemPage = () => {
       for (const field of selectedTemplate!.fields) {
         if (field.fieldType === 'img' && files[field.name]) {
           const file = files[field.name]!;
-          const type = selectedTemplate!.name.toLowerCase() || "images";
-          
+          const type = selectedTemplate!.name.toLowerCase() || 'images';
+
           const { presignedUrl, publicUrl } = await uploadImage(file, type);
           await fetch(presignedUrl, {
             method: 'PUT',
@@ -553,7 +578,7 @@ const CreateItemPage = () => {
       }
 
       // Submit the form with updated formValues
-      await createItem({
+      const { slug } = await createItem({
         templateId: selectedTemplate?.id,
         formValues: updatedFormValues,
         userRating,
@@ -563,9 +588,18 @@ const CreateItemPage = () => {
         type: 'success',
         message: 'Rating created successfully!',
       });
-      // setTimeout(() => {
-      //   router.push('/user/ratings');
-      // }, 1000);
+
+      // Clean up preview URLs after successful submission
+      Object.values(previews).forEach((url) => {
+        if (url) URL.revokeObjectURL(url);
+      });
+      setPreviews({});
+      setFiles({});
+
+      const itemUrl = `/item/subject/${slug}`;
+      setTimeout(() => {
+        router.push(itemUrl);
+      }, 1000);
     } catch (error) {
       console.error('Error submitting form:', error);
       setAlertMessage({
@@ -629,6 +663,10 @@ const CreateItemPage = () => {
                     setFormErrors={setFormErrors}
                     userRating={userRating}
                     setUserRating={setUserRating}
+                    files={files}
+                    setFiles={setFiles}
+                    previews={previews}
+                    setPreviews={setPreviews}
                   />
                   
                   <Stack direction="row" spacing={2} justifyContent="center" sx={{ mt: 4 }}>
@@ -636,6 +674,7 @@ const CreateItemPage = () => {
                       variant="outlined" 
                       color="secondary"
                       onClick={() => handleConfirmOpen('reset')}
+                      disabled={isLoading}
                     >
                       Reset
                     </Button>
@@ -643,6 +682,7 @@ const CreateItemPage = () => {
                       variant="contained" 
                       color="primary"
                       onClick={() => handleConfirmOpen('submit')}
+                      disabled={isLoading}
                     >
                       Submit
                     </Button>
@@ -672,11 +712,14 @@ const CreateItemPage = () => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleConfirmClose}>Cancel</Button>
+          <Button onClick={handleConfirmClose} disabled={isLoading}>
+            Cancel
+          </Button>
           <Button 
             onClick={confirmAction === 'reset' ? handleReset : handleSubmit} 
             autoFocus
             color={confirmAction === 'reset' ? 'error' : 'primary'}
+            disabled={isLoading}
           >
             {confirmAction === 'reset' ? 'Reset' : 'Submit'}
           </Button>
