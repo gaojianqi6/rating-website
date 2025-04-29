@@ -24,7 +24,7 @@ import {
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 interface Category {
-  value: number;
+  value: string;
   label: string;
 }
 
@@ -41,11 +41,12 @@ const Header = ({ user, onLogout, loading }: HeaderProps) => {
     useState<null | HTMLElement>(null);
 
   const categories: Category[] = [
-    { value: 1, label: "Movie" },
-    { value: 2, label: "Book" },
-    { value: 3, label: "Music" },
-    { value: 4, label: "Podcast" },
-    { value: 5, label: "TV Series" },
+    { value: "movie", label: "Movie" },
+    { value: "tv_series", label: "TV Series" },
+    { value: "variety_show", label: "Variety Show" },
+    { value: "book", label: "Book" },
+    { value: "music", label: "Music" },
+    { value: "podcast", label: "Podcast" },
   ];
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {

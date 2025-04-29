@@ -33,7 +33,8 @@ import {
 } from '@mui/material';
 
 import StarIcon from '@mui/icons-material/Star';
-import { createItem, getTemplate, getTemplates, uploadImage } from '@/api/item/create';
+import { createItem, uploadImage } from '@/api/item/create';
+import { getTemplate, getTemplates } from '@/api/template';
 
 // Types
 interface Template {
