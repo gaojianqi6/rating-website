@@ -14,10 +14,15 @@ import {
   Avatar,
   Stack,
   Alert,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  TextField,
+  DialogActions,
 } from '@mui/material';
 
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import { getItemBySlug } from '@/api/item';
+import { getItemBySlug, getUserRating, getRatingsForItem, createOrUpdateRating } from '@/api/item';
 
 // Types (same as in CreateItemPage)
 interface Item {
@@ -66,13 +71,20 @@ interface UserRating {
   id: number;
   itemId: number;
   userId: number;
-  rating: number;
-  comment: string;
+  rating: number; // Backend scale: 0-10
+  reviewText: string | null;
   createdAt: string;
+  updatedAt: string;
   user: {
     id: number;
     username: string;
   };
+}
+
+interface RatingsResponse {
+  averageRating: number; // Backend scale: 0-10
+  ratingsCount: number;
+  ratings: UserRating[];
 }
 
 interface RecommendationItem {
@@ -83,22 +95,7 @@ interface RecommendationItem {
   createdAt: string;
 }
 
-// Mock API functions (to be replaced later)
-const fetchUserRatings = async (itemId: number): Promise<UserRating[]> => {
-  // Mock data for ratings
-  return [
-    {
-      id: 1,
-      itemId,
-      userId: 1,
-      rating: 5,
-      comment: "A thrilling sci-fi drama with unexpected twists! The performances were stellar, and the concept of time alteration was handled brilliantly.",
-      createdAt: "2025-04-21T23:55:00.000Z",
-      user: { id: 1, username: "User1" },
-    },
-  ];
-};
-
+// Mock API functions for recommendations
 const fetchRecommendationsByTemplate = async (templateType: string): Promise<RecommendationItem[]> => {
   return [
     { id: 1, title: "Movie 1", slug: "movie-1", poster: "https://via.placeholder.com/150", createdAt: "2025-04-01" },
@@ -117,39 +114,70 @@ const fetchRecommendationsByGenre = async (genreType: string): Promise<Recommend
 const ItemDetailPage = () => {
   const { slug } = useParams();
   const [item, setItem] = useState<Item | null>(null);
-  const [userRatings, setUserRatings] = useState<UserRating[]>([]);
-  const [averageRating, setAverageRating] = useState<number>(0);
+  const [userRating, setUserRating] = useState<UserRating | null>(null);
+  const [ratingsData, setRatingsData] = useState<RatingsResponse | null>(null);
   const [templateRecommendations, setTemplateRecommendations] = useState<RecommendationItem[]>([]);
   const [genreRecommendations, setGenreRecommendations] = useState<RecommendationItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [openRatingDialog, setOpenRatingDialog] = useState(false);
+  const [newRating, setNewRating] = useState<number>(0); // Frontend scale: 0-5
+  const [newComment, setNewComment] = useState<string>('');
 
-  // Fetch item and ratings on mount
+  // Helper functions to convert between frontend (0-5) and backend (0-10) scales
+  const toFrontendScale = (backendRating: number) => backendRating / 2;
+  const toBackendScale = (frontendRating: number) => frontendRating * 2;
+
+  // Fetch non-ratings data (item and recommendations) on mount
+  const loadNonRatingsData = async () => {
+    try {
+      const itemData = await getItemBySlug(slug as string);
+      setItem(itemData);
+
+      // Fetch recommendations
+      const templateType = 'movie';
+      const genres = itemData.fieldValues.find(fv => fv.field.name === 'type')?.jsonValue || [];
+      const genreType = genres[0] || 'Science Fiction';
+
+      const templateRecs = await fetchRecommendationsByTemplate(templateType);
+      setTemplateRecommendations(templateRecs);
+
+      const genreRecs = await fetchRecommendationsByGenre(genreType);
+      setGenreRecommendations(genreRecs);
+
+      return itemData;
+    } catch (error) {
+      console.error('Error loading non-ratings data:', error);
+      throw error;
+    }
+  };
+
+  // Fetch ratings data (user rating and all ratings)
+  const loadRatingsData = async (itemId: number) => {
+    try {
+      // Fetch the current user's rating
+      const userRatingData = await getUserRating(itemId);
+      setUserRating(userRatingData);
+
+      // Set initial values for the dialog (convert backend scale to frontend scale)
+      setNewRating(userRatingData ? toFrontendScale(userRatingData.rating) : 0);
+      setNewComment(userRatingData?.reviewText || '');
+
+      // Fetch all ratings for the item
+      const ratingsResponse = await getRatingsForItem(itemId);
+      setRatingsData(ratingsResponse);
+    } catch (error) {
+      console.error('Error loading ratings data:', error);
+      throw error;
+    }
+  };
+
+  // Initial data load on mount
   useEffect(() => {
     const loadData = async () => {
       try {
         setIsLoading(true);
-        const itemData = await getItemBySlug(slug as string);
-        setItem(itemData);
-
-        const ratingsData = await fetchUserRatings(itemData.id);
-        setUserRatings(ratingsData);
-
-        // Calculate average rating
-        if (ratingsData.length > 0) {
-          const avg = ratingsData.reduce((sum, r) => sum + r.rating, 0) / ratingsData.length;
-          setAverageRating(avg);
-        }
-
-        // Fetch recommendations
-        const templateType = 'movie';
-        const genres = itemData.fieldValues.find(fv => fv.field.name === 'type')?.jsonValue || [];
-        const genreType = genres[0] || 'Science Fiction';
-
-        const templateRecs = await fetchRecommendationsByTemplate(templateType);
-        setTemplateRecommendations(templateRecs);
-
-        const genreRecs = await fetchRecommendationsByGenre(genreType);
-        setGenreRecommendations(genreRecs);
+        const itemData = await loadNonRatingsData();
+        await loadRatingsData(itemData.id);
       } catch (error) {
         console.error('Error loading data:', error);
       } finally {
@@ -161,6 +189,23 @@ const ItemDetailPage = () => {
       loadData();
     }
   }, [slug]);
+
+  // Handle rating submission
+  const handleRateNow = async () => {
+    if (!item) return;
+
+    try {
+      // Convert the frontend rating (0-5) to backend scale (0-10)
+      const backendRating = toBackendScale(newRating);
+      await createOrUpdateRating(item.id, backendRating, newComment);
+      // Refresh only the ratings data
+      await loadRatingsData(item.id);
+      setOpenRatingDialog(false);
+    } catch (error) {
+      console.error('Error submitting rating:', error);
+      alert('Failed to submit rating. Please try again.');
+    }
+  };
 
   if (isLoading) {
     return (
@@ -266,28 +311,93 @@ const ItemDetailPage = () => {
       {/* Rating Section */}
       <Box sx={{ mt: 4 }}>
         <Typography variant="h5" gutterBottom>
-          Ratings ({userRatings.length})
+          Ratings ({ratingsData?.ratingsCount || 0})
         </Typography>
         <Typography variant="h6" gutterBottom>
-          Average Rating: {averageRating.toFixed(1)} / 5
-          <Rating value={averageRating} precision={0.1} readOnly sx={{ verticalAlign: 'middle', ml: 1 }} />
+          Average Rating: {(ratingsData?.averageRating || 0).toFixed(1)} / 10
+          <Rating
+            value={toFrontendScale(ratingsData?.averageRating || 0)}
+            precision={0.5}
+            max={5}
+            readOnly
+            sx={{ verticalAlign: 'middle', ml: 1 }}
+          />
         </Typography>
 
         {/* My Rating Alert */}
         <Alert severity="info" sx={{ mt: 2 }}>
-          Have you watched or want to watch this movie? <Button color="primary" onClick={() => alert('Please go to the rating page to submit your rating.')}>Rate Now</Button>
+          {userRating ? (
+            <>
+              Your Rating:{' '}
+              <Rating
+                value={toFrontendScale(userRating.rating)}
+                precision={0.5}
+                max={5}
+                readOnly
+                size="small"
+                sx={{ verticalAlign: 'middle', ml: 1 }}
+              />
+              <Typography variant="body2" sx={{ mt: 1 }}>{userRating.reviewText}</Typography>
+              <Button color="primary" onClick={() => setOpenRatingDialog(true)} sx={{ mt: 1 }}>
+                Update Rating
+              </Button>
+            </>
+          ) : (
+            <>
+              Have you watched or want to watch this movie?{' '}
+              <Button color="primary" onClick={() => setOpenRatingDialog(true)}>
+                Rate Now
+              </Button>
+            </>
+          )}
         </Alert>
       </Box>
+
+      {/* Rating Dialog */}
+      <Dialog open={openRatingDialog} onClose={() => setOpenRatingDialog(false)}>
+        <DialogTitle>{userRating ? 'Update Your Rating' : 'Rate This Item'}</DialogTitle>
+        <DialogContent>
+          <Box sx={{ mt: 2 }}>
+            <Typography>Rating (out of 5 stars):</Typography>
+            <Rating
+              value={newRating}
+              onChange={(event, value) => setNewRating(value || 0)}
+              precision={0.5}
+              max={5}
+            />
+            <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+              {newRating ? `Score: ${toBackendScale(newRating).toFixed(1)} / 10` : 'Select a rating'}
+            </Typography>
+          </Box>
+          <TextField
+            label="Comment"
+            multiline
+            rows={4}
+            value={newComment}
+            onChange={(e) => setNewComment(e.target.value)}
+            fullWidth
+            sx={{ mt: 2 }}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpenRatingDialog(false)}>Cancel</Button>
+          <Button onClick={handleRateNow} color="primary">
+            Submit
+          </Button>
+        </DialogActions>
+      </Dialog>
 
       {/* User Ratings List */}
       <Box sx={{ mt: 4 }}>
         <Typography variant="h6" gutterBottom>
-          Reviews ({userRatings.length})
+          Reviews ({ratingsData?.ratings.length
+
+ || 0})
         </Typography>
-        {userRatings.length === 0 ? (
+        {ratingsData?.ratings.length === 0 ? (
           <Typography>No reviews yet.</Typography>
         ) : (
-          userRatings.map((rating) => (
+          ratingsData?.ratings.map((rating) => (
             <Paper key={rating.id} sx={{ p: 2, mb: 2 }}>
               <Stack direction="row" spacing={2} alignItems="center">
                 <Avatar>{rating.user.username[0]}</Avatar>
@@ -298,9 +408,15 @@ const ItemDetailPage = () => {
                   <Typography variant="caption" color="text.secondary">
                     {new Date(rating.createdAt).toLocaleString()}
                   </Typography>
-                  <Rating value={rating.rating} readOnly size="small" />
+                  <Rating
+                    value={toFrontendScale(rating.rating)}
+                    precision={0.5}
+                    max={5}
+                    readOnly
+                    size="small"
+                  />
                   <Typography variant="body2" sx={{ mt: 1 }}>
-                    {rating.comment}
+                    {rating.reviewText}
                   </Typography>
                 </Box>
               </Stack>
