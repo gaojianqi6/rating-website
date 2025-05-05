@@ -22,6 +22,14 @@ interface RatingsResponse {
   ratings: UserRating[];
 }
 
+export interface RecommendationItem {
+  id: number;
+  title: string;
+  slug: string;
+  poster: string;
+  createdAt: string;
+}
+
 // Fetch item by slug
 export const getItemBySlug = (slug: string) => api.get(`items/slug/${slug}`).json();
 
@@ -36,3 +44,14 @@ export const getRatingsForItem = (itemId: number) =>
 // Create or update a rating
 export const createOrUpdateRating = (itemId: number, rating: number, reviewText: string) =>
   api.post(`ratings`, { json: { itemId, rating, reviewText } }).json<UserRating>();
+
+// Fetch recommendations by template
+export const fetchRecommendationsByTemplate = async (templateTypeId: number): Promise<RecommendationItem[]> => {
+  return api.get(`items/recommendations/template/${templateTypeId}`).json<RecommendationItem[]>();
+};
+
+// Fetch recommendations by genre
+export const fetchRecommendationsByGenre = async (templateId: number, fieldId: number, genreValues: string[]): Promise<RecommendationItem[]> => {
+  const genreQuery = genreValues.join(',');
+  return api.get(`items/recommendations/genre/${templateId}/${fieldId}?genreValues=${encodeURIComponent(genreQuery)}`).json<RecommendationItem[]>();
+};

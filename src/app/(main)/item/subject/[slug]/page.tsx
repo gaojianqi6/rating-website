@@ -1,7 +1,7 @@
 "use client";
-import { useState, useEffect } from 'react';
-import { useParams } from 'next/navigation';
-import Link from 'next/link';
+import { useState, useEffect } from "react";
+import { useParams } from "next/navigation";
+import Link from "next/link";
 
 import {
   Typography,
@@ -19,10 +19,21 @@ import {
   DialogContent,
   TextField,
   DialogActions,
-} from '@mui/material';
+  Card,
+  CardMedia,
+  CardContent,
+} from "@mui/material";
 
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import { getItemBySlug, getUserRating, getRatingsForItem, createOrUpdateRating } from '@/api/item';
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import {
+  getItemBySlug,
+  getUserRating,
+  getRatingsForItem,
+  createOrUpdateRating,
+  fetchRecommendationsByGenre,
+  fetchRecommendationsByTemplate,
+  RecommendationItem,
+} from "@/api/item";
 
 // Types (same as in CreateItemPage)
 interface Item {
@@ -56,7 +67,14 @@ interface Field {
   name: string;
   displayName: string;
   description: string;
-  fieldType: 'text' | 'textarea' | 'number' | 'select' | 'multiselect' | 'img' | 'url';
+  fieldType:
+    | "text"
+    | "textarea"
+    | "number"
+    | "select"
+    | "multiselect"
+    | "img"
+    | "url";
   isRequired: boolean;
   isSearchable: boolean;
   isFilterable: boolean;
@@ -87,41 +105,22 @@ interface RatingsResponse {
   ratings: UserRating[];
 }
 
-interface RecommendationItem {
-  id: number;
-  title: string;
-  slug: string;
-  poster: string;
-  createdAt: string;
-}
-
-// Mock API functions for recommendations
-const fetchRecommendationsByTemplate = async (templateType: string): Promise<RecommendationItem[]> => {
-  return [
-    { id: 1, title: "Movie 1", slug: "movie-1", poster: "https://via.placeholder.com/150", createdAt: "2025-04-01" },
-    { id: 2, title: "Movie 2", slug: "movie-2", poster: "https://via.placeholder.com/150", createdAt: "2025-04-02" },
-  ];
-};
-
-const fetchRecommendationsByGenre = async (genreType: string): Promise<RecommendationItem[]> => {
-  return [
-    { id: 11, title: "Sci-Fi Movie 1", slug: "sci-fi-movie-1", poster: "https://via.placeholder.com/150", createdAt: "2025-04-01" },
-    { id: 12, title: "Sci-Fi Movie 2", slug: "sci-fi-movie-2", poster: "https://via.placeholder.com/150", createdAt: "2025-04-02" },
-  ];
-};
-
 // Main Component
 const ItemDetailPage = () => {
   const { slug } = useParams();
   const [item, setItem] = useState<Item | null>(null);
   const [userRating, setUserRating] = useState<UserRating | null>(null);
   const [ratingsData, setRatingsData] = useState<RatingsResponse | null>(null);
-  const [templateRecommendations, setTemplateRecommendations] = useState<RecommendationItem[]>([]);
-  const [genreRecommendations, setGenreRecommendations] = useState<RecommendationItem[]>([]);
+  const [templateRecommendations, setTemplateRecommendations] = useState<
+    RecommendationItem[]
+  >([]);
+  const [genreRecommendations, setGenreRecommendations] = useState<
+    RecommendationItem[]
+  >([]);
   const [isLoading, setIsLoading] = useState(true);
   const [openRatingDialog, setOpenRatingDialog] = useState(false);
   const [newRating, setNewRating] = useState<number>(0); // Frontend scale: 0-5
-  const [newComment, setNewComment] = useState<string>('');
+  const [newComment, setNewComment] = useState<string>("");
 
   // Helper functions to convert between frontend (0-5) and backend (0-10) scales
   const toFrontendScale = (backendRating: number) => backendRating / 2;
@@ -134,19 +133,28 @@ const ItemDetailPage = () => {
       setItem(itemData);
 
       // Fetch recommendations
-      const templateType = 'movie';
-      const genres = itemData.fieldValues.find(fv => fv.field.name === 'type')?.jsonValue || [];
-      const genreType = genres[0] || 'Science Fiction';
+      const templateTypeId = itemData.templateId;
+      const field = itemData.fieldValues.find(
+        (fv) => fv.field.name === "type" || fv.field.displayName === "Genre"
+      );
+      const { fieldId, jsonValue = [] } = field || {};
+      const genreValues = jsonValue || ["Drama"];
 
-      const templateRecs = await fetchRecommendationsByTemplate(templateType);
+      const templateRecs = await fetchRecommendationsByTemplate(templateTypeId);
       setTemplateRecommendations(templateRecs);
 
-      const genreRecs = await fetchRecommendationsByGenre(genreType);
-      setGenreRecommendations(genreRecs);
+      if (fieldId) {
+        const genreRecs = await fetchRecommendationsByGenre(
+          templateTypeId,
+          fieldId,
+          genreValues
+        );
+        setGenreRecommendations(genreRecs);
+      }
 
       return itemData;
     } catch (error) {
-      console.error('Error loading non-ratings data:', error);
+      console.error("Error loading non-ratings data:", error);
       throw error;
     }
   };
@@ -160,13 +168,13 @@ const ItemDetailPage = () => {
 
       // Set initial values for the dialog (convert backend scale to frontend scale)
       setNewRating(userRatingData ? toFrontendScale(userRatingData.rating) : 0);
-      setNewComment(userRatingData?.reviewText || '');
+      setNewComment(userRatingData?.reviewText || "");
 
       // Fetch all ratings for the item
       const ratingsResponse = await getRatingsForItem(itemId);
       setRatingsData(ratingsResponse);
     } catch (error) {
-      console.error('Error loading ratings data:', error);
+      console.error("Error loading ratings data:", error);
       throw error;
     }
   };
@@ -179,7 +187,7 @@ const ItemDetailPage = () => {
         const itemData = await loadNonRatingsData();
         await loadRatingsData(itemData.id);
       } catch (error) {
-        console.error('Error loading data:', error);
+        console.error("Error loading data:", error);
       } finally {
         setIsLoading(false);
       }
@@ -202,8 +210,8 @@ const ItemDetailPage = () => {
       await loadRatingsData(item.id);
       setOpenRatingDialog(false);
     } catch (error) {
-      console.error('Error submitting rating:', error);
-      alert('Failed to submit rating. Please try again.');
+      console.error("Error submitting rating:", error);
+      alert("Failed to submit rating. Please try again.");
     }
   };
 
@@ -224,18 +232,43 @@ const ItemDetailPage = () => {
   }
 
   // Extract field values for easy access
-  const title = item.fieldValues.find(fv => fv.field.name === 'title')?.textValue || 'N/A';
-  const poster = item.fieldValues.find(fv => fv.field.name === 'poster')?.textValue || '';
-  const releaseYear = item.fieldValues.find(fv => fv.field.name === 'release_year')?.numericValue || 'N/A';
-  const director = item.fieldValues.find(fv => fv.field.name === 'director')?.textValue || 'N/A';
-  const cast = item.fieldValues.find(fv => fv.field.name === 'cast')?.textValue || 'N/A';
-  const language = item.fieldValues.find(fv => fv.field.name === 'language')?.jsonValue?.join(', ') || 'N/A';
-  const genre = item.fieldValues.find(fv => fv.field.name === 'type')?.jsonValue?.join(', ') || 'N/A';
-  const country = item.fieldValues.find(fv => fv.field.name === 'country')?.jsonValue?.join(', ') || 'N/A';
-  const synopsis = item.fieldValues.find(fv => fv.field.name === 'synopsis')?.textValue || 'N/A';
-  const contentRating = item.fieldValues.find(fv => fv.field.name === 'content_rating')?.textValue || 'N/A';
-  const runtime = item.fieldValues.find(fv => fv.field.name === 'runtime')?.numericValue || 'N/A';
-  const trailerUrl = item.fieldValues.find(fv => fv.field.name === 'trailer_url')?.textValue || '#';
+  const title =
+    item.fieldValues.find((fv) => fv.field.name === "title")?.textValue ||
+    "N/A";
+  const poster =
+    item.fieldValues.find((fv) => fv.field.name === "poster")?.textValue || "";
+  const releaseYear =
+    item.fieldValues.find((fv) => fv.field.name === "release_year")
+      ?.numericValue || "N/A";
+  const director =
+    item.fieldValues.find((fv) => fv.field.name === "director")?.textValue ||
+    "N/A";
+  const cast =
+    item.fieldValues.find((fv) => fv.field.name === "cast")?.textValue || "N/A";
+  const language =
+    item.fieldValues
+      .find((fv) => fv.field.name === "language")
+      ?.jsonValue?.join(", ") || "N/A";
+  const genre =
+    item.fieldValues
+      .find((fv) => fv.field.name === "type")
+      ?.jsonValue?.join(", ") || "N/A";
+  const country =
+    item.fieldValues
+      .find((fv) => fv.field.name === "country")
+      ?.jsonValue?.join(", ") || "N/A";
+  const synopsis =
+    item.fieldValues.find((fv) => fv.field.name === "synopsis")?.textValue ||
+    "N/A";
+  const contentRating =
+    item.fieldValues.find((fv) => fv.field.name === "content_rating")
+      ?.textValue || "N/A";
+  const runtime =
+    item.fieldValues.find((fv) => fv.field.name === "runtime")?.numericValue ||
+    "N/A";
+  const trailerUrl =
+    item.fieldValues.find((fv) => fv.field.name === "trailer_url")?.textValue ||
+    "#";
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
@@ -248,17 +281,22 @@ const ItemDetailPage = () => {
             src={poster}
             alt={title}
             sx={{
-              width: '100%',
+              width: "100%",
               maxHeight: 400,
-              objectFit: 'cover',
+              objectFit: "cover",
               borderRadius: 2,
+              boxShadow: 3,
             }}
           />
         </Grid>
 
         {/* Details */}
         <Grid item xs={12} md={8}>
-          <Typography variant="h4" gutterBottom>
+          <Typography
+            variant="h4"
+            gutterBottom
+            sx={{ fontWeight: "bold", color: "primary.main" }}
+          >
             {title} ({releaseYear})
           </Typography>
           <Typography variant="subtitle1" color="text.secondary">
@@ -291,6 +329,7 @@ const ItemDetailPage = () => {
               startIcon={<PlayArrowIcon />}
               href={trailerUrl}
               target="_blank"
+              sx={{ borderRadius: 2 }}
             >
               Play Trailer
             </Button>
@@ -300,17 +339,25 @@ const ItemDetailPage = () => {
 
       {/* Synopsis Section */}
       <Box sx={{ mt: 4 }}>
-        <Typography variant="h6" gutterBottom>
+        <Typography
+          variant="h6"
+          gutterBottom
+          sx={{ fontWeight: "bold", color: "primary.main" }}
+        >
           Synopsis of {title}
         </Typography>
-        <Typography variant="body1" paragraph>
+        <Typography variant="body1" paragraph sx={{ lineHeight: 1.6 }}>
           {synopsis}
         </Typography>
       </Box>
 
       {/* Rating Section */}
       <Box sx={{ mt: 4 }}>
-        <Typography variant="h5" gutterBottom>
+        <Typography
+          variant="h5"
+          gutterBottom
+          sx={{ fontWeight: "bold", color: "primary.main" }}
+        >
           Ratings ({ratingsData?.ratingsCount || 0})
         </Typography>
         <Typography variant="h6" gutterBottom>
@@ -320,31 +367,37 @@ const ItemDetailPage = () => {
             precision={0.5}
             max={5}
             readOnly
-            sx={{ verticalAlign: 'middle', ml: 1 }}
+            sx={{ verticalAlign: "middle", ml: 1, color: "warning.main" }}
           />
         </Typography>
 
         {/* My Rating Alert */}
-        <Alert severity="info" sx={{ mt: 2 }}>
+        <Alert severity="info" sx={{ mt: 2, borderRadius: 2 }}>
           {userRating ? (
             <>
-              Your Rating:{' '}
+              Your Rating:{" "}
               <Rating
                 value={toFrontendScale(userRating.rating)}
                 precision={0.5}
                 max={5}
                 readOnly
                 size="small"
-                sx={{ verticalAlign: 'middle', ml: 1 }}
+                sx={{ verticalAlign: "middle", ml: 1, color: "warning.main" }}
               />
-              <Typography variant="body2" sx={{ mt: 1 }}>{userRating.reviewText}</Typography>
-              <Button color="primary" onClick={() => setOpenRatingDialog(true)} sx={{ mt: 1 }}>
+              <Typography variant="body2" sx={{ mt: 1 }}>
+                {userRating.reviewText}
+              </Typography>
+              <Button
+                color="primary"
+                onClick={() => setOpenRatingDialog(true)}
+                sx={{ mt: 1 }}
+              >
                 Update Rating
               </Button>
             </>
           ) : (
             <>
-              Have you watched or want to watch this movie?{' '}
+              Have you watched or want to watch this movie?{" "}
               <Button color="primary" onClick={() => setOpenRatingDialog(true)}>
                 Rate Now
               </Button>
@@ -354,8 +407,13 @@ const ItemDetailPage = () => {
       </Box>
 
       {/* Rating Dialog */}
-      <Dialog open={openRatingDialog} onClose={() => setOpenRatingDialog(false)}>
-        <DialogTitle>{userRating ? 'Update Your Rating' : 'Rate This Item'}</DialogTitle>
+      <Dialog
+        open={openRatingDialog}
+        onClose={() => setOpenRatingDialog(false)}
+      >
+        <DialogTitle>
+          {userRating ? "Update Your Rating" : "Rate This Item"}
+        </DialogTitle>
         <DialogContent>
           <Box sx={{ mt: 2 }}>
             <Typography>Rating (out of 5 stars):</Typography>
@@ -363,10 +421,14 @@ const ItemDetailPage = () => {
               value={newRating}
               onChange={(event, value) => setNewRating(value || 0)}
               precision={0.5}
+              min={0.5}
               max={5}
+              sx={{ color: "warning.main" }}
             />
             <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-              {newRating ? `Score: ${toBackendScale(newRating).toFixed(1)} / 10` : 'Select a rating'}
+              {newRating
+                ? `Score: ${toBackendScale(newRating).toFixed(1)} / 10`
+                : "Select a rating"}
             </Typography>
           </Box>
           <TextField
@@ -389,20 +451,27 @@ const ItemDetailPage = () => {
 
       {/* User Ratings List */}
       <Box sx={{ mt: 4 }}>
-        <Typography variant="h6" gutterBottom>
-          Reviews ({ratingsData?.ratings.length
-
- || 0})
+        <Typography
+          variant="h6"
+          gutterBottom
+          sx={{ fontWeight: "bold", color: "primary.main" }}
+        >
+          Reviews ({ratingsData?.ratings.length || 0})
         </Typography>
         {ratingsData?.ratings.length === 0 ? (
           <Typography>No reviews yet.</Typography>
         ) : (
           ratingsData?.ratings.map((rating) => (
-            <Paper key={rating.id} sx={{ p: 2, mb: 2 }}>
+            <Paper
+              key={rating.id}
+              sx={{ p: 2, mb: 2, borderRadius: 2, boxShadow: 2 }}
+            >
               <Stack direction="row" spacing={2} alignItems="center">
-                <Avatar>{rating.user.username[0]}</Avatar>
+                <Avatar sx={{ bgcolor: "primary.main" }}>
+                  {rating.user.username[0]}
+                </Avatar>
                 <Box>
-                  <Typography variant="subtitle2">
+                  <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
                     {rating.user.username}
                   </Typography>
                   <Typography variant="caption" color="text.secondary">
@@ -414,6 +483,7 @@ const ItemDetailPage = () => {
                     max={5}
                     readOnly
                     size="small"
+                    sx={{ color: "warning.main" }}
                   />
                   <Typography variant="body2" sx={{ mt: 1 }}>
                     {rating.reviewText}
@@ -426,62 +496,144 @@ const ItemDetailPage = () => {
       </Box>
 
       {/* Recommendation Sections */}
-      <Box sx={{ mt: 4 }}>
-        <Typography variant="h5" gutterBottom>
+      <Box sx={{ mt: 6 }}>
+        <Typography
+          variant="h5"
+          gutterBottom
+          sx={{ fontWeight: "bold", color: "primary.main" }}
+        >
           Recommended Movies
         </Typography>
-        <Grid container spacing={2}>
-          {templateRecommendations.map((rec) => (
-            <Grid item xs={12} sm={6} md={2} key={rec.id}>
-              <Link href={`/item/subject/${rec.slug}`}>
-                <Box
-                  component="img"
-                  src={rec.poster}
-                  alt={rec.title}
-                  sx={{
-                    width: '100%',
-                    height: 200,
-                    objectFit: 'cover',
-                    borderRadius: 2,
-                    cursor: 'pointer',
-                  }}
-                />
-              </Link>
-              <Typography variant="body2" sx={{ mt: 1 }}>
-                {rec.title}
-              </Typography>
-            </Grid>
-          ))}
-        </Grid>
+        {templateRecommendations.length === 0 ? (
+          <Typography>No recommendations available.</Typography>
+        ) : (
+          <Box
+            sx={{
+              display: "flex",
+              overflowX: "auto",
+              gap: 2,
+              pb: 2,
+              "&::-webkit-scrollbar": {
+                height: "8px",
+              },
+              "&::-webkit-scrollbar-thumb": {
+                backgroundColor: "rgba(0,0,0,0.2)",
+                borderRadius: "4px",
+              },
+            }}
+          >
+            {templateRecommendations.map((rec) => (
+              <Card
+                key={rec.id}
+                sx={{
+                  minWidth: 200,
+                  maxWidth: 200,
+                  transition: "transform 0.3s, box-shadow 0.3s",
+                  "&:hover": {
+                    transform: "scale(1.05)",
+                    boxShadow: 6,
+                  },
+                  borderRadius: 2,
+                }}
+              >
+                <Link href={`/item/subject/${rec.slug}`}>
+                  <CardMedia
+                    component="img"
+                    height="300"
+                    image={rec.poster}
+                    alt={rec.title}
+                    sx={{ objectFit: "cover", cursor: "pointer" }}
+                  />
+                </Link>
+                <CardContent sx={{ p: 2 }}>
+                  <Typography
+                    variant="body2"
+                    sx={{ fontWeight: "medium", textAlign: "center" }}
+                  >
+                    {rec.title}
+                  </Typography>
+                  <Typography
+                    variant="caption"
+                    color="text.secondary"
+                    sx={{ textAlign: "center", display: "block" }}
+                  >
+                    {rec.createdAt}
+                  </Typography>
+                </CardContent>
+              </Card>
+            ))}
+          </Box>
+        )}
       </Box>
 
-      <Box sx={{ mt: 4 }}>
-        <Typography variant="h5" gutterBottom>
-          More {genre} Movies
+      <Box sx={{ mt: 6, mb: 6 }}>
+        <Typography
+          variant="h5"
+          gutterBottom
+          sx={{ fontWeight: "bold", color: "primary.main" }}
+        >
+          Recommended for the same type
         </Typography>
-        <Grid container spacing={2}>
-          {genreRecommendations.map((rec) => (
-            <Grid item xs={12} sm={6} md={2} key={rec.id}>
-              <Link href={`/item/subject/${rec.slug}`}>
-                <Box
-                  component="img"
-                  src={rec.poster}
-                  alt={rec.title}
-                  sx={{
-                    width: '100%',
-                    height: 200,
-                    objectFit: 'cover',
-                    borderRadius: 2,
-                    cursor: 'pointer',
-                  }}
-                />
-              </Link>
-              <Typography variant="body2" sx={{ mt: 1 }}>
-                {rec.title}
-              </Typography>
-            </Grid>
-          ))}
-        </Grid>
+        {genreRecommendations.length === 0 ? (
+          <Typography>No recommendations available.</Typography>
+        ) : (
+          <Box
+            sx={{
+              display: "flex",
+              overflowX: "auto",
+              gap: 2,
+              pb: 2,
+              "&::-webkit-scrollbar": {
+                height: "8px",
+              },
+              "&::-webkit-scrollbar-thumb": {
+                backgroundColor: "rgba(0,0,0,0.2)",
+                borderRadius: "4px",
+              },
+            }}
+          >
+            {genreRecommendations.map((rec) => (
+              <Card
+                key={rec.id}
+                sx={{
+                  minWidth: 200,
+                  maxWidth: 200,
+                  transition: "transform 0.3s, box-shadow 0.3s",
+                  "&:hover": {
+                    transform: "scale(1.05)",
+                    boxShadow: 6,
+                  },
+                  borderRadius: 2,
+                }}
+              >
+                <Link href={`/item/subject/${rec.slug}`}>
+                  <CardMedia
+                    component="img"
+                    height="300"
+                    image={rec.poster}
+                    alt={rec.title}
+                    sx={{ objectFit: "cover", cursor: "pointer" }}
+                  />
+                </Link>
+                <CardContent sx={{ p: 2 }}>
+                  <Typography
+                    variant="body2"
+                    sx={{ fontWeight: "medium", textAlign: "center" }}
+                  >
+                    {rec.title}
+                  </Typography>
+                  <Typography
+                    variant="caption"
+                    color="text.secondary"
+                    sx={{ textAlign: "center", display: "block" }}
+                  >
+                    {rec.createdAt}
+                  </Typography>
+                </CardContent>
+              </Card>
+            ))}
+          </Box>
+        )}
       </Box>
     </Container>
   );
