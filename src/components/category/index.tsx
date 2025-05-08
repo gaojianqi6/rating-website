@@ -1,7 +1,8 @@
 "use client"
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { searchItems, fetchDataSources, DataSource, FilterOption } from '@/api/item';
+import { searchItems } from '@/api/item';
+import { getTemplateByName } from '@/api/template';
 
 // Define types for the data
 interface Item {
@@ -19,18 +20,63 @@ interface Pagination {
   totalPages: number;
 }
 
-interface CategoryPageProps {
-  templateId: number;
-  dataSourceIds: number[]; // Array of data source IDs to fetch (e.g., [1,7,8,9] for movie)
-  categoryName: string; // e.g., "movie", "tv_series"
+interface Template {
+  id: number;
+  name: string;
+  displayName: string;
+  description: string;
+  fullMarks: number;
+  isPublished: boolean;
+  createdAt: string;
+  updatedAt: string;
+  createdBy: number | null;
+  updatedBy: number | null;
+  fields: TemplateField[];
 }
 
-const CategoryPage: React.FC<CategoryPageProps> = ({
-  templateId,
-  dataSourceIds,
-  categoryName,
-}) => {
-  // State for items, filters, sorting, pagination, and error
+interface TemplateField {
+  id: number;
+  templateId: number;
+  name: string;
+  displayName: string;
+  description: string;
+  fieldType: string;
+  isRequired: boolean;
+  isSearchable: boolean;
+  isFilterable: boolean;
+  displayOrder: number;
+  dataSourceId: number | null;
+  validationRules: any | null;
+  createdAt: string;
+  updatedAt: string;
+  dataSource: DataSource | null;
+}
+
+interface DataSource {
+  id: number;
+  name: string;
+  sourceType: string;
+  configuration: any | null;
+  createdAt: string;
+  updatedAt: string;
+  createdBy: number | null;
+  options: FilterOption[];
+}
+
+interface FilterOption {
+  id: number;
+  dataSourceId: number;
+  value: string;
+  displayText: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface CategoryPageProps {
+  categoryName: string; // e.g., "movie", "book"
+}
+
+const CategoryPage: React.FC<CategoryPageProps> = ({ categoryName }) => {
   const [items, setItems] = useState<Item[]>([]);
   const [pagination, setPagination] = useState<Pagination>({
     total: 0,
@@ -41,58 +87,54 @@ const CategoryPage: React.FC<CategoryPageProps> = ({
   const [sort, setSort] = useState<'date' | 'score' | 'popularity'>('date');
   const [filters, setFilters] = useState<{ fieldId: number; fieldValue: any[] }[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [template, setTemplate] = useState<Template | null>(null);
+  const [filterOptions, setFilterOptions] = useState<Record<number, FilterOption[]>>({});
 
-  // State for filter options
-  const [typeOptions, setTypeOptions] = useState<FilterOption[]>([]);
-  const [languageOptions, setLanguageOptions] = useState<FilterOption[]>([]);
-  const [contentRatingOptions, setContentRatingOptions] = useState<FilterOption[]>([]);
-  const [countryOptions, setCountryOptions] = useState<FilterOption[]>([]);
-
-  // Fetch filter options when the component mounts
   useEffect(() => {
-    const fetchFilterOptionsData = async () => {
+    const fetchTemplate = async () => {
       try {
-        const dataSources = await fetchDataSources(dataSourceIds);
+        const templateData = await getTemplateByName(categoryName);
+        setTemplate(templateData);
 
-        // Map data sources to their respective filter options
-        dataSources.forEach((ds: DataSource) => {
-          switch (ds.id) {
-            case 1: // movie_type
-            case 2: // tv_type
-            case 3: // show_type
-            case 4: // book_type
-            case 5: // music_type
-            case 6: // podcast_type
-              setTypeOptions(ds.options);
-              break;
-            case 7: // language
-              setLanguageOptions(ds.options);
-              break;
-            case 8: // content_rating
-              setContentRatingOptions(ds.options);
-              break;
-            case 9: // country
-              setCountryOptions(ds.options);
-              break;
-            default:
-              break;
+        // Filter fields where isFilterable is true
+        const filterableFields = templateData.fields.filter((field) => field.isFilterable);
+
+        // Generate filter options
+        const options: Record<number, FilterOption[]> = {};
+        filterableFields.forEach((field) => {
+          if (field.name.toLowerCase().includes('year')) {
+            // Special case for release_year: generate years 1950-2025
+            options[field.id] = Array.from({ length: 2025 - 1950 + 1 }, (_, i) => ({
+              id: i + 1950,
+              dataSourceId: field.dataSourceId || 0,
+              value: (1950 + i).toString(),
+              displayText: (1950 + i).toString(),
+              createdAt: new Date().toISOString(),
+              updatedAt: new Date().toISOString(),
+            }));
+          } else if (field.dataSource && field.dataSource.options) {
+            // Use dataSource options for other fields
+            options[field.id] = field.dataSource.options;
           }
         });
+        setFilterOptions(options);
       } catch (error) {
-        console.error('Error fetching filter options:', error);
+        console.error('Error fetching template:', error);
+        setError('Failed to load category data. Please try again later.');
       }
     };
 
-    fetchFilterOptionsData();
-  }, [dataSourceIds]);
+    fetchTemplate();
+  }, [categoryName]);
 
-  // Fetch items based on filters, sorting, and pagination
   useEffect(() => {
+    if (!template) return;
+
     const fetchItems = async () => {
       try {
-        setError(null); // Clear previous errors
+        setError(null);
         const response = await searchItems(
-          templateId,
+          template.id,
           filters,
           sort,
           pagination.pageSize,
@@ -107,29 +149,24 @@ const CategoryPage: React.FC<CategoryPageProps> = ({
     };
 
     fetchItems();
-  }, [templateId, filters, sort, pagination.page, pagination.pageSize]);
+  }, [template, filters, sort, pagination.page, pagination.pageSize]);
 
-  // Handle filter changes
   const handleFilterChange = (fieldId: number, value: string) => {
     setFilters((prevFilters) => {
       const existingFilter = prevFilters.find((f) => f.fieldId === fieldId);
       if (existingFilter) {
         return prevFilters.map((f) =>
-          f.fieldId === fieldId
-            ? { ...f, fieldValue: value ? [value] : [] }
-            : f,
+          f.fieldId === fieldId ? { ...f, fieldValue: value ? [value] : [] } : f,
         );
       }
       return [...prevFilters, { fieldId, fieldValue: value ? [value] : [] }];
     });
   };
 
-  // Handle sort change
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSort(e.target.value as 'date' | 'score' | 'popularity');
   };
 
-  // Handle page change
   const handlePageChange = (newPage: number) => {
     setPagination((prev) => ({ ...prev, page: newPage }));
   };
@@ -137,79 +174,31 @@ const CategoryPage: React.FC<CategoryPageProps> = ({
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-4">
-        {categoryName.charAt(0).toUpperCase() + categoryName.slice(1)}
+        {template?.displayName || categoryName.charAt(0).toUpperCase() + categoryName.slice(1)}
       </h1>
 
-      {/* Error Message */}
       {error && <div className="text-red-500 mb-4">{error}</div>}
 
-      {/* Filters */}
       <div className="mb-4 flex flex-wrap gap-4">
-        {/* Type filter (movie_type, tv_type, etc.) */}
-        {typeOptions.length > 0 && (
-          <select
-            className="border p-2 rounded"
-            onChange={(e) => handleFilterChange(dataSourceIds[0], e.target.value)} // Use the first dataSourceId (e.g., 1 for movie_type)
-            defaultValue=""
-          >
-            <option value="">Select Type</option>
-            {typeOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.displayText}
-              </option>
+        {template &&
+          template.fields
+            .filter((field) => field.isFilterable)
+            .map((field) => (
+              <select
+                key={field.id}
+                className="border p-2 rounded"
+                onChange={(e) => handleFilterChange(field.id, e.target.value)}
+                defaultValue=""
+              >
+                <option value="">Select {field.displayName}</option>
+                {filterOptions[field.id]?.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.displayText}
+                  </option>
+                ))}
+              </select>
             ))}
-          </select>
-        )}
 
-        {/* Language filter */}
-        {languageOptions.length > 0 && (
-          <select
-            className="border p-2 rounded"
-            onChange={(e) => handleFilterChange(7, e.target.value)} // dataSourceId 7 for language
-            defaultValue=""
-          >
-            <option value="">Select Language</option>
-            {languageOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.displayText}
-              </option>
-            ))}
-          </select>
-        )}
-
-        {/* Content Rating filter */}
-        {contentRatingOptions.length > 0 && (
-          <select
-            className="border p-2 rounded"
-            onChange={(e) => handleFilterChange(8, e.target.value)} // dataSourceId 8 for content_rating
-            defaultValue=""
-          >
-            <option value="">Select Content Rating</option>
-            {contentRatingOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.displayText}
-              </option>
-            ))}
-          </select>
-        )}
-
-        {/* Country filter */}
-        {countryOptions.length > 0 && (
-          <select
-            className="border p-2 rounded"
-            onChange={(e) => handleFilterChange(9, e.target.value)} // dataSourceId 9 for country
-            defaultValue=""
-          >
-            <option value="">Select Country</option>
-            {countryOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.displayText}
-              </option>
-            ))}
-          </select>
-        )}
-
-        {/* Sort dropdown */}
         <select
           className="border p-2 rounded"
           onChange={handleSortChange}
@@ -221,7 +210,6 @@ const CategoryPage: React.FC<CategoryPageProps> = ({
         </select>
       </div>
 
-      {/* Items Grid */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
         {items.map((item) => (
           <Link href={`/item/${item.slug}`} key={item.id}>
@@ -240,7 +228,6 @@ const CategoryPage: React.FC<CategoryPageProps> = ({
         ))}
       </div>
 
-      {/* Pagination */}
       <div className="flex justify-center mt-4">
         <button
           className="px-4 py-2 mx-1 border rounded disabled:opacity-50"
