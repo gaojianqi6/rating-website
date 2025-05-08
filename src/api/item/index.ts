@@ -91,18 +91,18 @@ export const fetchRecommendationsByGenre = async (templateId: number, fieldId: n
 export const searchItems = async (
   templateId: number,
   fields: { fieldId: number; fieldValue: any[] }[],
-  sort: 'date' | 'score' | 'popularity',
-  pageSize: number,
-  pageNo: number,
+  sort: 'date' | 'score' | 'popularity' = 'date',
+  pageSize: number = 20,
+  pageNo: number = 1,
 ): Promise<SearchItemsResponse> => {
-  const query = new URLSearchParams({
-    templateId: templateId.toString(),
-    fields: JSON.stringify(fields),
+  const body = {
+    templateId,
+    fields: fields || [],
     sort,
-    pageSize: pageSize.toString(),
-    pageNo: pageNo.toString(),
-  });
-  return api.get(`items?${query.toString()}`).json<SearchItemsResponse>();
+    pageSize,
+    pageNo,
+  };
+  return api.post(`items/search`, { json: body }).json<SearchItemsResponse>();
 };
 
 // Fetch multiple data sources in a single call

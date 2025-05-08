@@ -30,7 +30,7 @@ const CategoryPage: React.FC<CategoryPageProps> = ({
   dataSourceIds,
   categoryName,
 }) => {
-  // State for items, filters, sorting, and pagination
+  // State for items, filters, sorting, pagination, and error
   const [items, setItems] = useState<Item[]>([]);
   const [pagination, setPagination] = useState<Pagination>({
     total: 0,
@@ -40,6 +40,7 @@ const CategoryPage: React.FC<CategoryPageProps> = ({
   });
   const [sort, setSort] = useState<'date' | 'score' | 'popularity'>('date');
   const [filters, setFilters] = useState<{ fieldId: number; fieldValue: any[] }[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   // State for filter options
   const [typeOptions, setTypeOptions] = useState<FilterOption[]>([]);
@@ -89,6 +90,7 @@ const CategoryPage: React.FC<CategoryPageProps> = ({
   useEffect(() => {
     const fetchItems = async () => {
       try {
+        setError(null); // Clear previous errors
         const response = await searchItems(
           templateId,
           filters,
@@ -100,6 +102,7 @@ const CategoryPage: React.FC<CategoryPageProps> = ({
         setPagination(response.pagination);
       } catch (error) {
         console.error('Error fetching items:', error);
+        setError('Failed to load items. Please try again later.');
       }
     };
 
@@ -136,6 +139,9 @@ const CategoryPage: React.FC<CategoryPageProps> = ({
       <h1 className="text-3xl font-bold mb-4">
         {categoryName.charAt(0).toUpperCase() + categoryName.slice(1)}
       </h1>
+
+      {/* Error Message */}
+      {error && <div className="text-red-500 mb-4">{error}</div>}
 
       {/* Filters */}
       <div className="mb-4 flex flex-wrap gap-4">
