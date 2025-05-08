@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // src/components/Header.tsx
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -22,15 +22,19 @@ import {
 } from "@mui/material";
 
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import { getTemplates } from "@/api/template";
 
-interface Category {
-  value: string;
-  label: string;
+interface Template {
+  id: number;
+  name: string;
+  displayName: string;
+  description: string;
+  fullMarks: number;
 }
 
 interface HeaderProps {
   user: any;
-  loading: boolean
+  loading: boolean;
   onLogout: () => void;
 }
 
@@ -39,15 +43,21 @@ const Header = ({ user, onLogout, loading }: HeaderProps) => {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const [anchorElCategories, setAnchorElCategories] =
     useState<null | HTMLElement>(null);
+  const [templates, setTemplates] = useState<Template[]>([]);
 
-  const categories: Category[] = [
-    { value: "movie", label: "Movie" },
-    { value: "tv_series", label: "TV Series" },
-    { value: "variety_show", label: "Variety Show" },
-    { value: "book", label: "Book" },
-    { value: "music", label: "Music" },
-    { value: "podcast", label: "Podcast" },
-  ];
+  useEffect(() => {
+    const fetchTemplates = async () => {
+      try {
+        const data = await getTemplates();
+        setTemplates(data);
+      } catch (error) {
+        console.error("Failed to fetch templates:", error);
+        // Optionally set a fallback or error state
+      }
+    };
+
+    fetchTemplates();
+  }, []);
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -70,8 +80,8 @@ const Header = ({ user, onLogout, loading }: HeaderProps) => {
     handleCloseUserMenu();
   };
 
-  const handleCategoryClick = (categoryId: number) => {
-    router.push(`/category/${categoryId}`);
+  const handleCategoryClick = (categoryName: string) => {
+    router.push(`/category/${categoryName}`);
     handleCloseCategoriesMenu();
   };
 
@@ -107,12 +117,12 @@ const Header = ({ user, onLogout, loading }: HeaderProps) => {
                 "aria-labelledby": "categories-button",
               }}
             >
-              {categories.map((category) => (
+              {templates.map((template) => (
                 <MenuItem
-                  key={category.value}
-                  onClick={() => handleCategoryClick(category.value)}
+                  key={template.id}
+                  onClick={() => handleCategoryClick(template.name)}
                 >
-                  {category.label}
+                  {template.displayName}
                 </MenuItem>
               ))}
             </Menu>
