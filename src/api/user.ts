@@ -5,3 +5,4 @@ export const login = (username: string, password: string) => api.post('auth/logi
 }).json();
 
 export const getProfile = () => api.get('users/profile').json();
+export const getRatings = () => api.get('users/ratings').json();
