@@ -1,11 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { getRatings } from '@/api/user';
 import {
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
   Typography,
   Card,
   CardMedia,
@@ -15,7 +13,6 @@ import {
   CircularProgress,
   Rating,
 } from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 interface RatingItem {
   id: number;
@@ -35,6 +32,7 @@ interface TemplateRating {
 }
 
 const RatingsPage = () => {
+  const router = useRouter();
   const [ratings, setRatings] = useState<TemplateRating[] | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -95,7 +93,7 @@ const RatingsPage = () => {
           key={template.templateId}
           className="mb-6 shadow-lg rounded-lg bg-white"
         >
-          <Box className="bg-blue-50 p-4 rounded-t-lg">
+          <Box className="bg-gray-100 p-3 rounded-t-lg">
             <Typography
               variant="h6"
               className="text-left font-semibold text-gray-600 text-[14px]"
@@ -105,18 +103,19 @@ const RatingsPage = () => {
           </Box>
           <Box className="p-4">
             {template.ratings.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
                 {template.ratings.map((item) => (
                   <Card
                     key={item.id}
-                    className="overflow-hidden transition-transform hover:scale-[1.02] hover:shadow-md"
+                    className="overflow-hidden transition-transform hover:scale-[1.02] hover:shadow-md cursor-pointer"
+                    onClick={() => router.push(`/item/subject/${item.slug}`)}
                   >
                     <CardMedia
                       component="img"
                       height="150"
                       image={item.poster || '/placeholder.jpg'}
                       alt={item.title}
-                      className="object-cover"
+                      className="object-contain w-full h-[150px]"
                     />
                     <CardContent className="p-3 bg-gray-50">
                       <Typography
@@ -125,7 +124,7 @@ const RatingsPage = () => {
                       >
                         {item.title} ({item.year})
                       </Typography>
-                      <Box className="mt-2">
+                      <Box className="mt-1 flex items-center">
                         <Rating
                           value={toFrontendScale(item.rating)}
                           precision={0.5}
@@ -136,7 +135,7 @@ const RatingsPage = () => {
                         />
                         <Typography
                           variant="caption"
-                          className="ml-2 text-gray-600 text-[12px]"
+                          className="ml-1 text-gray-600 text-[12px]"
                         >
                           ({item.rating}/10)
                         </Typography>

@@ -361,7 +361,7 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ categoryName }) => {
       <Grid container spacing={1}>
         {items.map((item) => (
           <Grid item xs={12} sm={6} md={4} lg={2.4} key={item.id}>
-            <Link href={`/item/${item.slug}`} passHref>
+            <Link href={`/item/subject/${item.slug}`} passHref>
               <Paper
                 elevation={3}
                 sx={{
