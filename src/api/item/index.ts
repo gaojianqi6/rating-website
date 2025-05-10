@@ -61,6 +61,16 @@ export interface DataSource {
   options: FilterOption[];
 }
 
+export const createItem = (data) => {
+  const { formValues, templateId, userRating } = data;
+  const title = formValues.title;
+  const fieldValues = Object.entries(formValues).map((arr) => ({ fieldName: arr[0], value: arr[1] }));
+  return api.post("items", {
+    json: { templateId, title, fieldValues, userRating }
+  }).json();
+};
+
+
 // Fetch item by slug
 export const getItemBySlug = (slug: string) => api.get(`items/slug/${slug}`).json();
 

@@ -90,7 +90,10 @@ const Header = ({ user, onLogout, loading }: HeaderProps) => {
       <Container maxWidth="xl">
         <Toolbar disableGutters sx={{ justifyContent: "space-between" }}>
           {/* Logo */}
-          <Image src="/logo.png" alt="Logo" width={104} height={48} />
+          <Link href="/">
+            <Image src="/logo.png" alt="Logo" width={104} height={48} />
+          </Link>
+          
 
           {/* Navigation */}
           <Box sx={{ display: "flex", flexGrow: 1, ml: 4 }}>
@@ -163,9 +166,6 @@ const Header = ({ user, onLogout, loading }: HeaderProps) => {
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
                 >
-                  <MenuItem onClick={() => handleMenuClick("/user/profile")}>
-                    <Typography textAlign="center">Your Profile</Typography>
-                  </MenuItem>
                   <MenuItem onClick={() => handleMenuClick("/user/ratings")}>
                     <Typography textAlign="center">Your Ratings</Typography>
                   </MenuItem>
