@@ -93,7 +93,6 @@ const Header = ({ user, onLogout, loading }: HeaderProps) => {
           <Link href="/">
             <Image src="/logo.png" alt="Logo" width={104} height={48} />
           </Link>
-          
 
           {/* Navigation */}
           <Box sx={{ display: "flex", flexGrow: 1, ml: 4 }}>
@@ -141,9 +140,18 @@ const Header = ({ user, onLogout, loading }: HeaderProps) => {
                   <Button
                     onClick={handleOpenUserMenu}
                     startIcon={
-                      <Avatar sx={{ width: 32, height: 32 }}>
-                        {user.username.charAt(0).toUpperCase()}
-                      </Avatar>
+                      user.avatar ? (
+                        <Image
+                          src={user.avatar}
+                          alt="Avatar"
+                          width={32}
+                          height={32}
+                        />
+                      ) : (
+                        <Avatar sx={{ width: 32, height: 32 }}>
+                          {user.username.charAt(0).toUpperCase()}
+                        </Avatar>
+                      )
                     }
                     endIcon={<ArrowDropDownIcon />}
                   >

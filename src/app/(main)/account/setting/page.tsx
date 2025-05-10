@@ -177,10 +177,8 @@ const SettingsPage = () => {
         updatedAvatar = publicUrl;
       }
 
-      // Prepare updated profile data
+      // Prepare updated profile data (exclude username and email)
       const updatedProfile = {
-        username: formData.username,
-        email: formData.email,
         nickname: formData.nickname || null,
         description: formData.description || null,
         country: formData.country || null,
@@ -193,9 +191,8 @@ const SettingsPage = () => {
       // Update profile
       await updateProfile(profile.id, updatedProfile);
       setSuccess('Profile updated successfully');
-      setProfile({ ...profile, ...updatedProfile });
+      setProfile((prev) => prev ? { ...prev, ...updatedProfile } : null);
       setAvatarFile(null); // Reset avatar file after upload
-      // Update avatar preview to the public URL
       setAvatarPreview(updatedAvatar || null);
     } catch (err) {
       setError('Failed to update profile');
@@ -274,9 +271,7 @@ const SettingsPage = () => {
               fullWidth
               margin="normal"
               className="mb-4"
-              required
-              error={formData.username === ''}
-              helperText={formData.username === '' ? 'Username is required' : ''}
+              disabled
             />
             <TextField
               label="Email"
@@ -287,15 +282,7 @@ const SettingsPage = () => {
               fullWidth
               margin="normal"
               className="mb-4"
-              required
-              error={formData.email === '' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)}
-              helperText={
-                formData.email === ''
-                  ? 'Email is required'
-                  : !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)
-                  ? 'Invalid email format'
-                  : ''
-              }
+              disabled
             />
             <TextField
               label="Nickname"
