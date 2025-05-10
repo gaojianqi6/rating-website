@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// src/components/Header.tsx
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -19,9 +18,26 @@ import {
   Tooltip,
   Divider,
   CircularProgress,
+  Drawer,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  IconButton,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 
+import DensityMediumIcon from '@mui/icons-material/DensityMedium';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import HomeIcon from '@mui/icons-material/Home';
+import MovieIcon from '@mui/icons-material/Movie';
+import TvIcon from '@mui/icons-material/Tv';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import SlideshowIcon from '@mui/icons-material/Slideshow';
+import MusicVideoIcon from '@mui/icons-material/MusicVideo';
+import HeadsetMicIcon from '@mui/icons-material/HeadsetMic';
 import { getTemplates } from "@/api/template";
 
 interface Template {
@@ -38,11 +54,32 @@ interface HeaderProps {
   onLogout: () => void;
 }
 
+const Menus = [{
+  "name": "movie",
+  "icon": <MovieIcon />,
+}, {
+  "name": "tv_series",
+  "icon": <TvIcon />,
+}, {
+  "name": "variety_show",
+  "icon": <SlideshowIcon />,
+}, {
+  "name": "book",
+  "icon": <MenuBookIcon />,
+}, {
+  "name": "music",
+  "icon": <MusicVideoIcon />,
+}, {
+  "name": "podcast",
+  "icon": <HeadsetMicIcon />,
+},];
+
 const Header = ({ user, onLogout, loading }: HeaderProps) => {
   const router = useRouter();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md')); // Breakpoint for mobile (below medium screens)
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
-  const [anchorElCategories, setAnchorElCategories] =
-    useState<null | HTMLElement>(null);
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const [templates, setTemplates] = useState<Template[]>([]);
 
   useEffect(() => {
@@ -52,7 +89,6 @@ const Header = ({ user, onLogout, loading }: HeaderProps) => {
         setTemplates(data);
       } catch (error) {
         console.error("Failed to fetch templates:", error);
-        // Optionally set a fallback or error state
       }
     };
 
@@ -67,70 +103,108 @@ const Header = ({ user, onLogout, loading }: HeaderProps) => {
     setAnchorElUser(null);
   };
 
-  const handleOpenCategoriesMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElCategories(event.currentTarget);
-  };
-
-  const handleCloseCategoriesMenu = () => {
-    setAnchorElCategories(null);
+  const handleDrawerToggle = () => {
+    setDrawerOpen(!drawerOpen);
   };
 
   const handleMenuClick = (path: string) => {
     router.push(path);
     handleCloseUserMenu();
+    if (isMobile) setDrawerOpen(false);
   };
 
   const handleCategoryClick = (categoryName: string) => {
     router.push(`/category/${categoryName}`);
-    handleCloseCategoriesMenu();
+    if (isMobile) setDrawerOpen(false);
   };
 
+  // Define categories with icons
+  const categories = [
+    { name: 'Home', displayName: 'Home', path: '/', icon: <HomeIcon /> },
+    ...Menus.map((menu) => {
+      const template = templates.find(t => t.name === menu.name) || { displayName: ""};
+      return {
+        name: menu.name,
+        displayName: template.displayName,
+        path: `/category/${menu.name}`,
+        icon: menu.icon,
+      }
+    })
+  ];
+
+  // Drawer content for mobile
+  const drawerContent = (
+    <Box sx={{ width: 250 }} role="presentation">
+      <List>
+        {categories.map((category) => (
+          <ListItem
+            key={category.name}
+            onClick={() => handleCategoryClick(category.name === 'Home' ? '' : category.name)}
+            sx={{ cursor: 'pointer' }}
+          >
+            <ListItemIcon>{category.icon}</ListItemIcon>
+            <ListItemText primary={category.displayName} />
+          </ListItem>
+        ))}
+      </List>
+    </Box>
+  );
+
   return (
-    <AppBar position="static" color="default" elevation={1}>
+    <AppBar position="static" color="default" elevation={1} sx={{ bgcolor: 'white' }}>
       <Container maxWidth="xl">
-        <Toolbar disableGutters sx={{ justifyContent: "space-between" }}>
-          {/* Logo */}
-          <Link href="/">
-            <Image src="/logo.png" alt="Logo" width={104} height={48} />
-          </Link>
-
-          {/* Navigation */}
-          <Box sx={{ display: "flex", flexGrow: 1, ml: 4 }}>
-            <Button
-              component={Link}
-              href="/"
-              sx={{ color: "inherit", display: "block", mr: 2 }}
-            >
-              Home
-            </Button>
-
-            <Button
-              onClick={handleOpenCategoriesMenu}
-              sx={{ color: "inherit", display: "block" }}
-              endIcon={<ArrowDropDownIcon />}
-            >
-              Categories
-            </Button>
-            <Menu
-              anchorEl={anchorElCategories}
-              open={Boolean(anchorElCategories)}
-              onClose={handleCloseCategoriesMenu}
-              MenuListProps={{
-                "aria-labelledby": "categories-button",
-              }}
-            >
-              {templates.map((template) => (
-                <MenuItem
-                  key={template.id}
-                  onClick={() => handleCategoryClick(template.name)}
-                >
-                  {template.displayName}
-                </MenuItem>
-              ))}
-            </Menu>
+        <Toolbar disableGutters sx={{ justifyContent: "space-between", py: 1 }}>
+          {/* Mobile Drawer Toggle and Logo */}
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            {isMobile && (
+              <IconButton
+                color="inherit"
+                edge="start"
+                onClick={handleDrawerToggle}
+                sx={{ mr: 1 }}
+              >
+                <DensityMediumIcon />
+              </IconButton>
+            )}
+            <Link href="/">
+              <Image src="/logo.png" alt="Logo" width={104} height={48} />
+            </Link>
           </Box>
 
-          {/* User Menu */}
+          {/* Navigation */}
+          {!isMobile ? (
+            // Flat navigation for larger screens
+            <Box sx={{ display: 'flex', flexGrow: 1, ml: 4, alignItems: 'center' }}>
+              {categories.map((category) => (
+                <Button
+                  key={category.name}
+                  component={Link}
+                  href={category.path}
+                  startIcon={category.icon}
+                  sx={{ color: 'text.primary', mr: 2, textTransform: 'none' }}
+                >
+                  {category.displayName}
+                </Button>
+              ))}
+            </Box>
+          ) : (
+            // Drawer for mobile
+            <Drawer
+              anchor="left"
+              open={drawerOpen}
+              onClose={handleDrawerToggle}
+              sx={{
+                '& .MuiDrawer-paper': {
+                  bgcolor: 'white',
+                  color: 'text.primary',
+                },
+              }}
+            >
+              {drawerContent}
+            </Drawer>
+          )}
+
+          {/* User Section */}
           <Box sx={{ flexGrow: 0 }}>
             {loading ? (
               <CircularProgress size={24} sx={{ mr: 2 }} />
@@ -144,18 +218,18 @@ const Header = ({ user, onLogout, loading }: HeaderProps) => {
                         <Image
                           src={user.avatar}
                           alt="Avatar"
-                          width={32}
-                          height={32}
+                          width={isMobile ? 40 : 32}
+                          height={isMobile ? 40 : 32}
+                          style={{ borderRadius: '50%' }}
                         />
                       ) : (
-                        <Avatar sx={{ width: 32, height: 32 }}>
-                          {user.username.charAt(0).toUpperCase()}
-                        </Avatar>
+                        <AccountCircleIcon sx={{ fontSize: isMobile ? 40 : 32 }} />
                       )
                     }
                     endIcon={<ArrowDropDownIcon />}
+                    sx={{ textTransform: 'none', color: 'text.primary' }}
                   >
-                    {user.username}
+                    <Typography variant="body1">{user.nickname || user.username}</Typography>
                   </Button>
                 </Tooltip>
                 <Menu
@@ -178,9 +252,7 @@ const Header = ({ user, onLogout, loading }: HeaderProps) => {
                     <Typography textAlign="center">Your Ratings</Typography>
                   </MenuItem>
                   <MenuItem onClick={() => handleMenuClick("/item/creating")}>
-                    <Typography textAlign="center">
-                      Create Rating Item
-                    </Typography>
+                    <Typography textAlign="center">Create Rating Item</Typography>
                   </MenuItem>
                   <MenuItem onClick={() => handleMenuClick("/account/setting")}>
                     <Typography textAlign="center">Account Settings</Typography>
@@ -195,10 +267,10 @@ const Header = ({ user, onLogout, loading }: HeaderProps) => {
               <Button
                 component={Link}
                 href="/login"
-                variant="outlined"
-                sx={{ my: 1 }}
+                startIcon={<AccountCircleIcon sx={{ fontSize: isMobile ? 40 : 32 }} />}
+                sx={{ textTransform: 'none', color: 'text.primary' }}
               >
-                Sign In
+                Sign In/Up
               </Button>
             )}
           </Box>
