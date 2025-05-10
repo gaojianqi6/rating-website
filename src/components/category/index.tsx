@@ -1,21 +1,18 @@
-"use client"
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
+"use client";
+import { useState, useEffect } from "react";
+import Link from "next/link";
 import {
   Typography,
   Box,
   Container,
   Button,
-  Select,
-  FormControl,
-  InputLabel,
-  MenuItem,
   Paper,
   Grid,
   Alert,
-} from '@mui/material';
-import { getTemplateByName } from '@/api/template';
-import { searchItems } from '@/api/item';
+  Chip,
+} from "@mui/material";
+import { getTemplateByName } from "@/api/template";
+import { searchItems } from "@/api/item";
 
 // Define types for the data
 interface Item {
@@ -97,11 +94,16 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ categoryName }) => {
     pageSize: 20,
     totalPages: 1,
   });
-  const [sort, setSort] = useState<'date' | 'score' | 'popularity'>('date');
-  const [filters, setFilters] = useState<{ fieldId: number; fieldValue: any[] }[]>([]);
+  const [sort, setSort] = useState<"date" | "score" | "popularity">("date");
+  const [filters, setFilters] = useState<
+    { fieldId: number; fieldValue: any[] }[]
+  >([]);
   const [error, setError] = useState<string | null>(null);
   const [template, setTemplate] = useState<Template | null>(null);
-  const [filterOptions, setFilterOptions] = useState<Record<number, FilterOption[]>>({});
+  const [filterOptions, setFilterOptions] = useState<
+    Record<number, FilterOption[]>
+  >({});
+  const [isFiltersOpen, setIsFiltersOpen] = useState(true);
 
   useEffect(() => {
     const fetchTemplate = async () => {
@@ -109,27 +111,32 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ categoryName }) => {
         const templateData = await getTemplateByName(categoryName);
         setTemplate(templateData);
 
-        const filterableFields = templateData.fields.filter((field) => field.isFilterable);
+        const filterableFields = templateData.fields.filter(
+          (field) => field.isFilterable
+        );
 
         const options: Record<number, FilterOption[]> = {};
         filterableFields.forEach((field) => {
-          if (field.name.toLowerCase().includes('year')) {
-            options[field.id] = Array.from({ length: 2025 - 1950 + 1 }, (_, i) => ({
-              id: i + 1950,
-              dataSourceId: field.dataSourceId || 0,
-              value: (1950 + i).toString(),
-              displayText: (1950 + i).toString(),
-              createdAt: new Date().toISOString(),
-              updatedAt: new Date().toISOString(),
-            }));
+          if (field.name.toLowerCase().includes("year")) {
+            options[field.id] = Array.from(
+              { length: 2025 - 2005 + 1 },
+              (_, i) => ({
+                id: 2025 - i,
+                dataSourceId: field.dataSourceId || 0,
+                value: (2025 - i).toString(),
+                displayText: (2025 - i).toString(),
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString(),
+              })
+            );
           } else if (field.dataSource && field.dataSource.options) {
             options[field.id] = field.dataSource.options;
           }
         });
         setFilterOptions(options);
       } catch (error) {
-        console.error('Error fetching template:', error);
-        setError('Failed to load category data. Please try again later.');
+        console.error("Error fetching template:", error);
+        setError("Failed to load category data. Please try again later.");
       }
     };
 
@@ -147,13 +154,13 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ categoryName }) => {
           filters,
           sort,
           pagination.pageSize,
-          pagination.page,
+          pagination.page
         );
         setItems(response.items);
         setPagination(response.pagination);
       } catch (error) {
-        console.error('Error fetching items:', error);
-        setError('Failed to load items. Please try again later.');
+        console.error("Error fetching items:", error);
+        setError("Failed to load items. Please try again later.");
       }
     };
 
@@ -163,17 +170,32 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ categoryName }) => {
   const handleFilterChange = (fieldId: number, value: string) => {
     setFilters((prevFilters) => {
       const existingFilter = prevFilters.find((f) => f.fieldId === fieldId);
-      if (existingFilter) {
-        return prevFilters.map((f) =>
-          f.fieldId === fieldId ? { ...f, fieldValue: value ? [value] : [] } : f,
-        );
-      }
-      return [...prevFilters, { fieldId, fieldValue: value ? [value] : [] }];
+      const updatedFilters = existingFilter
+        ? prevFilters.map((f) =>
+            f.fieldId === fieldId
+              ? { ...f, fieldValue: value ? [value] : [] }
+              : f
+          )
+        : [...prevFilters, { fieldId, fieldValue: value ? [value] : [] }];
+
+      setPagination((prev) => ({ ...prev, page: 1 }));
+      return updatedFilters;
     });
   };
 
-  const handleSortChange = (e: React.ChangeEvent<{ value: unknown }>) => {
-    setSort(e.target.value as 'date' | 'score' | 'popularity');
+  const handleSortChange = (value: "date" | "score" | "popularity") => {
+    setSort(value);
+    setPagination((prev) => ({ ...prev, page: 1 }));
+  };
+
+  const handleResetFilters = () => {
+    setFilters([]);
+    setSort("date");
+    setPagination((prev) => ({ ...prev, page: 1 }));
+  };
+
+  const handleToggleFilters = () => {
+    setIsFiltersOpen((prev) => !prev);
   };
 
   const handlePageChange = (newPage: number) => {
@@ -181,76 +203,173 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ categoryName }) => {
   };
 
   return (
-    <Container maxWidth="lg" className="py-6">
-      <Box sx={{ mb: 4 }}>
-        <Typography variant="h2" component="h1" gutterBottom>
-          {template?.displayName || categoryName.charAt(0).toUpperCase() + categoryName.slice(1)}
-        </Typography>
-        {error && (
-          <Alert severity="error" sx={{ mb: 2 }}>
-            {error}
-          </Alert>
-        )}
-      </Box>
+    <Container maxWidth="lg" className="py-4">
+      {error && (
+        <Alert severity="error" sx={{ mb: 2 }}>
+          {error}
+        </Alert>
+      )}
 
-      <Box sx={{ mb: 4 }}>
-        <Grid container spacing={2} alignItems="center" className="flex-wrap">
-          {template &&
-            template.fields
-              .filter((field) => field.isFilterable)
-              .map((field) => (
-                <Grid item xs={12} sm={6} md={3} key={field.id}>
-                  <FormControl fullWidth variant="outlined" size="small">
-                    <InputLabel id={`${field.name}-label`}>{field.displayName}</InputLabel>
-                    <Select
-                      labelId={`${field.name}-label`}
-                      value={filters.find((f) => f.fieldId === field.id)?.fieldValue[0] || ''}
-                      onChange={(e) => handleFilterChange(field.id, e.target.value as string)}
-                      label={field.displayName}
-                    >
-                      <MenuItem value="">
-                        <em>Select {field.displayName}</em>
-                      </MenuItem>
-                      {filterOptions[field.id]?.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                          {option.displayText}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </Grid>
-              ))}
-
-          <Grid item xs={12} sm={6} md={3}>
-            <FormControl fullWidth variant="outlined" size="small">
-              <InputLabel id="sort-label">Sort By</InputLabel>
-              <Select
-                labelId="sort-label"
-                value={sort}
-                onChange={handleSortChange}
-                label="Sort By"
+      <Box sx={{ mb: 2 }}>
+        <Paper elevation={1} sx={{ p: 2, backgroundColor: "#f5f5f5" }}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              mb: 2,
+            }}
+          >
+            <div className="flex align-middle">
+              <Typography variant="h2" component="h1" sx={{ fontSize: "16px" }}>
+                {template?.displayName ||
+                  categoryName.charAt(0).toUpperCase() + categoryName.slice(1)}
+              </Typography>
+              <Typography
+                onClick={handleResetFilters}
+                variant="h2"
+                component="h2"
+                sx={{ fontSize: "14px", position: "relative", marginLeft: "12px", cursor: "pointer", top: "1px" }}
               >
-                <MenuItem value="date">Date</MenuItem>
-                <MenuItem value="score">Score</MenuItem>
-                <MenuItem value="popularity">Popularity</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-        </Grid>
+                Reset Filters
+              </Typography>
+            </div>
+
+            <Box sx={{ display: "flex", gap: 1 }}>
+              <Chip
+                label={isFiltersOpen ? "Pack Up" : "Open Up"}
+                onClick={handleToggleFilters}
+                color="default"
+                sx={{
+                  backgroundColor: "transparent",
+                }}
+              />
+            </Box>
+          </Box>
+
+          <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+            {template &&
+              template.fields
+                .filter((field) => field.isFilterable)
+                .map((field) => (
+                  <Box
+                    key={field.id}
+                    sx={{
+                      display: isFiltersOpen ? "flex" : "none",
+                      alignItems: "flex-start",
+                      flexWrap: "wrap",
+                      gap: 0.5,
+                    }}
+                  >
+                    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                      <Chip
+                        label={`${field.displayName}:`}
+                        sx={{
+                          backgroundColor: "transparent",
+                          fontWeight: "medium",
+                          alignSelf: "center",
+                        }}
+                      ></Chip>
+                      <Chip
+                        label="All"
+                        onClick={() => handleFilterChange(field.id, "")}
+                        color={
+                          !filters.find((f) => f.fieldId === field.id)
+                            ?.fieldValue[0]
+                            ? "primary"
+                            : "default"
+                        }
+                        sx={{
+                          borderRadius: "4px",
+                          backgroundColor: !filters.find(
+                            (f) => f.fieldId === field.id
+                          )?.fieldValue[0]
+                            ? undefined
+                            : "transparent",
+                        }}
+                      />
+                      {filterOptions[field.id]?.map((option) => (
+                        <Chip
+                          key={option.value}
+                          label={option.displayText}
+                          onClick={() =>
+                            handleFilterChange(field.id, option.value)
+                          }
+                          color={
+                            filters.find((f) => f.fieldId === field.id)
+                              ?.fieldValue[0] === option.value
+                              ? "primary"
+                              : "default"
+                          }
+                          sx={{
+                            borderRadius: "4px",
+                            backgroundColor:
+                              filters.find((f) => f.fieldId === field.id)
+                                ?.fieldValue[0] === option.value
+                                ? undefined
+                                : "transparent",
+                          }}
+                        />
+                      ))}
+                    </Box>
+                  </Box>
+                ))}
+
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "flex-start",
+                flexWrap: "wrap",
+                gap: 0.5,
+              }}
+            >
+              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                <Chip
+                  label="Sort By:"
+                  sx={{
+                    backgroundColor: "transparent",
+                    fontWeight: "medium",
+                    alignSelf: "center",
+                  }}
+                ></Chip>
+                {["date", "score", "popularity"].map((sortOption) => (
+                  <Chip
+                    key={sortOption}
+                    label={
+                      sortOption.charAt(0).toUpperCase() +
+                      sortOption.slice(1).replace("_", " ")
+                    }
+                    onClick={() =>
+                      handleSortChange(
+                        sortOption as "date" | "score" | "popularity"
+                      )
+                    }
+                    color={sort === sortOption ? "primary" : "default"}
+                    sx={{
+                      borderRadius: "4px",
+                      backgroundColor:
+                        sort === sortOption ? undefined : "transparent",
+                    }}
+                  />
+                ))}
+              </Box>
+            </Box>
+          </Box>
+        </Paper>
       </Box>
 
-      <Grid container spacing={2}>
+      <Grid container spacing={1}>
         {items.map((item) => (
           <Grid item xs={12} sm={6} md={4} lg={2.4} key={item.id}>
-            <Link href={`/item/subject/${item.slug}`} passHref>
+            <Link href={`/item/${item.slug}`} passHref>
               <Paper
                 elevation={3}
                 sx={{
-                  height: '100%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  transition: 'transform 0.3s',
-                  '&:hover': { transform: 'scale(1.05)' },
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  transition: "transform 0.3s",
+                  "&:hover": { transform: "scale(1.05)" },
                 }}
                 className="overflow-hidden"
               >
@@ -259,7 +378,7 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ categoryName }) => {
                   alt={item.title}
                   className="w-full h-48 object-cover"
                 />
-                <Box p={2} flexGrow={1}>
+                <Box p={1} flexGrow={1}>
                   <Typography variant="h6" component="h3" gutterBottom>
                     {item.title}
                   </Typography>
@@ -273,21 +392,23 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ categoryName }) => {
         ))}
       </Grid>
 
-      <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center', gap: 2 }}>
+      <Box sx={{ mt: 2, display: "flex", justifyContent: "center", gap: 1 }}>
         <Button
           variant="contained"
           disabled={pagination.page === 1}
           onClick={() => handlePageChange(pagination.page - 1)}
+          sx={{ py: 0.5, px: 1 }}
         >
           Previous
         </Button>
-        <Typography variant="body1">
+        <Typography variant="body1" sx={{ py: 0.5 }}>
           Page {pagination.page} of {pagination.totalPages}
         </Typography>
         <Button
           variant="contained"
           disabled={pagination.page === pagination.totalPages}
           onClick={() => handlePageChange(pagination.page + 1)}
+          sx={{ py: 0.5, px: 1 }}
         >
           Next
         </Button>
