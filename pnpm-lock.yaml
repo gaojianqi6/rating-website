@@ -21,6 +21,7 @@ specifiers:
   next: 15.2.1
   react: ^19.0.0
   react-dom: ^19.0.0
+  swiper: ^11.2.6
   tailwindcss: ^4
   typescript: ^5
   zustand: ^5.0.3
@@ -38,6 +39,7 @@ dependencies:
   next: registry.npmjs.org/next/15.2.1_upmzqgzhjrquwzo2dphtigtdgi
   react: registry.npmjs.org/react/19.0.0
   react-dom: registry.npmjs.org/react-dom/19.0.0_react@19.0.0
+  swiper: registry.npmjs.org/swiper/11.2.6
   zustand: registry.npmjs.org/zustand/5.0.3_cmnynwxg3ky26emhk6apxalvqe
 
 devDependencies:
@@ -4264,6 +4266,13 @@ packages:
     name: supports-preserve-symlinks-flag
     version: 1.0.0
     engines: {node: '>= 0.4'}
+
+  registry.npmjs.org/swiper/11.2.6:
+    resolution: {integrity: sha512-8aXpYKtjy3DjcbzZfz+/OX/GhcU5h+looA6PbAzHMZT6ESSycSp9nAjPCenczgJyslV+rUGse64LMGpWE3PX9Q==, registry: https://registry.yarnpkg.com/, tarball: https://registry.npmjs.org/swiper/-/swiper-11.2.6.tgz}
+    name: swiper
+    version: 11.2.6
+    engines: {node: '>= 4.7.0'}
+    dev: false
 
   registry.npmjs.org/tailwindcss/4.0.12:
     resolution: {integrity: sha512-bT0hJo91FtncsAMSsMzUkoo/iEU0Xs5xgFgVC9XmdM9bw5MhZuQFjPNl6wxAE0SiQF/YTZJa+PndGWYSDtuxAg==, registry: https://registry.yarnpkg.com/, tarball: https://registry.npmjs.org/tailwindcss/-/tailwindcss-4.0.12.tgz}

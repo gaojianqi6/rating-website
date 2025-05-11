@@ -2,6 +2,10 @@
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Mousewheel } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
 
 import {
   Typography,
@@ -25,6 +29,8 @@ import {
 } from "@mui/material";
 
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import {
   getItemBySlug,
   getUserRating,
@@ -495,74 +501,130 @@ const ItemDetailPage = () => {
         )}
       </Box>
 
-      {/* Recommendation Sections */}
+      {/* Recommendation Sections with Swiper */}
       <Box sx={{ mt: 6 }}>
         <Typography
           variant="h5"
           gutterBottom
-          sx={{ fontWeight: "bold", color: "primary.main" }}
+          sx={{ fontWeight: "bold", color: "primary.main", pl: 0 }}
         >
           Recommended Movies
         </Typography>
         {templateRecommendations.length === 0 ? (
           <Typography>No recommendations available.</Typography>
         ) : (
-          <Box
-            sx={{
-              display: "flex",
-              overflowX: "auto",
-              gap: 2,
-              pb: 2,
-              "&::-webkit-scrollbar": {
-                height: "8px",
-              },
-              "&::-webkit-scrollbar-thumb": {
-                backgroundColor: "rgba(0,0,0,0.2)",
-                borderRadius: "4px",
-              },
+          <Swiper
+            modules={[Navigation, Mousewheel]}
+            spaceBetween={15}
+            slidesPerView={1}
+            breakpoints={{
+              640: { slidesPerView: 2 },
+              768: { slidesPerView: 3 },
+              1024: { slidesPerView: 4 },
             }}
+            navigation={{
+              prevEl: ".swiper-button-prev-template",
+              nextEl: ".swiper-button-next-template",
+              disabledClass: "swiper-button-disabled",
+              hiddenClass: "swiper-button-hidden",
+            }}
+            mousewheel={{ forceToAxis: true }}
+            style={{ padding: "10px 0px", position: "relative" }}
           >
-            {templateRecommendations.map((rec) => (
-              <Card
-                key={rec.id}
-                sx={{
-                  minWidth: 200,
-                  maxWidth: 200,
-                  transition: "transform 0.3s, box-shadow 0.3s",
-                  "&:hover": {
-                    transform: "scale(1.05)",
-                    boxShadow: 6,
-                  },
-                  borderRadius: 2,
-                }}
-              >
+            {templateRecommendations.map((rec, index) => (
+              <SwiperSlide key={rec.id} style={{ paddingLeft: index === 0 ? 0 : undefined }}>
                 <Link href={`/item/subject/${rec.slug}`}>
-                  <CardMedia
-                    component="img"
-                    height="300"
-                    image={rec.poster}
-                    alt={rec.title}
-                    sx={{ objectFit: "cover", cursor: "pointer" }}
-                  />
+                  <Card
+                    sx={{
+                      minWidth: 240,
+                      maxWidth: 240,
+                      transition: "transform 0.3s, box-shadow 0.3s",
+                      "&:hover": {
+                        transform: "scale(1.05)",
+                        boxShadow: 6,
+                      },
+                      borderRadius: 2,
+                    }}
+                  >
+                    <CardMedia
+                      component="img"
+                      height={250}
+                      image={rec.poster}
+                      alt={rec.title}
+                      sx={{ objectFit: "cover", width: "100%", cursor: "pointer" }}
+                    />
+                    <CardContent sx={{ p: 2 }}>
+                      <Typography
+                        variant="body2"
+                        sx={{ fontWeight: "medium", textAlign: "center" }}
+                      >
+                        {rec.title}
+                      </Typography>
+                      <Typography
+                        variant="caption"
+                        color="text.secondary"
+                        sx={{ textAlign: "center", display: "block" }}
+                      >
+                        {rec.createdAt}
+                      </Typography>
+                    </CardContent>
+                  </Card>
                 </Link>
-                <CardContent sx={{ p: 2 }}>
-                  <Typography
-                    variant="body2"
-                    sx={{ fontWeight: "medium", textAlign: "center" }}
-                  >
-                    {rec.title}
-                  </Typography>
-                  <Typography
-                    variant="caption"
-                    color="text.secondary"
-                    sx={{ textAlign: "center", display: "block" }}
-                  >
-                    {rec.createdAt}
-                  </Typography>
-                </CardContent>
-              </Card>
+              </SwiperSlide>
             ))}
-          </Box>
+            <Box
+              className="swiper-button-prev-template"
+              sx={{
+                position: "absolute",
+                top: "50%",
+                left: 0,
+                transform: "translateY(-50%)",
+                width: 32,
+                height: 32,
+                backgroundColor: "rgba(128, 128, 128, 0.5)",
+                borderRadius: "50%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                zIndex: 10,
+                cursor: "pointer",
+                "&:after": {
+                  content: "none",
+                },
+                "&.swiper-button-disabled": {
+                  display: "none",
+                },
+              }}
+            >
+              <ArrowBackIosNewIcon sx={{ fontSize: 16, color: "white" }} />
+            </Box>
+            <Box
+              className="swiper-button-next-template"
+              sx={{
+                position: "absolute",
+                top: "50%",
+                right: 0,
+                transform: "translateY(-50%)",
+                width: 32,
+                height: 32,
+                backgroundColor: "rgba(128, 128, 128, 0.5)",
+                borderRadius: "50%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                zIndex: 10,
+                cursor: "pointer",
+                "&:after": {
+                  content: "none",
+                },
+                "&.swiper-button-disabled": {
+                  display: "none",
+                },
+              }}
+            >
+              <ArrowForwardIosIcon sx={{ fontSize: 16, color: "white" }} />
+            </Box>
+          </Swiper>
         )}
       </Box>
 
@@ -570,69 +632,125 @@ const ItemDetailPage = () => {
         <Typography
           variant="h5"
           gutterBottom
-          sx={{ fontWeight: "bold", color: "primary.main" }}
+          sx={{ fontWeight: "bold", color: "primary.main", pl: 0 }}
         >
           Recommended for the same type
         </Typography>
         {genreRecommendations.length === 0 ? (
           <Typography>No recommendations available.</Typography>
         ) : (
-          <Box
-            sx={{
-              display: "flex",
-              overflowX: "auto",
-              gap: 2,
-              pb: 2,
-              "&::-webkit-scrollbar": {
-                height: "8px",
-              },
-              "&::-webkit-scrollbar-thumb": {
-                backgroundColor: "rgba(0,0,0,0.2)",
-                borderRadius: "4px",
-              },
+          <Swiper
+            modules={[Navigation, Mousewheel]}
+            spaceBetween={15}
+            slidesPerView={1}
+            breakpoints={{
+              640: { slidesPerView: 2 },
+              768: { slidesPerView: 3 },
+              1024: { slidesPerView: 4 },
             }}
+            navigation={{
+              prevEl: ".swiper-button-prev-genre",
+              nextEl: ".swiper-button-next-genre",
+              disabledClass: "swiper-button-disabled",
+              hiddenClass: "swiper-button-hidden",
+            }}
+            mousewheel={{ forceToAxis: true }}
+            style={{ padding: "10px 0px", position: "relative" }}
           >
-            {genreRecommendations.map((rec) => (
-              <Card
-                key={rec.id}
-                sx={{
-                  minWidth: 200,
-                  maxWidth: 200,
-                  transition: "transform 0.3s, box-shadow 0.3s",
-                  "&:hover": {
-                    transform: "scale(1.05)",
-                    boxShadow: 6,
-                  },
-                  borderRadius: 2,
-                }}
-              >
+            {genreRecommendations.map((rec, index) => (
+              <SwiperSlide key={rec.id} style={{ paddingLeft: index === 0 ? 0 : undefined }}>
                 <Link href={`/item/subject/${rec.slug}`}>
-                  <CardMedia
-                    component="img"
-                    height="300"
-                    image={rec.poster}
-                    alt={rec.title}
-                    sx={{ objectFit: "cover", cursor: "pointer" }}
-                  />
+                  <Card
+                    sx={{
+                      minWidth: 240,
+                      maxWidth: 240,
+                      transition: "transform 0.3s, box-shadow 0.3s",
+                      "&:hover": {
+                        transform: "scale(1.05)",
+                        boxShadow: 6,
+                      },
+                      borderRadius: 2,
+                    }}
+                  >
+                    <CardMedia
+                      component="img"
+                      height={250}
+                      image={rec.poster}
+                      alt={rec.title}
+                      sx={{ objectFit: "cover", width: "100%", cursor: "pointer" }}
+                    />
+                    <CardContent sx={{ p: 2 }}>
+                      <Typography
+                        variant="body2"
+                        sx={{ fontWeight: "medium", textAlign: "center" }}
+                      >
+                        {rec.title}
+                      </Typography>
+                      <Typography
+                        variant="caption"
+                        color="text.secondary"
+                        sx={{ textAlign: "center", display: "block" }}
+                      >
+                        {rec.createdAt}
+                      </Typography>
+                    </CardContent>
+                  </Card>
                 </Link>
-                <CardContent sx={{ p: 2 }}>
-                  <Typography
-                    variant="body2"
-                    sx={{ fontWeight: "medium", textAlign: "center" }}
-                  >
-                    {rec.title}
-                  </Typography>
-                  <Typography
-                    variant="caption"
-                    color="text.secondary"
-                    sx={{ textAlign: "center", display: "block" }}
-                  >
-                    {rec.createdAt}
-                  </Typography>
-                </CardContent>
-              </Card>
+              </SwiperSlide>
             ))}
-          </Box>
+            <Box
+              className="swiper-button-prev-genre"
+              sx={{
+                position: "absolute",
+                top: "50%",
+                left: 0,
+                transform: "translateY(-50%)",
+                width: 32,
+                height: 32,
+                backgroundColor: "rgba(128, 128, 128, 0.5)",
+                borderRadius: "50%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                zIndex: 10,
+                cursor: "pointer",
+                "&:after": {
+                  content: "none",
+                },
+                "&.swiper-button-disabled": {
+                  display: "none",
+                },
+              }}
+            >
+              <ArrowBackIosNewIcon sx={{ fontSize: 16, color: "white" }} />
+            </Box>
+            <Box
+              className="swiper-button-next-genre"
+              sx={{
+                position: "absolute",
+                top: "50%",
+                right: 0,
+                transform: "translateY(-50%)",
+                width: 32,
+                height: 32,
+                backgroundColor: "rgba(128, 128, 128, 0.5)",
+                borderRadius: "50%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                zIndex: 10,
+                cursor: "pointer",
+                "&:after": {
+                  content: "none",
+                },
+                "&.swiper-button-disabled": {
+                  display: "none",
+                },
+              }}
+            >
+              <ArrowForwardIosIcon sx={{ fontSize: 16, color: "white" }} />
+            </Box>
+          </Swiper>
         )}
       </Box>
     </Container>
