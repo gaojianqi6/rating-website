@@ -14,7 +14,6 @@ import {
   Button,
   Menu,
   MenuItem,
-  Avatar,
   Tooltip,
   Divider,
   CircularProgress,
@@ -32,13 +31,8 @@ import DensityMediumIcon from '@mui/icons-material/DensityMedium';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import HomeIcon from '@mui/icons-material/Home';
-import MovieIcon from '@mui/icons-material/Movie';
-import TvIcon from '@mui/icons-material/Tv';
-import MenuBookIcon from '@mui/icons-material/MenuBook';
-import SlideshowIcon from '@mui/icons-material/Slideshow';
-import MusicVideoIcon from '@mui/icons-material/MusicVideo';
-import HeadsetMicIcon from '@mui/icons-material/HeadsetMic';
 import { getTemplates } from "@/api/template";
+import { MENU_ITEMS } from "@/constants/menu";
 
 interface Template {
   id: number;
@@ -54,26 +48,6 @@ interface HeaderProps {
   onLogout: () => void;
 }
 
-const Menus = [{
-  "name": "movie",
-  "icon": <MovieIcon />,
-}, {
-  "name": "tv_series",
-  "icon": <TvIcon />,
-}, {
-  "name": "variety_show",
-  "icon": <SlideshowIcon />,
-}, {
-  "name": "book",
-  "icon": <MenuBookIcon />,
-}, {
-  "name": "music",
-  "icon": <MusicVideoIcon />,
-}, {
-  "name": "podcast",
-  "icon": <HeadsetMicIcon />,
-},];
-
 const Header = ({ user, onLogout, loading }: HeaderProps) => {
   const router = useRouter();
   const theme = useTheme();
@@ -85,7 +59,7 @@ const Header = ({ user, onLogout, loading }: HeaderProps) => {
   useEffect(() => {
     const fetchTemplates = async () => {
       try {
-        const data = await getTemplates();
+        const data = await getTemplates() as Template[];
         setTemplates(data);
       } catch (error) {
         console.error("Failed to fetch templates:", error);
@@ -121,13 +95,13 @@ const Header = ({ user, onLogout, loading }: HeaderProps) => {
   // Define categories with icons
   const categories = [
     { name: 'Home', displayName: 'Home', path: '/', icon: <HomeIcon /> },
-    ...Menus.map((menu) => {
-      const template = templates.find(t => t.name === menu.name) || { displayName: ""};
+    ...MENU_ITEMS.map((menu) => {
+      const template = templates.find(t => t.name === menu.name) || { displayName: menu.displayName };
       return {
         name: menu.name,
         displayName: template.displayName,
         path: `/category/${menu.name}`,
-        icon: menu.icon,
+        icon: menu.icon ? <menu.icon /> : null,
       }
     })
   ];
@@ -249,7 +223,7 @@ const Header = ({ user, onLogout, loading }: HeaderProps) => {
                   onClose={handleCloseUserMenu}
                 >
                   <MenuItem onClick={() => handleMenuClick("/user/ratings")}>
-                    <Typography textAlign="center">Your Ratings</Typography>
+                    <Typography textAlign="center">My Ratings</Typography>
                   </MenuItem>
                   <MenuItem onClick={() => handleMenuClick("/item/creating")}>
                     <Typography textAlign="center">Create Rating Item</Typography>
