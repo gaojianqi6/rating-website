@@ -22,7 +22,6 @@ import {
   Box,
   Container,
   Card,
-  CardMedia,
   CardContent,
   CircularProgress,
   Stack,
@@ -31,6 +30,7 @@ import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { MENU_ITEMS, MenuItem } from "@/constants/menu";
 import Image from "next/image";
+import ImageWithPlaceholder from "@/components/ImageWithPlaceholder";
 
 // Temporary banner data - replace slugs later
 const BANNERS = [
@@ -352,11 +352,11 @@ export default function Home() {
                           height: "100%",
                         }}
                       >
-                        <CardMedia
-                          component="img"
-                          height={140}
-                          image={rec.poster || "/placeholder.jpg"}
+                        <ImageWithPlaceholder
+                          src={rec.poster}
+                          fallbackSrc="/placeholder.svg"
                           alt={rec.title}
+                          height={140}
                           sx={{ objectFit: "cover" }}
                         />
                         <CardContent sx={{ p: 1, pb: "8px !important" }}>

@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import { getTemplateByName } from "@/api/template";
 import { searchItems } from "@/api/item";
+import ImageWithPlaceholder from "@/components/ImageWithPlaceholder";
 
 // Define types for the data
 interface Item {
@@ -56,7 +57,7 @@ interface TemplateField {
   isFilterable: boolean;
   displayOrder: number;
   dataSourceId: number | null;
-  validationRules: any | null;
+  validationRules: Record<string, unknown> | null;
   createdAt: string;
   updatedAt: string;
   dataSource: DataSource | null;
@@ -66,7 +67,7 @@ interface DataSource {
   id: number;
   name: string;
   sourceType: string;
-  configuration: any | null;
+  configuration: Record<string, unknown> | null;
   createdAt: string;
   updatedAt: string;
   createdBy: number | null;
@@ -82,6 +83,11 @@ interface FilterOption {
   updatedAt: string;
 }
 
+interface Filter {
+  fieldId: number;
+  fieldValue: string[];
+}
+
 interface CategoryPageProps {
   categoryName: string; // e.g., "movie", "book"
 }
@@ -95,9 +101,7 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ categoryName }) => {
     totalPages: 1,
   });
   const [sort, setSort] = useState<"date" | "score" | "popularity">("date");
-  const [filters, setFilters] = useState<
-    { fieldId: number; fieldValue: any[] }[]
-  >([]);
+  const [filters, setFilters] = useState<Filter[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [template, setTemplate] = useState<Template | null>(null);
   const [filterOptions, setFilterOptions] = useState<
@@ -108,15 +112,15 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ categoryName }) => {
   useEffect(() => {
     const fetchTemplate = async () => {
       try {
-        const templateData = await getTemplateByName(categoryName);
+        const templateData = await getTemplateByName(categoryName) as Template;
         setTemplate(templateData);
 
         const filterableFields = templateData.fields.filter(
-          (field) => field.isFilterable
+          (field: TemplateField) => field.isFilterable
         );
 
         const options: Record<number, FilterOption[]> = {};
-        filterableFields.forEach((field) => {
+        filterableFields.forEach((field: TemplateField) => {
           if (field.name.toLowerCase().includes("year")) {
             options[field.id] = Array.from(
               { length: 2025 - 2005 + 1 },
@@ -373,10 +377,12 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ categoryName }) => {
                 }}
                 className="overflow-hidden"
               >
-                <img
+                <ImageWithPlaceholder
                   src={item.poster}
+                  fallbackSrc="/placeholder.svg"
                   alt={item.title}
-                  className="w-full h-48 object-cover"
+                  height={192}
+                  sx={{ objectFit: "cover", width: "100%" }}
                 />
                 <Box p={1} flexGrow={1}>
                   <Typography variant="h6" component="h3" gutterBottom>
