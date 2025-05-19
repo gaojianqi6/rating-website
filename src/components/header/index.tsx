@@ -240,7 +240,7 @@ const Header = ({ user, onLogout, loading }: HeaderProps) => {
             ) : (
               <Button
                 component={Link}
-                href="/login"
+                href="/auth/login"
                 startIcon={<AccountCircleIcon sx={{ fontSize: isMobile ? 40 : 32 }} />}
                 sx={{ textTransform: 'none', color: 'text.primary' }}
               >

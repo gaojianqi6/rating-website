@@ -1,5 +1,4 @@
 "use client";
-import { getProfile } from "@/api/user";
 import { getTemplates } from "@/api/template";
 import { fetchRecommendationsByTemplate, RecommendationItem } from "@/api/item";
 import { useState, useEffect } from "react";
@@ -65,10 +64,7 @@ export default function Home() {
     const fetchData = async () => {
       try {
         // Fetch user profile and templates
-        const [, templates] = await Promise.all([
-          getProfile(),
-          getTemplates() as Promise<Template[]>,
-        ]);
+        const templates = await getTemplates() as Template[];
 
         // Fetch recommendations for each template
         const recommendationsPromises = templates.map(

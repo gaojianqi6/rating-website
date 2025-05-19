@@ -6,6 +6,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Mousewheel } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
+import { useUserStore } from "@/store/userStore";
 
 import {
   Typography,
@@ -114,6 +115,7 @@ interface RatingsResponse {
 // Main Component
 const ItemDetailPage = () => {
   const { slug } = useParams();
+  const { user } = useUserStore();
   const [item, setItem] = useState<Item | null>(null);
   const [userRating, setUserRating] = useState<UserRating | null>(null);
   const [ratingsData, setRatingsData] = useState<RatingsResponse | null>(null);
@@ -168,13 +170,17 @@ const ItemDetailPage = () => {
   // Fetch ratings data (user rating and all ratings)
   const loadRatingsData = async (itemId: number) => {
     try {
-      // Fetch the current user's rating
-      const userRatingData = await getUserRating(itemId);
-      setUserRating(userRatingData);
+      // Only fetch user rating if user is logged in
+      if (user) {
+        const userRatingData = await getUserRating(itemId);
+        setUserRating(userRatingData);
 
-      // Set initial values for the dialog (convert backend scale to frontend scale)
-      setNewRating(userRatingData ? toFrontendScale(userRatingData.rating) : 0);
-      setNewComment(userRatingData?.reviewText || "");
+        // Set initial values for the dialog (convert backend scale to frontend scale)
+        setNewRating(userRatingData ? toFrontendScale(userRatingData.rating) : 0);
+        setNewComment(userRatingData?.reviewText || "");
+      } else {
+        setUserRating(null);
+      }
 
       // Fetch all ratings for the item
       const ratingsResponse = await getRatingsForItem(itemId);
@@ -207,6 +213,12 @@ const ItemDetailPage = () => {
   // Handle rating submission
   const handleRateNow = async () => {
     if (!item) return;
+
+    if (!user) {
+      // Redirect to login page if user is not authenticated
+      window.location.href = '/auth/login';
+      return;
+    }
 
     try {
       // Convert the frontend rating (0-5) to backend scale (0-10)
@@ -379,33 +391,42 @@ const ItemDetailPage = () => {
 
         {/* My Rating Alert */}
         <Alert severity="info" sx={{ mt: 2, borderRadius: 2 }}>
-          {userRating ? (
-            <>
-              Your Rating:{" "}
-              <Rating
-                value={toFrontendScale(userRating.rating)}
-                precision={0.5}
-                max={5}
-                readOnly
-                size="small"
-                sx={{ verticalAlign: "middle", ml: 1, color: "warning.main" }}
-              />
-              <Typography variant="body2" sx={{ mt: 1 }}>
-                {userRating.reviewText}
-              </Typography>
-              <Button
-                color="primary"
-                onClick={() => setOpenRatingDialog(true)}
-                sx={{ mt: 1 }}
-              >
-                Update Rating
-              </Button>
-            </>
+          {user ? (
+            userRating ? (
+              <>
+                Your Rating:{" "}
+                <Rating
+                  value={toFrontendScale(userRating.rating)}
+                  precision={0.5}
+                  max={5}
+                  readOnly
+                  size="small"
+                  sx={{ verticalAlign: "middle", ml: 1, color: "warning.main" }}
+                />
+                <Typography variant="body2" sx={{ mt: 1 }}>
+                  {userRating.reviewText}
+                </Typography>
+                <Button
+                  color="primary"
+                  onClick={() => setOpenRatingDialog(true)}
+                  sx={{ mt: 1 }}
+                >
+                  Update Rating
+                </Button>
+              </>
+            ) : (
+              <>
+                Have you watched or want to watch this movie?{" "}
+                <Button color="primary" onClick={() => setOpenRatingDialog(true)}>
+                  Rate Now
+                </Button>
+              </>
+            )
           ) : (
             <>
-              Have you watched or want to watch this movie?{" "}
-              <Button color="primary" onClick={() => setOpenRatingDialog(true)}>
-                Rate Now
+              Want to rate this movie?{" "}
+              <Button color="primary" component={Link} href="/auth/login">
+                Login to Rate
               </Button>
             </>
           )}
