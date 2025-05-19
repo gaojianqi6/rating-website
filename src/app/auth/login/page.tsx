@@ -72,14 +72,16 @@ const LoginPage = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <Box
-        className="w-full max-w-3xl bg-white rounded-2xl shadow-xl flex flex-col md:flex-row overflow-hidden"
+        className="w-full h-screen md:h-auto md:w-full md:max-w-3xl bg-white md:rounded-2xl md:shadow-xl flex flex-col md:flex-row overflow-hidden md:my-0 md:mx-auto md:mt-0 md:mb-0"
         sx={{
-          minHeight: { xs: 0, md: 420 },
+          minHeight: { xs: '100vh', md: 420 },
+          borderRadius: { xs: 0, md: 4 },
+          boxShadow: { xs: 'none', md: 3 },
         }}
       >
         {/* Login Form Section */}
         <Box
-          className="flex-1 flex flex-col items-center justify-center p-6"
+          className="flex-1 flex flex-col items-center justify-center p-4 md:p-6"
           sx={{ minWidth: { xs: '100%', md: 340 }, maxWidth: 420 }}
         >
           <Image src="/logo.png" alt="Logo" width={104} height={48} className="mb-2" />
@@ -93,6 +95,7 @@ const LoginPage = () => {
               fullWidth
               margin="normal"
               value={username}
+              placeholder="Email/Username"
               onChange={(e) => setUsername(e.target.value)}
               InputLabelProps={{ shrink: true }}
               autoComplete="username"
@@ -104,6 +107,7 @@ const LoginPage = () => {
               fullWidth
               margin="normal"
               value={password}
+              placeholder="Password, at least 6 characters"
               onChange={(e) => setPassword(e.target.value)}
               InputLabelProps={{ shrink: true }}
               autoComplete="current-password"
