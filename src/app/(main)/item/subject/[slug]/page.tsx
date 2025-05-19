@@ -12,16 +12,9 @@ import {
   Typography,
   Box,
   Container,
-  Button,
-  Rating,
   Card,
   CardMedia,
   CardContent,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  TextField,
-  DialogActions,
 } from "@mui/material";
 
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
@@ -45,6 +38,7 @@ import MusicTemplate from "@/components/templates/MusicTemplate";
 import PodcastTemplate from "@/components/templates/PodcastTemplate";
 
 import { Item, UserRating, RatingsResponse } from "@/types/item";
+import RatingCommentDialog from '@/components/RatingCommentDialog';
 
 // Add template display names mapping
 const TEMPLATE_DISPLAY_NAMES: { [key: number]: string } = {
@@ -289,45 +283,17 @@ const ItemDetailPage = () => {
       {renderTemplate()}
 
       {/* Rating Dialog */}
-      <Dialog
+      <RatingCommentDialog
         open={openRatingDialog}
         onClose={() => setOpenRatingDialog(false)}
-      >
-        <DialogTitle>
-          {userRating ? "Update Your Rating" : "Rate This Item"}
-        </DialogTitle>
-        <DialogContent>
-          <Box sx={{ mt: 2 }}>
-            <Typography>Rating (out of 5 stars):</Typography>
-            <Rating
-              value={newRating}
-              onChange={(event, value) => setNewRating(value || 0)}
-              precision={0.5}
-              sx={{ color: "warning.main" }}
-            />
-            <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-              {newRating
-                ? `Score: ${toBackendScale(newRating).toFixed(1)} / 10`
-                : "Select a rating"}
-            </Typography>
-          </Box>
-          <TextField
-            label="Comment"
-            multiline
-            rows={4}
-            value={newComment}
-            onChange={(e) => setNewComment(e.target.value)}
-            fullWidth
-            sx={{ mt: 2 }}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpenRatingDialog(false)}>Cancel</Button>
-          <Button onClick={handleRateNow} color="primary">
-            Submit
-          </Button>
-        </DialogActions>
-      </Dialog>
+        onSubmit={handleRateNow}
+        rating={newRating}
+        setRating={setNewRating}
+        comment={newComment}
+        setComment={setNewComment}
+        isUpdate={!!userRating}
+        maxRating={5}
+      />
 
       {/* Recommendation Sections with Swiper */}
       <Box sx={{ mt: 6 }}>
