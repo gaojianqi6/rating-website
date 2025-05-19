@@ -5,11 +5,11 @@ import {
   Typography,
   Box,
   Container,
-  Button,
   Paper,
   Grid,
   Alert,
   Chip,
+  Pagination,
 } from "@mui/material";
 import { getTemplateByName } from "@/api/template";
 import { searchItems } from "@/api/item";
@@ -170,6 +170,12 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ categoryName }) => {
 
     fetchItems();
   }, [template, filters, sort, pagination.page, pagination.pageSize]);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.innerWidth < 768) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, [pagination.page]);
 
   const handleFilterChange = (fieldId: number, value: string) => {
     setFilters((prevFilters) => {
@@ -364,7 +370,7 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ categoryName }) => {
 
       <Grid container spacing={1}>
         {items.map((item) => (
-          <Grid item xs={12} sm={6} md={4} lg={2.4} key={item.id}>
+          <Grid item xs={6} sm={6} md={4} lg={2.4} key={item.id}>
             <Link href={`/item/subject/${item.slug}`} passHref>
               <Paper
                 elevation={3}
@@ -398,26 +404,16 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ categoryName }) => {
         ))}
       </Grid>
 
-      <Box sx={{ mt: 2, display: "flex", justifyContent: "center", gap: 1 }}>
-        <Button
-          variant="contained"
-          disabled={pagination.page === 1}
-          onClick={() => handlePageChange(pagination.page - 1)}
-          sx={{ py: 0.5, px: 1 }}
-        >
-          Previous
-        </Button>
-        <Typography variant="body1" sx={{ py: 0.5 }}>
-          Page {pagination.page} of {pagination.totalPages}
-        </Typography>
-        <Button
-          variant="contained"
-          disabled={pagination.page === pagination.totalPages}
-          onClick={() => handlePageChange(pagination.page + 1)}
-          sx={{ py: 0.5, px: 1 }}
-        >
-          Next
-        </Button>
+      <Box sx={{ mt: 2, display: "flex", justifyContent: "center" }}>
+        <Pagination
+          count={pagination.totalPages}
+          page={pagination.page}
+          onChange={(_, value) => handlePageChange(value)}
+          size="small"
+          color="primary"
+          siblingCount={1}
+          boundaryCount={1}
+        />
       </Box>
     </Container>
   );
