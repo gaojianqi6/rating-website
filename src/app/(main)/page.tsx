@@ -34,11 +34,11 @@ import ImageWithPlaceholder from "@/components/ImageWithPlaceholder";
 
 // Temporary banner data - replace slugs later
 const BANNERS = [
-  { id: 1, image: "/banners/01.webp", slug: "temp-1", width: 2880, height: 1620 },
-  { id: 2, image: "/banners/02.webp", slug: "temp-2", width: 1920, height: 1080 },
-  { id: 3, image: "/banners/03.webp", slug: "temp-3", width: 1920, height: 1080 },
-  { id: 4, image: "/banners/04.webp", slug: "temp-4", width: 1920, height: 1080 },
-  { id: 5, image: "/banners/05.webp", slug: "temp-5", width: 1920, height: 1080 },
+  { id: 1, image: "/banners/01.webp", slug: "the-mandalorian", width: 2880, height: 1620, alt: "The Mandalorian" },
+  { id: 2, image: "/banners/02.webp", slug: "star-wars-the-force-awakens", width: 1920, height: 1080, alt: "Star wars: The force awakens" },
+  { id: 3, image: "/banners/03.webp", slug: "star-wars-the-last-jedi", width: 1920, height: 1080, alt: "Star wars: The last jedi" },
+  { id: 4, image: "/banners/04.webp", slug: "the-empire-strikes-back", width: 1920, height: 1080, alt: "Star wars: The empire strikes back" },
+  { id: 5, image: "/banners/05.webp", slug: "return-of-the-jedi", width: 1920, height: 1080, alt: "Star wars: Return of the jedi" },
 ];
 
 interface Template {
