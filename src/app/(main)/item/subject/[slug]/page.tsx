@@ -24,7 +24,7 @@ import {
   DialogActions,
 } from "@mui/material";
 
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import {
   getItemBySlug,
@@ -53,7 +53,7 @@ const TEMPLATE_DISPLAY_NAMES: { [key: number]: string } = {
   3: "Variety Shows",
   4: "Books",
   5: "Music",
-  6: "Podcasts"
+  6: "Podcasts",
 };
 
 // Main Component
@@ -63,8 +63,12 @@ const ItemDetailPage = () => {
   const [item, setItem] = useState<Item | null>(null);
   const [userRating, setUserRating] = useState<UserRating | null>(null);
   const [ratingsData, setRatingsData] = useState<RatingsResponse | null>(null);
-  const [templateRecommendations, setTemplateRecommendations] = useState<RecommendationItem[]>([]);
-  const [genreRecommendations, setGenreRecommendations] = useState<RecommendationItem[]>([]);
+  const [templateRecommendations, setTemplateRecommendations] = useState<
+    RecommendationItem[]
+  >([]);
+  const [genreRecommendations, setGenreRecommendations] = useState<
+    RecommendationItem[]
+  >([]);
   const [isLoading, setIsLoading] = useState(true);
   const [openRatingDialog, setOpenRatingDialog] = useState(false);
   const [newRating, setNewRating] = useState<number>(0);
@@ -77,13 +81,13 @@ const ItemDetailPage = () => {
   // Fetch non-ratings data (item and recommendations) on mount
   const loadNonRatingsData = async () => {
     try {
-      const itemData = await getItemBySlug(slug as string) as Item;
+      const itemData = (await getItemBySlug(slug as string)) as Item;
       setItem(itemData);
 
       // Fetch recommendations
       const templateTypeId = itemData.templateId;
       const field = itemData.fieldValues.find(
-        (fv: { field: { name: string; displayName: string } }) => 
+        (fv: { field: { name: string; displayName: string } }) =>
           fv.field.name === "type" || fv.field.displayName === "Genre"
       );
       const { fieldId, jsonValue = [] } = field || {};
@@ -108,24 +112,29 @@ const ItemDetailPage = () => {
     }
   };
 
+  const getCurrentItemRating = async (itemId: number) => {
+    // Fetch all ratings for the item
+    const ratingsResponse = await getRatingsForItem(itemId);
+    setRatingsData(ratingsResponse);
+  };
+
+  const getCurrentUserRating = async (itemId: number) => {
+    const userRatingData = await getUserRating(itemId);
+    setUserRating(userRatingData);
+
+    // Set initial values for the dialog (convert backend scale to frontend scale)
+    setNewRating(userRatingData ? toFrontendScale(userRatingData.rating) : 0);
+    setNewComment(userRatingData?.reviewText || "");
+  };
+
   // Fetch ratings data (user rating and all ratings)
   const loadRatingsData = async (itemId: number) => {
     try {
       // Only fetch user rating if user is logged in
       if (user) {
-        const userRatingData = await getUserRating(itemId);
-        setUserRating(userRatingData);
-
-        // Set initial values for the dialog (convert backend scale to frontend scale)
-        setNewRating(userRatingData ? toFrontendScale(userRatingData.rating) : 0);
-        setNewComment(userRatingData?.reviewText || "");
-      } else {
-        setUserRating(null);
+        getCurrentUserRating(itemId);
       }
-
-      // Fetch all ratings for the item
-      const ratingsResponse = await getRatingsForItem(itemId);
-      setRatingsData(ratingsResponse);
+      getCurrentItemRating(itemId);
     } catch (error) {
       console.error("Error loading ratings data:", error);
       throw error;
@@ -138,7 +147,10 @@ const ItemDetailPage = () => {
       try {
         setIsLoading(true);
         const itemData = await loadNonRatingsData();
-        await loadRatingsData(itemData.id);
+        // Only load ratings data if we have an item
+        if (itemData) {
+          await getCurrentItemRating(itemData.id);
+        }
       } catch (error) {
         console.error("Error loading data:", error);
       } finally {
@@ -151,13 +163,28 @@ const ItemDetailPage = () => {
     }
   }, [slug]);
 
+  // Load user rating when user state changes
+  useEffect(() => {
+    const loadUserRating = async () => {
+      if (user && item) {
+        try {
+          getCurrentUserRating(item.id);
+        } catch (error) {
+          console.error("Error loading user rating:", error);
+        }
+      }
+    };
+
+    loadUserRating();
+  }, [user, item]);
+
   // Handle rating submission
   const handleRateNow = async () => {
     if (!item) return;
 
     if (!user) {
       // Redirect to login page if user is not authenticated
-      window.location.href = '/auth/login';
+      window.location.href = "/auth/login";
       return;
     }
 
@@ -334,7 +361,10 @@ const ItemDetailPage = () => {
             style={{ padding: "10px 0px", position: "relative" }}
           >
             {templateRecommendations.map((rec, index) => (
-              <SwiperSlide key={rec.id} style={{ paddingLeft: index === 0 ? 0 : undefined }}>
+              <SwiperSlide
+                key={rec.id}
+                style={{ paddingLeft: index === 0 ? 0 : undefined }}
+              >
                 <Link href={`/item/subject/${rec.slug}`}>
                   <Card
                     sx={{
@@ -353,13 +383,17 @@ const ItemDetailPage = () => {
                       height={200}
                       image={rec.poster}
                       alt={rec.title}
-                      sx={{ objectFit: "cover", width: "100%", cursor: "pointer" }}
+                      sx={{
+                        objectFit: "cover",
+                        width: "100%",
+                        cursor: "pointer",
+                      }}
                     />
                     <CardContent sx={{ p: 1.5 }}>
                       <Typography
                         variant="body2"
-                        sx={{ 
-                          fontWeight: "medium", 
+                        sx={{
+                          fontWeight: "medium",
                           textAlign: "center",
                           fontSize: "0.875rem",
                           lineHeight: 1.2,
@@ -367,7 +401,7 @@ const ItemDetailPage = () => {
                           overflow: "hidden",
                           display: "-webkit-box",
                           WebkitLineClamp: 2,
-                          WebkitBoxOrient: "vertical"
+                          WebkitBoxOrient: "vertical",
                         }}
                       >
                         {rec.title}
@@ -446,7 +480,8 @@ const ItemDetailPage = () => {
           gutterBottom
           sx={{ fontWeight: "bold", color: "primary.main", pl: 0 }}
         >
-          Recommended {TEMPLATE_DISPLAY_NAMES[item.templateId] || "Items"} in the same genre
+          Recommended {TEMPLATE_DISPLAY_NAMES[item.templateId] || "Items"} in
+          the same genre
         </Typography>
         {genreRecommendations.length === 0 ? (
           <Typography>No recommendations available.</Typography>
@@ -471,7 +506,10 @@ const ItemDetailPage = () => {
             style={{ padding: "10px 0px", position: "relative" }}
           >
             {genreRecommendations.map((rec, index) => (
-              <SwiperSlide key={rec.id} style={{ paddingLeft: index === 0 ? 0 : undefined }}>
+              <SwiperSlide
+                key={rec.id}
+                style={{ paddingLeft: index === 0 ? 0 : undefined }}
+              >
                 <Link href={`/item/subject/${rec.slug}`}>
                   <Card
                     sx={{
@@ -490,13 +528,17 @@ const ItemDetailPage = () => {
                       height={200}
                       image={rec.poster}
                       alt={rec.title}
-                      sx={{ objectFit: "cover", width: "100%", cursor: "pointer" }}
+                      sx={{
+                        objectFit: "cover",
+                        width: "100%",
+                        cursor: "pointer",
+                      }}
                     />
                     <CardContent sx={{ p: 1.5 }}>
                       <Typography
                         variant="body2"
-                        sx={{ 
-                          fontWeight: "medium", 
+                        sx={{
+                          fontWeight: "medium",
                           textAlign: "center",
                           fontSize: "0.875rem",
                           lineHeight: 1.2,
@@ -504,7 +546,7 @@ const ItemDetailPage = () => {
                           overflow: "hidden",
                           display: "-webkit-box",
                           WebkitLineClamp: 2,
-                          WebkitBoxOrient: "vertical"
+                          WebkitBoxOrient: "vertical",
                         }}
                       >
                         {rec.title}
