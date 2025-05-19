@@ -316,12 +316,13 @@ const ItemDetailPage = () => {
         ) : (
           <Swiper
             modules={[Navigation, Mousewheel]}
-            spaceBetween={15}
-            slidesPerView={1}
+            spaceBetween={10}
+            slidesPerView={2}
             breakpoints={{
-              640: { slidesPerView: 2 },
-              768: { slidesPerView: 3 },
-              1024: { slidesPerView: 4 },
+              480: { slidesPerView: 3 },
+              640: { slidesPerView: 4 },
+              768: { slidesPerView: 5 },
+              1024: { slidesPerView: 6 },
             }}
             navigation={{
               prevEl: ".swiper-button-prev-template",
@@ -337,8 +338,8 @@ const ItemDetailPage = () => {
                 <Link href={`/item/subject/${rec.slug}`}>
                   <Card
                     sx={{
-                      minWidth: 240,
-                      maxWidth: 240,
+                      minWidth: 160,
+                      maxWidth: 160,
                       transition: "transform 0.3s, box-shadow 0.3s",
                       "&:hover": {
                         transform: "scale(1.05)",
@@ -349,22 +350,32 @@ const ItemDetailPage = () => {
                   >
                     <CardMedia
                       component="img"
-                      height={250}
+                      height={200}
                       image={rec.poster}
                       alt={rec.title}
                       sx={{ objectFit: "cover", width: "100%", cursor: "pointer" }}
                     />
-                    <CardContent sx={{ p: 2 }}>
+                    <CardContent sx={{ p: 1.5 }}>
                       <Typography
                         variant="body2"
-                        sx={{ fontWeight: "medium", textAlign: "center" }}
+                        sx={{ 
+                          fontWeight: "medium", 
+                          textAlign: "center",
+                          fontSize: "0.875rem",
+                          lineHeight: 1.2,
+                          height: "2.4em",
+                          overflow: "hidden",
+                          display: "-webkit-box",
+                          WebkitLineClamp: 2,
+                          WebkitBoxOrient: "vertical"
+                        }}
                       >
                         {rec.title}
                       </Typography>
                       <Typography
                         variant="caption"
                         color="text.secondary"
-                        sx={{ textAlign: "center", display: "block" }}
+                        sx={{ textAlign: "center", display: "block", mt: 0.5 }}
                       >
                         {rec.createdAt}
                       </Typography>
@@ -380,8 +391,8 @@ const ItemDetailPage = () => {
                 top: "50%",
                 left: 0,
                 transform: "translateY(-50%)",
-                width: 32,
-                height: 32,
+                width: 28,
+                height: 28,
                 backgroundColor: "rgba(128, 128, 128, 0.5)",
                 borderRadius: "50%",
                 display: "flex",
@@ -397,7 +408,7 @@ const ItemDetailPage = () => {
                 },
               }}
             >
-              <ArrowBackIosNewIcon sx={{ fontSize: 16, color: "white" }} />
+              <ArrowBackIosNewIcon sx={{ fontSize: 14, color: "white" }} />
             </Box>
             <Box
               className="swiper-button-next-template"
@@ -406,8 +417,8 @@ const ItemDetailPage = () => {
                 top: "50%",
                 right: 0,
                 transform: "translateY(-50%)",
-                width: 32,
-                height: 32,
+                width: 28,
+                height: 28,
                 backgroundColor: "rgba(128, 128, 128, 0.5)",
                 borderRadius: "50%",
                 display: "flex",
@@ -423,7 +434,7 @@ const ItemDetailPage = () => {
                 },
               }}
             >
-              <ArrowForwardIosIcon sx={{ fontSize: 16, color: "white" }} />
+              <ArrowForwardIosIcon sx={{ fontSize: 14, color: "white" }} />
             </Box>
           </Swiper>
         )}
@@ -442,12 +453,13 @@ const ItemDetailPage = () => {
         ) : (
           <Swiper
             modules={[Navigation, Mousewheel]}
-            spaceBetween={15}
-            slidesPerView={1}
+            spaceBetween={10}
+            slidesPerView={2}
             breakpoints={{
-              640: { slidesPerView: 2 },
-              768: { slidesPerView: 3 },
-              1024: { slidesPerView: 4 },
+              480: { slidesPerView: 3 },
+              640: { slidesPerView: 4 },
+              768: { slidesPerView: 5 },
+              1024: { slidesPerView: 6 },
             }}
             navigation={{
               prevEl: ".swiper-button-prev-genre",
@@ -463,8 +475,8 @@ const ItemDetailPage = () => {
                 <Link href={`/item/subject/${rec.slug}`}>
                   <Card
                     sx={{
-                      minWidth: 240,
-                      maxWidth: 240,
+                      minWidth: 160,
+                      maxWidth: 160,
                       transition: "transform 0.3s, box-shadow 0.3s",
                       "&:hover": {
                         transform: "scale(1.05)",
@@ -475,22 +487,32 @@ const ItemDetailPage = () => {
                   >
                     <CardMedia
                       component="img"
-                      height={250}
+                      height={200}
                       image={rec.poster}
                       alt={rec.title}
                       sx={{ objectFit: "cover", width: "100%", cursor: "pointer" }}
                     />
-                    <CardContent sx={{ p: 2 }}>
+                    <CardContent sx={{ p: 1.5 }}>
                       <Typography
                         variant="body2"
-                        sx={{ fontWeight: "medium", textAlign: "center" }}
+                        sx={{ 
+                          fontWeight: "medium", 
+                          textAlign: "center",
+                          fontSize: "0.875rem",
+                          lineHeight: 1.2,
+                          height: "2.4em",
+                          overflow: "hidden",
+                          display: "-webkit-box",
+                          WebkitLineClamp: 2,
+                          WebkitBoxOrient: "vertical"
+                        }}
                       >
                         {rec.title}
                       </Typography>
                       <Typography
                         variant="caption"
                         color="text.secondary"
-                        sx={{ textAlign: "center", display: "block" }}
+                        sx={{ textAlign: "center", display: "block", mt: 0.5 }}
                       >
                         {rec.createdAt}
                       </Typography>
@@ -506,8 +528,8 @@ const ItemDetailPage = () => {
                 top: "50%",
                 left: 0,
                 transform: "translateY(-50%)",
-                width: 32,
-                height: 32,
+                width: 28,
+                height: 28,
                 backgroundColor: "rgba(128, 128, 128, 0.5)",
                 borderRadius: "50%",
                 display: "flex",
@@ -523,7 +545,7 @@ const ItemDetailPage = () => {
                 },
               }}
             >
-              <ArrowBackIosNewIcon sx={{ fontSize: 16, color: "white" }} />
+              <ArrowBackIosNewIcon sx={{ fontSize: 14, color: "white" }} />
             </Box>
             <Box
               className="swiper-button-next-genre"
@@ -532,8 +554,8 @@ const ItemDetailPage = () => {
                 top: "50%",
                 right: 0,
                 transform: "translateY(-50%)",
-                width: 32,
-                height: 32,
+                width: 28,
+                height: 28,
                 backgroundColor: "rgba(128, 128, 128, 0.5)",
                 borderRadius: "50%",
                 display: "flex",
@@ -549,7 +571,7 @@ const ItemDetailPage = () => {
                 },
               }}
             >
-              <ArrowForwardIosIcon sx={{ fontSize: 16, color: "white" }} />
+              <ArrowForwardIosIcon sx={{ fontSize: 14, color: "white" }} />
             </Box>
           </Swiper>
         )}
