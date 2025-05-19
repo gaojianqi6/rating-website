@@ -7,9 +7,15 @@ import { Google as GoogleIcon } from "@mui/icons-material";
 import { Button, TextField, Snackbar, Alert } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { login } from "@/api/user";
+import { useUserStore } from "@/store/userStore";
+
+interface LoginResponse {
+  access_token: string;
+}
 
 const LoginPage = () => {
   const router = useRouter();
+  const { fetchUser } = useUserStore();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [toast, setToast] = useState({
@@ -17,20 +23,22 @@ const LoginPage = () => {
     message: "",
   });
 
-  const handleLogin = async (e) => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const { access_token } = await login(username, password);
-      if (access_token) {
-        localStorage.setItem("accessToken", access_token);
+      const response = await login(username, password) as LoginResponse;
+      if (response.access_token) {
+        localStorage.setItem("accessToken", response.access_token);
+        // Fetch user data after successful login
+        await fetchUser();
         router.push("/");
         return;
       }
-      throw new Error("Not have access token");
-    } catch (error) {
+      throw new Error("No access token received");
+    } catch (error: unknown) {
       // Handle network errors or unexpected issues
       const errorMessage =
-        error.message ||
+        error instanceof Error ? error.message :
         "An unexpected error occurred. Please try again.";
       setToast({
         open: true,
