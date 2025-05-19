@@ -61,7 +61,7 @@ const BaseTemplate: React.FC<BaseTemplateProps> = ({
   };
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }} style={{ paddingLeft: 0, paddingRight: 0 }}>
       <Grid container spacing={4}>
         {/* Poster */}
         <Grid item xs={12} md={4}>
