@@ -13,31 +13,35 @@ const Footer = () => {
     <Box
       component="footer"
       sx={{
-        py: 3,
-        px: 2,
+        py: 2,
+        px: 0,
         mt: 'auto',
-        backgroundColor: (theme) => theme.palette.grey[100],
+        backgroundColor: (theme) => theme.palette.background.paper,
+        boxShadow: '0 -2px 8px rgba(0,0,0,0.04)',
       }}
     >
-      <Container maxWidth="xl">
-        <Typography variant="h6" align="center" gutterBottom>
+      <Container
+        maxWidth="xl"
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: 0.2,
+          lineHeight: 1,
+        }}
+      >
+        <Typography variant="subtitle2" color="text.primary" fontWeight={600} sx={{ fontSize: 14 }}>
           Rate Everything
         </Typography>
-        <Typography
-          variant="subtitle1"
-          align="center"
-          color="text.secondary"
-          component="p"
-        >
+        <Typography variant="caption" color="text.secondary" sx={{ fontSize: 12 }}>
           Discover, Rate, Share
         </Typography>
-        <Typography variant="body2" color="text.secondary" align="center">
+        <Typography variant="caption" color="text.disabled" align="center" sx={{ fontSize: 11 }}>
           {'Copyright © '}
-          <Link color="inherit" href="/">
+          <Link color="inherit" href="/" style={{ textDecoration: 'none', color: 'inherit' }}>
             Rating Website
           </Link>{' '}
           {new Date().getFullYear()}
-          {'.'}
         </Typography>
       </Container>
     </Box>

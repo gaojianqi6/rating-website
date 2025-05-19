@@ -125,7 +125,7 @@ const Header = ({ user, onLogout, loading }: HeaderProps) => {
   );
 
   return (
-    <AppBar position="static" color="default" elevation={1} sx={{ bgcolor: 'white' }}>
+    <AppBar position="static" color="default" elevation={0} sx={{ bgcolor: 'white', boxShadow: '0 2px 8px rgba(0,0,0,0.04)' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters sx={{ justifyContent: "space-between", py: 1 }}>
           {/* Mobile Drawer Toggle and Logo */}
