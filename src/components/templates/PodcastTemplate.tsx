@@ -1,4 +1,6 @@
-import { Typography, Grid } from "@mui/material";
+import React from "react";
+import { Typography, Grid, Stack, Button } from "@mui/material";
+import { Headphones as HeadphonesIcon } from "@mui/icons-material";
 import BaseTemplate from "./BaseTemplate";
 import { Item, UserRating, RatingsResponse } from "@/types/item";
 
@@ -9,28 +11,22 @@ interface PodcastTemplateProps {
   onRateClick: () => void;
 }
 
-const PodcastTemplate = ({ item, ratingsData, userRating, onRateClick }: PodcastTemplateProps) => {
+const PodcastTemplate: React.FC<PodcastTemplateProps> = ({
+  item,
+  ratingsData,
+  userRating,
+  onRateClick,
+}) => {
+  // Helper function to get field value
   const getFieldValue = (fieldName: string): string => {
     const field = item.fieldValues.find((fv) => fv.field.name === fieldName);
     if (!field) return "N/A";
 
-    switch (field.field.fieldType) {
-      case "text":
-      case "textarea":
-        return field.textValue || "N/A";
-      case "number":
-        return field.numericValue?.toString() || "N/A";
-      case "multiselect":
-      case "select":
-        return field.jsonValue?.join(", ") || "N/A";
-      case "img":
-        return field.textValue || "";
-      case "url":
-        return field.textValue || "#";
-      default:
-        return "N/A";
-    }
+    const { textValue, numericValue, dateValue, jsonValue } = field;
+    return textValue || numericValue?.toString() || dateValue || jsonValue?.join(", ") || "N/A";
   };
+
+  const audioUrl = getFieldValue("audio_url");
 
   return (
     <BaseTemplate
@@ -40,43 +36,57 @@ const PodcastTemplate = ({ item, ratingsData, userRating, onRateClick }: Podcast
       onRateClick={onRateClick}
       contentType="podcast"
     >
-      <Grid item xs={12} md={8}>
-        <Typography
-          variant="h4"
-          gutterBottom
-          sx={{ fontWeight: "bold", color: "primary.main" }}
-        >
-          {getFieldValue("title")} ({getFieldValue("first_air_year")}
-          {getFieldValue("end_year") !== "N/A" ? ` - ${getFieldValue("end_year")}` : ""})
-        </Typography>
-        <Typography variant="subtitle1" color="text.secondary">
-          <strong>Host:</strong> {getFieldValue("host")}
-        </Typography>
-        <Typography variant="subtitle1" color="text.secondary">
-          <strong>Network:</strong> {getFieldValue("network")}
-        </Typography>
-        <Typography variant="subtitle1" color="text.secondary">
-          <strong>Genre:</strong> {getFieldValue("type")}
-        </Typography>
-        <Typography variant="subtitle1" color="text.secondary">
-          <strong>Language:</strong> {getFieldValue("language")}
-        </Typography>
-        <Typography variant="subtitle1" color="text.secondary">
-          <strong>Country:</strong> {getFieldValue("country")}
-        </Typography>
-        <Typography variant="subtitle1" color="text.secondary">
-          <strong>Status:</strong> {getFieldValue("status")}
-        </Typography>
-        <Typography variant="subtitle1" color="text.secondary">
-          <strong>Episodes:</strong> {getFieldValue("episodes")}
-        </Typography>
-        <Typography variant="subtitle1" color="text.secondary">
-          <strong>Average Duration:</strong> {getFieldValue("avg_duration")} minutes
-        </Typography>
-        <Typography variant="subtitle1" color="text.secondary">
-          <strong>Content Rating:</strong> {getFieldValue("content_rating")}
-        </Typography>
+      <Typography variant="h4" gutterBottom sx={{ fontWeight: "bold" }}>
+        {getFieldValue("title")} ({getFieldValue("first_air_year")}
+        {getFieldValue("end_year") && ` - ${getFieldValue("end_year")}`})
+      </Typography>
+
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={6}>
+          <Typography variant="body1">
+            <strong>Host:</strong> {getFieldValue("host")}
+          </Typography>
+          <Typography variant="body1">
+            <strong>Network:</strong> {getFieldValue("network")}
+          </Typography>
+          <Typography variant="body1">
+            <strong>Genre:</strong> {getFieldValue("type")}
+          </Typography>
+          <Typography variant="body1">
+            <strong>Language:</strong> {getFieldValue("language")}
+          </Typography>
+          <Typography variant="body1">
+            <strong>Country:</strong> {getFieldValue("country")}
+          </Typography>
+          <Typography variant="body1">
+            <strong>Status:</strong> {getFieldValue("status")}
+          </Typography>
+          <Typography variant="body1">
+            <strong>Episodes:</strong> {getFieldValue("episodes")}
+          </Typography>
+          <Typography variant="body1">
+            <strong>Average Duration:</strong> {getFieldValue("avg_duration")} minutes
+          </Typography>
+          <Typography variant="body1">
+            <strong>Content Rating:</strong> {getFieldValue("content_rating")}
+          </Typography>
+        </Grid>
       </Grid>
+
+      {audioUrl && audioUrl !== "N/A" && (
+        <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
+          <Button
+            variant="contained"
+            color="warning"
+            startIcon={<HeadphonesIcon />}
+            href={audioUrl}
+            target="_blank"
+            sx={{ borderRadius: 2 }}
+          >
+            Listen to Podcast
+          </Button>
+        </Stack>
+      )}
     </BaseTemplate>
   );
 };

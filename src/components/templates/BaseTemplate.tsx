@@ -95,7 +95,7 @@ const BaseTemplate: React.FC<BaseTemplateProps> = ({
           Synopsis
         </Typography>
         <Typography variant="body1" paragraph sx={{ lineHeight: 1.6 }}>
-          {getFieldValue("synopsis")}
+          {getFieldValue("synopsis") || getFieldValue("description")}
         </Typography>
       </Box>
 
