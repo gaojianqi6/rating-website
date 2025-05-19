@@ -1,0 +1,4704 @@
+[
+  {
+    "id": 1,
+    "name": "movie",
+    "displayName": "Movie",
+    "description": "A template for capturing details of movies, including title, genre, language, and more.",
+    "fullMarks": 10,
+    "isPublished": true,
+    "createdAt": "2025-04-17T16:54:38.833Z",
+    "updatedAt": "2025-04-22T05:19:12.489Z",
+    "createdBy": null,
+    "updatedBy": 1,
+    "fields": [
+      {
+        "id": 1,
+        "templateId": 1,
+        "name": "title",
+        "displayName": "Title",
+        "description": "The official title of the movie.",
+        "fieldType": "text",
+        "isRequired": true,
+        "isSearchable": true,
+        "isFilterable": false,
+        "displayOrder": 1,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T16:56:37.006Z",
+        "updatedAt": "2025-04-17T16:56:37.006Z",
+        "dataSource": null
+      },
+      {
+        "id": 2,
+        "templateId": 1,
+        "name": "poster",
+        "displayName": "Poster",
+        "description": "URL to the movie’s poster image.",
+        "fieldType": "img",
+        "isRequired": true,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 2,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T16:56:37.006Z",
+        "updatedAt": "2025-04-17T16:56:37.006Z",
+        "dataSource": null
+      },
+      {
+        "id": 3,
+        "templateId": 1,
+        "name": "release_year",
+        "displayName": "Release Year",
+        "description": "The year the movie was first released.",
+        "fieldType": "number",
+        "isRequired": true,
+        "isSearchable": false,
+        "isFilterable": true,
+        "displayOrder": 3,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T16:56:37.006Z",
+        "updatedAt": "2025-04-17T16:56:37.006Z",
+        "dataSource": null
+      },
+      {
+        "id": 4,
+        "templateId": 1,
+        "name": "director",
+        "displayName": "Director",
+        "description": "The primary director(s) of the movie.",
+        "fieldType": "text",
+        "isRequired": true,
+        "isSearchable": true,
+        "isFilterable": false,
+        "displayOrder": 4,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T16:56:37.006Z",
+        "updatedAt": "2025-04-17T16:56:37.006Z",
+        "dataSource": null
+      },
+      {
+        "id": 5,
+        "templateId": 1,
+        "name": "cast",
+        "displayName": "Cast",
+        "description": "Main actors and actresses starring in the movie.",
+        "fieldType": "text",
+        "isRequired": true,
+        "isSearchable": true,
+        "isFilterable": false,
+        "displayOrder": 5,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T16:56:37.006Z",
+        "updatedAt": "2025-04-17T16:56:37.006Z",
+        "dataSource": null
+      },
+      {
+        "id": 6,
+        "templateId": 1,
+        "name": "language",
+        "displayName": "Language",
+        "description": "The primary language(s) spoken in the movie.",
+        "fieldType": "multiselect",
+        "isRequired": true,
+        "isSearchable": false,
+        "isFilterable": true,
+        "displayOrder": 6,
+        "dataSourceId": 7,
+        "validationRules": null,
+        "createdAt": "2025-04-17T16:56:37.006Z",
+        "updatedAt": "2025-04-17T16:56:37.006Z",
+        "dataSource": {
+          "id": 7,
+          "name": "language",
+          "sourceType": "dropdown",
+          "configuration": null,
+          "createdAt": "2025-04-17T16:42:39.023Z",
+          "updatedAt": "2025-04-17T16:42:39.023Z",
+          "createdBy": null,
+          "options": [
+            {
+              "id": 160,
+              "dataSourceId": 7,
+              "value": "Mandarin",
+              "displayText": "Mandarin",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 161,
+              "dataSourceId": 7,
+              "value": "English",
+              "displayText": "English",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 162,
+              "dataSourceId": 7,
+              "value": "Cantonese",
+              "displayText": "Cantonese",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 163,
+              "dataSourceId": 7,
+              "value": "Korean",
+              "displayText": "Korean",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 164,
+              "dataSourceId": 7,
+              "value": "Japanese",
+              "displayText": "Japanese",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 165,
+              "dataSourceId": 7,
+              "value": "Thai",
+              "displayText": "Thai",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 166,
+              "dataSourceId": 7,
+              "value": "French",
+              "displayText": "French",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 167,
+              "dataSourceId": 7,
+              "value": "German",
+              "displayText": "German",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 168,
+              "dataSourceId": 7,
+              "value": "Russian",
+              "displayText": "Russian",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 169,
+              "dataSourceId": 7,
+              "value": "Swedish",
+              "displayText": "Swedish",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 170,
+              "dataSourceId": 7,
+              "value": "Portuguese",
+              "displayText": "Portuguese",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 171,
+              "dataSourceId": 7,
+              "value": "Hindi",
+              "displayText": "Hindi",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 172,
+              "dataSourceId": 7,
+              "value": "Irish",
+              "displayText": "Irish",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            }
+          ]
+        }
+      },
+      {
+        "id": 7,
+        "templateId": 1,
+        "name": "type",
+        "displayName": "Genre",
+        "description": "The genre(s) or category of the movie.",
+        "fieldType": "multiselect",
+        "isRequired": true,
+        "isSearchable": false,
+        "isFilterable": true,
+        "displayOrder": 7,
+        "dataSourceId": 1,
+        "validationRules": null,
+        "createdAt": "2025-04-17T16:56:37.006Z",
+        "updatedAt": "2025-04-17T16:56:37.006Z",
+        "dataSource": {
+          "id": 1,
+          "name": "movie_type",
+          "sourceType": "dropdown",
+          "configuration": null,
+          "createdAt": "2025-04-17T16:34:40.099Z",
+          "updatedAt": "2025-04-17T16:34:40.099Z",
+          "createdBy": null,
+          "options": [
+            {
+              "id": 16,
+              "dataSourceId": 1,
+              "value": "Adventure",
+              "displayText": "Adventure",
+              "createdAt": "2025-04-17T16:34:54.587Z",
+              "updatedAt": "2025-04-17T16:34:54.587Z"
+            },
+            {
+              "id": 17,
+              "dataSourceId": 1,
+              "value": "Drama",
+              "displayText": "Drama",
+              "createdAt": "2025-04-17T16:34:54.587Z",
+              "updatedAt": "2025-04-17T16:34:54.587Z"
+            },
+            {
+              "id": 18,
+              "dataSourceId": 1,
+              "value": "Action",
+              "displayText": "Action",
+              "createdAt": "2025-04-17T16:34:54.587Z",
+              "updatedAt": "2025-04-17T16:34:54.587Z"
+            },
+            {
+              "id": 19,
+              "dataSourceId": 1,
+              "value": "Online Movies",
+              "displayText": "Online Movies",
+              "createdAt": "2025-04-17T16:34:54.587Z",
+              "updatedAt": "2025-04-17T16:34:54.587Z"
+            },
+            {
+              "id": 20,
+              "dataSourceId": 1,
+              "value": "Gay Movies",
+              "displayText": "Gay Movies",
+              "createdAt": "2025-04-17T16:34:54.587Z",
+              "updatedAt": "2025-04-17T16:34:54.587Z"
+            },
+            {
+              "id": 21,
+              "dataSourceId": 1,
+              "value": "Horror",
+              "displayText": "Horror",
+              "createdAt": "2025-04-17T16:34:54.587Z",
+              "updatedAt": "2025-04-17T16:34:54.587Z"
+            },
+            {
+              "id": 22,
+              "dataSourceId": 1,
+              "value": "Suspense",
+              "displayText": "Suspense",
+              "createdAt": "2025-04-17T16:34:54.587Z",
+              "updatedAt": "2025-04-17T16:34:54.587Z"
+            },
+            {
+              "id": 23,
+              "dataSourceId": 1,
+              "value": "Thriller",
+              "displayText": "Thriller",
+              "createdAt": "2025-04-17T16:34:54.587Z",
+              "updatedAt": "2025-04-17T16:34:54.587Z"
+            },
+            {
+              "id": 24,
+              "dataSourceId": 1,
+              "value": "Musical",
+              "displayText": "Musical",
+              "createdAt": "2025-04-17T16:34:54.587Z",
+              "updatedAt": "2025-04-17T16:34:54.587Z"
+            },
+            {
+              "id": 25,
+              "dataSourceId": 1,
+              "value": "Disaster",
+              "displayText": "Disaster",
+              "createdAt": "2025-04-17T16:34:54.587Z",
+              "updatedAt": "2025-04-17T16:34:54.587Z"
+            },
+            {
+              "id": 26,
+              "dataSourceId": 1,
+              "value": "Romance",
+              "displayText": "Romance",
+              "createdAt": "2025-04-17T16:34:54.587Z",
+              "updatedAt": "2025-04-17T16:34:54.587Z"
+            },
+            {
+              "id": 27,
+              "dataSourceId": 1,
+              "value": "Crime",
+              "displayText": "Crime",
+              "createdAt": "2025-04-17T16:34:54.587Z",
+              "updatedAt": "2025-04-17T16:34:54.587Z"
+            },
+            {
+              "id": 28,
+              "dataSourceId": 1,
+              "value": "Science Fiction",
+              "displayText": "Science Fiction",
+              "createdAt": "2025-04-17T16:34:54.587Z",
+              "updatedAt": "2025-04-17T16:34:54.587Z"
+            },
+            {
+              "id": 29,
+              "dataSourceId": 1,
+              "value": "Classic Movies",
+              "displayText": "Classic Movies",
+              "createdAt": "2025-04-17T16:34:54.587Z",
+              "updatedAt": "2025-04-17T16:34:54.587Z"
+            },
+            {
+              "id": 30,
+              "dataSourceId": 1,
+              "value": "Animation",
+              "displayText": "Animation",
+              "createdAt": "2025-04-17T16:34:54.587Z",
+              "updatedAt": "2025-04-17T16:34:54.587Z"
+            },
+            {
+              "id": 31,
+              "dataSourceId": 1,
+              "value": "War",
+              "displayText": "War",
+              "createdAt": "2025-04-17T16:34:54.587Z",
+              "updatedAt": "2025-04-17T16:34:54.587Z"
+            },
+            {
+              "id": 32,
+              "dataSourceId": 1,
+              "value": "Crossing",
+              "displayText": "Crossing",
+              "createdAt": "2025-04-17T16:34:54.587Z",
+              "updatedAt": "2025-04-17T16:34:54.587Z"
+            },
+            {
+              "id": 33,
+              "dataSourceId": 1,
+              "value": "Palace",
+              "displayText": "Palace",
+              "createdAt": "2025-04-17T16:34:54.587Z",
+              "updatedAt": "2025-04-17T16:34:54.587Z"
+            },
+            {
+              "id": 34,
+              "dataSourceId": 1,
+              "value": "Myth",
+              "displayText": "Myth",
+              "createdAt": "2025-04-17T16:34:54.587Z",
+              "updatedAt": "2025-04-17T16:34:54.587Z"
+            },
+            {
+              "id": 35,
+              "dataSourceId": 1,
+              "value": "Business War",
+              "displayText": "Business War",
+              "createdAt": "2025-04-17T16:34:54.587Z",
+              "updatedAt": "2025-04-17T16:34:54.587Z"
+            },
+            {
+              "id": 36,
+              "dataSourceId": 1,
+              "value": "Cops and Robbers",
+              "displayText": "Cops and Robbers",
+              "createdAt": "2025-04-17T16:34:54.587Z",
+              "updatedAt": "2025-04-17T16:34:54.587Z"
+            },
+            {
+              "id": 37,
+              "dataSourceId": 1,
+              "value": "Plot",
+              "displayText": "Plot",
+              "createdAt": "2025-04-17T16:34:54.587Z",
+              "updatedAt": "2025-04-17T16:34:54.587Z"
+            },
+            {
+              "id": 38,
+              "dataSourceId": 1,
+              "value": "Homosexual",
+              "displayText": "Homosexual",
+              "createdAt": "2025-04-17T16:34:54.587Z",
+              "updatedAt": "2025-04-17T16:34:54.587Z"
+            },
+            {
+              "id": 39,
+              "dataSourceId": 1,
+              "value": "Fantasy",
+              "displayText": "Fantasy",
+              "createdAt": "2025-04-17T16:34:54.587Z",
+              "updatedAt": "2025-04-17T16:34:54.587Z"
+            },
+            {
+              "id": 40,
+              "dataSourceId": 1,
+              "value": "Comedy",
+              "displayText": "Comedy",
+              "createdAt": "2025-04-17T16:34:54.587Z",
+              "updatedAt": "2025-04-17T16:34:54.587Z"
+            },
+            {
+              "id": 41,
+              "dataSourceId": 1,
+              "value": "Sci-Fi",
+              "displayText": "Sci-Fi",
+              "createdAt": "2025-04-17T16:34:54.587Z",
+              "updatedAt": "2025-04-17T16:34:54.587Z"
+            },
+            {
+              "id": 42,
+              "dataSourceId": 1,
+              "value": "Martial Arts",
+              "displayText": "Martial Arts",
+              "createdAt": "2025-04-17T16:34:54.587Z",
+              "updatedAt": "2025-04-17T16:34:54.587Z"
+            },
+            {
+              "id": 43,
+              "dataSourceId": 1,
+              "value": "Costume Drama",
+              "displayText": "Costume Drama",
+              "createdAt": "2025-04-17T16:34:54.587Z",
+              "updatedAt": "2025-04-17T16:34:54.587Z"
+            },
+            {
+              "id": 44,
+              "dataSourceId": 1,
+              "value": "Family Drama",
+              "displayText": "Family Drama",
+              "createdAt": "2025-04-17T16:34:54.587Z",
+              "updatedAt": "2025-04-17T16:34:54.587Z"
+            },
+            {
+              "id": 45,
+              "dataSourceId": 1,
+              "value": "History",
+              "displayText": "History",
+              "createdAt": "2025-04-17T16:34:54.587Z",
+              "updatedAt": "2025-04-17T16:34:54.587Z"
+            },
+            {
+              "id": 46,
+              "dataSourceId": 1,
+              "value": "Biography",
+              "displayText": "Biography",
+              "createdAt": "2025-04-17T16:34:54.587Z",
+              "updatedAt": "2025-04-17T16:34:54.587Z"
+            },
+            {
+              "id": 47,
+              "dataSourceId": 1,
+              "value": "Western",
+              "displayText": "Western",
+              "createdAt": "2025-04-17T16:34:54.587Z",
+              "updatedAt": "2025-04-17T16:34:54.587Z"
+            },
+            {
+              "id": 48,
+              "dataSourceId": 1,
+              "value": "Short Film",
+              "displayText": "Short Film",
+              "createdAt": "2025-04-17T16:34:54.587Z",
+              "updatedAt": "2025-04-17T16:34:54.587Z"
+            },
+            {
+              "id": 49,
+              "dataSourceId": 1,
+              "value": "Documentary",
+              "displayText": "Documentary",
+              "createdAt": "2025-04-17T16:34:54.587Z",
+              "updatedAt": "2025-04-17T16:34:54.587Z"
+            }
+          ]
+        }
+      },
+      {
+        "id": 8,
+        "templateId": 1,
+        "name": "country",
+        "displayName": "Country",
+        "description": "The country or countries where the movie was produced.",
+        "fieldType": "multiselect",
+        "isRequired": true,
+        "isSearchable": false,
+        "isFilterable": true,
+        "displayOrder": 8,
+        "dataSourceId": 9,
+        "validationRules": null,
+        "createdAt": "2025-04-17T16:56:37.006Z",
+        "updatedAt": "2025-04-17T16:56:37.006Z",
+        "dataSource": {
+          "id": 9,
+          "name": "country",
+          "sourceType": "dropdown",
+          "configuration": null,
+          "createdAt": "2025-04-17T16:49:24.638Z",
+          "updatedAt": "2025-04-17T16:49:24.638Z",
+          "createdBy": null,
+          "options": [
+            {
+              "id": 177,
+              "dataSourceId": 9,
+              "value": "USA",
+              "displayText": "USA",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 178,
+              "dataSourceId": 9,
+              "value": "South Korea",
+              "displayText": "South Korea",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 179,
+              "dataSourceId": 9,
+              "value": "Japan",
+              "displayText": "Japan",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 180,
+              "dataSourceId": 9,
+              "value": "Thailand",
+              "displayText": "Thailand",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 181,
+              "dataSourceId": 9,
+              "value": "France",
+              "displayText": "France",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 182,
+              "dataSourceId": 9,
+              "value": "Germany",
+              "displayText": "Germany",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 183,
+              "dataSourceId": 9,
+              "value": "Russia",
+              "displayText": "Russia",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 184,
+              "dataSourceId": 9,
+              "value": "Sweden",
+              "displayText": "Sweden",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 185,
+              "dataSourceId": 9,
+              "value": "Brazil",
+              "displayText": "Brazil",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 186,
+              "dataSourceId": 9,
+              "value": "India",
+              "displayText": "India",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 187,
+              "dataSourceId": 9,
+              "value": "Canada",
+              "displayText": "Canada",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 188,
+              "dataSourceId": 9,
+              "value": "Ireland",
+              "displayText": "Ireland",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 189,
+              "dataSourceId": 9,
+              "value": "Australia",
+              "displayText": "Australia",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 190,
+              "dataSourceId": 9,
+              "value": "United Kingdom",
+              "displayText": "United Kingdom",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 191,
+              "dataSourceId": 9,
+              "value": "China",
+              "displayText": "China",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 192,
+              "dataSourceId": 9,
+              "value": "Mexico",
+              "displayText": "Mexico",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 193,
+              "dataSourceId": 9,
+              "value": "Spain",
+              "displayText": "Spain",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 194,
+              "dataSourceId": 9,
+              "value": "Italy",
+              "displayText": "Italy",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 195,
+              "dataSourceId": 9,
+              "value": "Nigeria",
+              "displayText": "Nigeria",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 196,
+              "dataSourceId": 9,
+              "value": "South Africa",
+              "displayText": "South Africa",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 197,
+              "dataSourceId": 9,
+              "value": "New Zealand",
+              "displayText": "New Zealand",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            }
+          ]
+        }
+      },
+      {
+        "id": 9,
+        "templateId": 1,
+        "name": "synopsis",
+        "displayName": "Synopsis",
+        "description": "A brief summary of the movie’s plot.",
+        "fieldType": "textarea",
+        "isRequired": true,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 9,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T16:56:37.006Z",
+        "updatedAt": "2025-04-17T16:56:37.006Z",
+        "dataSource": null
+      },
+      {
+        "id": 10,
+        "templateId": 1,
+        "name": "content_rating",
+        "displayName": "Content Rating",
+        "description": "The age-appropriateness rating of the movie.",
+        "fieldType": "select",
+        "isRequired": true,
+        "isSearchable": false,
+        "isFilterable": true,
+        "displayOrder": 10,
+        "dataSourceId": 8,
+        "validationRules": null,
+        "createdAt": "2025-04-17T16:56:37.006Z",
+        "updatedAt": "2025-04-17T16:56:37.006Z",
+        "dataSource": {
+          "id": 8,
+          "name": "content_rating",
+          "sourceType": "dropdown",
+          "configuration": null,
+          "createdAt": "2025-04-17T16:42:39.023Z",
+          "updatedAt": "2025-04-17T16:42:39.023Z",
+          "createdBy": null,
+          "options": [
+            {
+              "id": 173,
+              "dataSourceId": 8,
+              "value": "G",
+              "displayText": "G (General Audiences)",
+              "createdAt": "2025-04-17T16:42:54.475Z",
+              "updatedAt": "2025-04-17T16:42:54.475Z"
+            },
+            {
+              "id": 174,
+              "dataSourceId": 8,
+              "value": "PG",
+              "displayText": "PG (Parental Guidance Suggested)",
+              "createdAt": "2025-04-17T16:42:54.475Z",
+              "updatedAt": "2025-04-17T16:42:54.475Z"
+            },
+            {
+              "id": 175,
+              "dataSourceId": 8,
+              "value": "PG-13",
+              "displayText": "PG-13 (Parents Strongly Cautioned)",
+              "createdAt": "2025-04-17T16:42:54.475Z",
+              "updatedAt": "2025-04-17T16:42:54.475Z"
+            },
+            {
+              "id": 176,
+              "dataSourceId": 8,
+              "value": "NC-17",
+              "displayText": "NC-17 (Adults Only)",
+              "createdAt": "2025-04-17T16:42:54.475Z",
+              "updatedAt": "2025-04-17T16:42:54.475Z"
+            },
+            {
+              "id": 198,
+              "dataSourceId": 8,
+              "value": "R",
+              "displayText": "R (Restricted)",
+              "createdAt": "2025-04-17T17:01:00.191Z",
+              "updatedAt": "2025-04-17T17:01:00.191Z"
+            }
+          ]
+        }
+      },
+      {
+        "id": 11,
+        "templateId": 1,
+        "name": "runtime",
+        "displayName": "Runtime (minutes)",
+        "description": "The total duration of the movie in minutes.",
+        "fieldType": "number",
+        "isRequired": true,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 11,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T16:56:37.006Z",
+        "updatedAt": "2025-04-17T16:56:37.006Z",
+        "dataSource": null
+      },
+      {
+        "id": 12,
+        "templateId": 1,
+        "name": "trailer_url",
+        "displayName": "Trailer URL",
+        "description": "A URL linking to the movie’s official trailer.",
+        "fieldType": "url",
+        "isRequired": false,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 12,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T16:56:37.006Z",
+        "updatedAt": "2025-04-17T16:56:37.006Z",
+        "dataSource": null
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "tv_series",
+    "displayName": "TV Series",
+    "description": "A template for capturing details of TV series, including title, genre, seasons, and more.",
+    "fullMarks": 10,
+    "isPublished": true,
+    "createdAt": "2025-04-17T17:14:35.854Z",
+    "updatedAt": "2025-05-18T11:15:17.388Z",
+    "createdBy": null,
+    "updatedBy": 1,
+    "fields": [
+      {
+        "id": 14,
+        "templateId": 2,
+        "name": "poster",
+        "displayName": "Poster",
+        "description": "URL to the TV series’ poster image.",
+        "fieldType": "img",
+        "isRequired": false,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 2,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:14:52.547Z",
+        "updatedAt": "2025-04-17T17:14:52.547Z",
+        "dataSource": null
+      },
+      {
+        "id": 15,
+        "templateId": 2,
+        "name": "first_air_year",
+        "displayName": "First Air Year",
+        "description": "The year the TV series first aired.",
+        "fieldType": "number",
+        "isRequired": true,
+        "isSearchable": true,
+        "isFilterable": true,
+        "displayOrder": 3,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:14:52.547Z",
+        "updatedAt": "2025-04-17T17:14:52.547Z",
+        "dataSource": null
+      },
+      {
+        "id": 16,
+        "templateId": 2,
+        "name": "end_year",
+        "displayName": "End Year",
+        "description": "The year the TV series ended, if applicable.",
+        "fieldType": "number",
+        "isRequired": false,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 4,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:14:52.547Z",
+        "updatedAt": "2025-04-17T17:14:52.547Z",
+        "dataSource": null
+      },
+      {
+        "id": 17,
+        "templateId": 2,
+        "name": "created_by",
+        "displayName": "Created By",
+        "description": "The creator(s) or showrunner(s) of the TV series.",
+        "fieldType": "text",
+        "isRequired": false,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 5,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:14:52.547Z",
+        "updatedAt": "2025-04-17T17:14:52.547Z",
+        "dataSource": null
+      },
+      {
+        "id": 18,
+        "templateId": 2,
+        "name": "cast",
+        "displayName": "Cast",
+        "description": "Main actors and actresses starring in the TV series.",
+        "fieldType": "text",
+        "isRequired": false,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 6,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:14:52.547Z",
+        "updatedAt": "2025-04-17T17:14:52.547Z",
+        "dataSource": null
+      },
+      {
+        "id": 19,
+        "templateId": 2,
+        "name": "language",
+        "displayName": "Language",
+        "description": "The primary language(s) spoken in the TV series.",
+        "fieldType": "multiselect",
+        "isRequired": true,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 7,
+        "dataSourceId": 7,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:14:52.547Z",
+        "updatedAt": "2025-04-17T17:14:52.547Z",
+        "dataSource": {
+          "id": 7,
+          "name": "language",
+          "sourceType": "dropdown",
+          "configuration": null,
+          "createdAt": "2025-04-17T16:42:39.023Z",
+          "updatedAt": "2025-04-17T16:42:39.023Z",
+          "createdBy": null,
+          "options": [
+            {
+              "id": 160,
+              "dataSourceId": 7,
+              "value": "Mandarin",
+              "displayText": "Mandarin",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 161,
+              "dataSourceId": 7,
+              "value": "English",
+              "displayText": "English",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 162,
+              "dataSourceId": 7,
+              "value": "Cantonese",
+              "displayText": "Cantonese",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 163,
+              "dataSourceId": 7,
+              "value": "Korean",
+              "displayText": "Korean",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 164,
+              "dataSourceId": 7,
+              "value": "Japanese",
+              "displayText": "Japanese",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 165,
+              "dataSourceId": 7,
+              "value": "Thai",
+              "displayText": "Thai",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 166,
+              "dataSourceId": 7,
+              "value": "French",
+              "displayText": "French",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 167,
+              "dataSourceId": 7,
+              "value": "German",
+              "displayText": "German",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 168,
+              "dataSourceId": 7,
+              "value": "Russian",
+              "displayText": "Russian",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 169,
+              "dataSourceId": 7,
+              "value": "Swedish",
+              "displayText": "Swedish",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 170,
+              "dataSourceId": 7,
+              "value": "Portuguese",
+              "displayText": "Portuguese",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 171,
+              "dataSourceId": 7,
+              "value": "Hindi",
+              "displayText": "Hindi",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 172,
+              "dataSourceId": 7,
+              "value": "Irish",
+              "displayText": "Irish",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            }
+          ]
+        }
+      },
+      {
+        "id": 20,
+        "templateId": 2,
+        "name": "genre",
+        "displayName": "Genre",
+        "description": "The genre(s) or category of the TV series.",
+        "fieldType": "multiselect",
+        "isRequired": true,
+        "isSearchable": true,
+        "isFilterable": true,
+        "displayOrder": 8,
+        "dataSourceId": 2,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:14:52.547Z",
+        "updatedAt": "2025-04-17T17:14:52.547Z",
+        "dataSource": {
+          "id": 2,
+          "name": "tv_type",
+          "sourceType": "dropdown",
+          "configuration": null,
+          "createdAt": "2025-04-17T16:34:40.099Z",
+          "updatedAt": "2025-04-17T16:34:40.099Z",
+          "createdBy": null,
+          "options": [
+            {
+              "id": 202,
+              "dataSourceId": 2,
+              "value": "love",
+              "displayText": "Love",
+              "createdAt": "2025-05-18T22:49:13.976Z",
+              "updatedAt": "2025-05-18T22:49:13.976Z"
+            },
+            {
+              "id": 203,
+              "dataSourceId": 2,
+              "value": "romance",
+              "displayText": "Romance",
+              "createdAt": "2025-05-18T22:49:13.976Z",
+              "updatedAt": "2025-05-18T22:49:13.976Z"
+            },
+            {
+              "id": 204,
+              "dataSourceId": 2,
+              "value": "comedy",
+              "displayText": "Comedy",
+              "createdAt": "2025-05-18T22:49:13.976Z",
+              "updatedAt": "2025-05-18T22:49:13.976Z"
+            },
+            {
+              "id": 205,
+              "dataSourceId": 2,
+              "value": "history",
+              "displayText": "History",
+              "createdAt": "2025-05-18T22:49:13.976Z",
+              "updatedAt": "2025-05-18T22:49:13.976Z"
+            },
+            {
+              "id": 206,
+              "dataSourceId": 2,
+              "value": "competition",
+              "displayText": "Competition",
+              "createdAt": "2025-05-18T22:49:13.976Z",
+              "updatedAt": "2025-05-18T22:49:13.976Z"
+            },
+            {
+              "id": 207,
+              "dataSourceId": 2,
+              "value": "emotional",
+              "displayText": "Emotional",
+              "createdAt": "2025-05-18T22:49:13.976Z",
+              "updatedAt": "2025-05-18T22:49:13.976Z"
+            },
+            {
+              "id": 208,
+              "dataSourceId": 2,
+              "value": "animation",
+              "displayText": "Animation",
+              "createdAt": "2025-05-18T22:49:13.976Z",
+              "updatedAt": "2025-05-18T22:49:13.976Z"
+            },
+            {
+              "id": 209,
+              "dataSourceId": 2,
+              "value": "costume_drama",
+              "displayText": "Costume Drama",
+              "createdAt": "2025-05-18T22:49:13.976Z",
+              "updatedAt": "2025-05-18T22:49:13.976Z"
+            },
+            {
+              "id": 210,
+              "dataSourceId": 2,
+              "value": "family_drama",
+              "displayText": "Family Drama",
+              "createdAt": "2025-05-18T22:49:13.976Z",
+              "updatedAt": "2025-05-18T22:49:13.976Z"
+            },
+            {
+              "id": 211,
+              "dataSourceId": 2,
+              "value": "crime",
+              "displayText": "Crime",
+              "createdAt": "2025-05-18T22:49:13.976Z",
+              "updatedAt": "2025-05-18T22:49:13.976Z"
+            },
+            {
+              "id": 212,
+              "dataSourceId": 2,
+              "value": "thriller",
+              "displayText": "Thriller",
+              "createdAt": "2025-05-18T22:49:13.976Z",
+              "updatedAt": "2025-05-18T22:49:13.976Z"
+            },
+            {
+              "id": 213,
+              "dataSourceId": 2,
+              "value": "adventure",
+              "displayText": "Adventure",
+              "createdAt": "2025-05-18T22:49:13.976Z",
+              "updatedAt": "2025-05-18T22:49:13.976Z"
+            },
+            {
+              "id": 214,
+              "dataSourceId": 2,
+              "value": "horror",
+              "displayText": "Horror",
+              "createdAt": "2025-05-18T22:49:13.976Z",
+              "updatedAt": "2025-05-18T22:49:13.976Z"
+            },
+            {
+              "id": 215,
+              "dataSourceId": 2,
+              "value": "war",
+              "displayText": "War",
+              "createdAt": "2025-05-18T22:49:13.976Z",
+              "updatedAt": "2025-05-18T22:49:13.976Z"
+            },
+            {
+              "id": 216,
+              "dataSourceId": 2,
+              "value": "action",
+              "displayText": "Action",
+              "createdAt": "2025-05-18T22:49:13.976Z",
+              "updatedAt": "2025-05-18T22:49:13.976Z"
+            },
+            {
+              "id": 217,
+              "dataSourceId": 2,
+              "value": "biography",
+              "displayText": "Biography",
+              "createdAt": "2025-05-18T22:49:13.976Z",
+              "updatedAt": "2025-05-18T22:49:13.976Z"
+            },
+            {
+              "id": 218,
+              "dataSourceId": 2,
+              "value": "drama",
+              "displayText": "Drama",
+              "createdAt": "2025-05-18T22:49:13.976Z",
+              "updatedAt": "2025-05-18T22:49:13.976Z"
+            },
+            {
+              "id": 219,
+              "dataSourceId": 2,
+              "value": "fantasy",
+              "displayText": "Fantasy",
+              "createdAt": "2025-05-18T22:49:13.976Z",
+              "updatedAt": "2025-05-18T22:49:13.976Z"
+            },
+            {
+              "id": 220,
+              "dataSourceId": 2,
+              "value": "disaster",
+              "displayText": "Disaster",
+              "createdAt": "2025-05-18T22:49:13.976Z",
+              "updatedAt": "2025-05-18T22:49:13.976Z"
+            },
+            {
+              "id": 221,
+              "dataSourceId": 2,
+              "value": "musical",
+              "displayText": "Musical",
+              "createdAt": "2025-05-18T22:49:13.976Z",
+              "updatedAt": "2025-05-18T22:49:13.976Z"
+            }
+          ]
+        }
+      },
+      {
+        "id": 21,
+        "templateId": 2,
+        "name": "country",
+        "displayName": "Country",
+        "description": "The country or countries where the TV series was produced.",
+        "fieldType": "multiselect",
+        "isRequired": true,
+        "isSearchable": true,
+        "isFilterable": true,
+        "displayOrder": 9,
+        "dataSourceId": 9,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:14:52.547Z",
+        "updatedAt": "2025-04-17T17:14:52.547Z",
+        "dataSource": {
+          "id": 9,
+          "name": "country",
+          "sourceType": "dropdown",
+          "configuration": null,
+          "createdAt": "2025-04-17T16:49:24.638Z",
+          "updatedAt": "2025-04-17T16:49:24.638Z",
+          "createdBy": null,
+          "options": [
+            {
+              "id": 177,
+              "dataSourceId": 9,
+              "value": "USA",
+              "displayText": "USA",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 178,
+              "dataSourceId": 9,
+              "value": "South Korea",
+              "displayText": "South Korea",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 179,
+              "dataSourceId": 9,
+              "value": "Japan",
+              "displayText": "Japan",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 180,
+              "dataSourceId": 9,
+              "value": "Thailand",
+              "displayText": "Thailand",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 181,
+              "dataSourceId": 9,
+              "value": "France",
+              "displayText": "France",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 182,
+              "dataSourceId": 9,
+              "value": "Germany",
+              "displayText": "Germany",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 183,
+              "dataSourceId": 9,
+              "value": "Russia",
+              "displayText": "Russia",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 184,
+              "dataSourceId": 9,
+              "value": "Sweden",
+              "displayText": "Sweden",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 185,
+              "dataSourceId": 9,
+              "value": "Brazil",
+              "displayText": "Brazil",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 186,
+              "dataSourceId": 9,
+              "value": "India",
+              "displayText": "India",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 187,
+              "dataSourceId": 9,
+              "value": "Canada",
+              "displayText": "Canada",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 188,
+              "dataSourceId": 9,
+              "value": "Ireland",
+              "displayText": "Ireland",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 189,
+              "dataSourceId": 9,
+              "value": "Australia",
+              "displayText": "Australia",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 190,
+              "dataSourceId": 9,
+              "value": "United Kingdom",
+              "displayText": "United Kingdom",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 191,
+              "dataSourceId": 9,
+              "value": "China",
+              "displayText": "China",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 192,
+              "dataSourceId": 9,
+              "value": "Mexico",
+              "displayText": "Mexico",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 193,
+              "dataSourceId": 9,
+              "value": "Spain",
+              "displayText": "Spain",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 194,
+              "dataSourceId": 9,
+              "value": "Italy",
+              "displayText": "Italy",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 195,
+              "dataSourceId": 9,
+              "value": "Nigeria",
+              "displayText": "Nigeria",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 196,
+              "dataSourceId": 9,
+              "value": "South Africa",
+              "displayText": "South Africa",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 197,
+              "dataSourceId": 9,
+              "value": "New Zealand",
+              "displayText": "New Zealand",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            }
+          ]
+        }
+      },
+      {
+        "id": 22,
+        "templateId": 2,
+        "name": "synopsis",
+        "displayName": "Synopsis",
+        "description": "A brief summary of the TV series’ plot.",
+        "fieldType": "textarea",
+        "isRequired": true,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 10,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:14:52.547Z",
+        "updatedAt": "2025-04-17T17:14:52.547Z",
+        "dataSource": null
+      },
+      {
+        "id": 23,
+        "templateId": 2,
+        "name": "content_rating",
+        "displayName": "Content Rating",
+        "description": "The age-appropriateness rating of the TV series.",
+        "fieldType": "select",
+        "isRequired": false,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 11,
+        "dataSourceId": 8,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:14:52.547Z",
+        "updatedAt": "2025-04-17T17:14:52.547Z",
+        "dataSource": {
+          "id": 8,
+          "name": "content_rating",
+          "sourceType": "dropdown",
+          "configuration": null,
+          "createdAt": "2025-04-17T16:42:39.023Z",
+          "updatedAt": "2025-04-17T16:42:39.023Z",
+          "createdBy": null,
+          "options": [
+            {
+              "id": 173,
+              "dataSourceId": 8,
+              "value": "G",
+              "displayText": "G (General Audiences)",
+              "createdAt": "2025-04-17T16:42:54.475Z",
+              "updatedAt": "2025-04-17T16:42:54.475Z"
+            },
+            {
+              "id": 174,
+              "dataSourceId": 8,
+              "value": "PG",
+              "displayText": "PG (Parental Guidance Suggested)",
+              "createdAt": "2025-04-17T16:42:54.475Z",
+              "updatedAt": "2025-04-17T16:42:54.475Z"
+            },
+            {
+              "id": 175,
+              "dataSourceId": 8,
+              "value": "PG-13",
+              "displayText": "PG-13 (Parents Strongly Cautioned)",
+              "createdAt": "2025-04-17T16:42:54.475Z",
+              "updatedAt": "2025-04-17T16:42:54.475Z"
+            },
+            {
+              "id": 176,
+              "dataSourceId": 8,
+              "value": "NC-17",
+              "displayText": "NC-17 (Adults Only)",
+              "createdAt": "2025-04-17T16:42:54.475Z",
+              "updatedAt": "2025-04-17T16:42:54.475Z"
+            },
+            {
+              "id": 198,
+              "dataSourceId": 8,
+              "value": "R",
+              "displayText": "R (Restricted)",
+              "createdAt": "2025-04-17T17:01:00.191Z",
+              "updatedAt": "2025-04-17T17:01:00.191Z"
+            }
+          ]
+        }
+      },
+      {
+        "id": 24,
+        "templateId": 2,
+        "name": "average_runtime",
+        "displayName": "Average Runtime (minutes)",
+        "description": "The average duration of each episode in minutes.",
+        "fieldType": "number",
+        "isRequired": true,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 12,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:14:52.547Z",
+        "updatedAt": "2025-04-17T17:14:52.547Z",
+        "dataSource": null
+      },
+      {
+        "id": 25,
+        "templateId": 2,
+        "name": "number_of_seasons",
+        "displayName": "Number of Seasons",
+        "description": "The total number of seasons in the TV series.",
+        "fieldType": "number",
+        "isRequired": true,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 14,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:14:52.547Z",
+        "updatedAt": "2025-04-17T17:14:52.547Z",
+        "dataSource": null
+      },
+      {
+        "id": 26,
+        "templateId": 2,
+        "name": "number_of_episodes",
+        "displayName": "Number of Episodes",
+        "description": "The total number of episodes in the TV series.",
+        "fieldType": "number",
+        "isRequired": true,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 15,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:14:52.547Z",
+        "updatedAt": "2025-04-17T17:14:52.547Z",
+        "dataSource": null
+      },
+      {
+        "id": 27,
+        "templateId": 2,
+        "name": "network_or_platform",
+        "displayName": "Network or Platform",
+        "description": "The network or streaming platform where the TV series airs.",
+        "fieldType": "text",
+        "isRequired": true,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 16,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:14:52.547Z",
+        "updatedAt": "2025-04-17T17:14:52.547Z",
+        "dataSource": null
+      },
+      {
+        "id": 28,
+        "templateId": 2,
+        "name": "status",
+        "displayName": "Status",
+        "description": "The current status of the TV series (e.g., ongoing, ended, canceled).",
+        "fieldType": "select",
+        "isRequired": true,
+        "isSearchable": true,
+        "isFilterable": true,
+        "displayOrder": 17,
+        "dataSourceId": 10,
+        "validationRules": {
+          "options": [
+            "ongoing",
+            "ended",
+            "canceled"
+          ]
+        },
+        "createdAt": "2025-04-17T17:14:52.547Z",
+        "updatedAt": "2025-04-17T17:14:52.547Z",
+        "dataSource": {
+          "id": 10,
+          "name": "tv_status",
+          "sourceType": "dropdown",
+          "configuration": null,
+          "createdAt": "2025-04-17T17:18:05.691Z",
+          "updatedAt": "2025-04-17T17:18:05.691Z",
+          "createdBy": null,
+          "options": [
+            {
+              "id": 199,
+              "dataSourceId": 10,
+              "value": "ongoing",
+              "displayText": "Ongoing",
+              "createdAt": "2025-04-17T17:20:11.676Z",
+              "updatedAt": "2025-04-17T17:20:11.676Z"
+            },
+            {
+              "id": 200,
+              "dataSourceId": 10,
+              "value": "ended",
+              "displayText": "Ended",
+              "createdAt": "2025-04-17T17:20:11.676Z",
+              "updatedAt": "2025-04-17T17:20:11.676Z"
+            },
+            {
+              "id": 201,
+              "dataSourceId": 10,
+              "value": "canceled",
+              "displayText": "Canceled",
+              "createdAt": "2025-04-17T17:20:11.676Z",
+              "updatedAt": "2025-04-17T17:20:11.676Z"
+            }
+          ]
+        }
+      },
+      {
+        "id": 29,
+        "templateId": 2,
+        "name": "trailer_url",
+        "displayName": "Trailer URL",
+        "description": "A URL linking to the TV series’ official trailer.",
+        "fieldType": "text",
+        "isRequired": false,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 13,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:14:52.547Z",
+        "updatedAt": "2025-04-17T17:14:52.547Z",
+        "dataSource": null
+      },
+      {
+        "id": 13,
+        "templateId": 2,
+        "name": "title",
+        "displayName": "Title",
+        "description": "The official title of the TV series.",
+        "fieldType": "text",
+        "isRequired": true,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 1,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:14:52.547Z",
+        "updatedAt": "2025-04-17T17:14:52.547Z",
+        "dataSource": null
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "variety_show",
+    "displayName": "Variety Show",
+    "description": "A template for capturing details of variety shows, including title, host, genre, and episode details.",
+    "fullMarks": 10,
+    "isPublished": true,
+    "createdAt": "2025-04-17T17:57:58.233Z",
+    "updatedAt": "2025-05-18T11:14:50.443Z",
+    "createdBy": null,
+    "updatedBy": 1,
+    "fields": [
+      {
+        "id": 31,
+        "templateId": 3,
+        "name": "poster",
+        "displayName": "Poster",
+        "description": "URL to the variety show’s poster image.",
+        "fieldType": "img",
+        "isRequired": false,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 2,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:58:56.262Z",
+        "updatedAt": "2025-04-17T17:58:56.262Z",
+        "dataSource": null
+      },
+      {
+        "id": 33,
+        "templateId": 3,
+        "name": "first_air_year",
+        "displayName": "First Air Year",
+        "description": "The year the variety show first aired.",
+        "fieldType": "number",
+        "isRequired": true,
+        "isSearchable": true,
+        "isFilterable": true,
+        "displayOrder": 4,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:58:56.262Z",
+        "updatedAt": "2025-04-17T17:58:56.262Z",
+        "dataSource": null
+      },
+      {
+        "id": 34,
+        "templateId": 3,
+        "name": "end_year",
+        "displayName": "End Year",
+        "description": "The year the variety show ended, if applicable.",
+        "fieldType": "number",
+        "isRequired": false,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 5,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:58:56.262Z",
+        "updatedAt": "2025-04-17T17:58:56.262Z",
+        "dataSource": null
+      },
+      {
+        "id": 35,
+        "templateId": 3,
+        "name": "network_or_platform",
+        "displayName": "Network or Platform",
+        "description": "The network or platform where the variety show airs (e.g., KBS, Netflix).",
+        "fieldType": "text",
+        "isRequired": false,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 6,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:58:56.262Z",
+        "updatedAt": "2025-04-17T17:58:56.262Z",
+        "dataSource": null
+      },
+      {
+        "id": 36,
+        "templateId": 3,
+        "name": "genre",
+        "displayName": "Genre",
+        "description": "The genre(s) or category of the variety show.",
+        "fieldType": "multiselect",
+        "isRequired": true,
+        "isSearchable": true,
+        "isFilterable": true,
+        "displayOrder": 7,
+        "dataSourceId": 3,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:58:56.262Z",
+        "updatedAt": "2025-04-17T17:58:56.262Z",
+        "dataSource": {
+          "id": 3,
+          "name": "show_type",
+          "sourceType": "dropdown",
+          "configuration": null,
+          "createdAt": "2025-04-17T16:34:40.099Z",
+          "updatedAt": "2025-04-17T16:34:40.099Z",
+          "createdBy": null,
+          "options": [
+            {
+              "id": 222,
+              "dataSourceId": 3,
+              "value": "reality_show",
+              "displayText": "Reality Show",
+              "createdAt": "2025-05-18T22:49:26.027Z",
+              "updatedAt": "2025-05-18T22:49:26.027Z"
+            },
+            {
+              "id": 223,
+              "dataSourceId": 3,
+              "value": "talent_show",
+              "displayText": "Talent Show",
+              "createdAt": "2025-05-18T22:49:26.027Z",
+              "updatedAt": "2025-05-18T22:49:26.027Z"
+            },
+            {
+              "id": 224,
+              "dataSourceId": 3,
+              "value": "talk_show",
+              "displayText": "Talk Show",
+              "createdAt": "2025-05-18T22:49:26.027Z",
+              "updatedAt": "2025-05-18T22:49:26.027Z"
+            },
+            {
+              "id": 225,
+              "dataSourceId": 3,
+              "value": "dance_show",
+              "displayText": "Dance Show",
+              "createdAt": "2025-05-18T22:49:26.027Z",
+              "updatedAt": "2025-05-18T22:49:26.027Z"
+            },
+            {
+              "id": 226,
+              "dataSourceId": 3,
+              "value": "comedy_show",
+              "displayText": "Comedy Show",
+              "createdAt": "2025-05-18T22:49:26.027Z",
+              "updatedAt": "2025-05-18T22:49:26.027Z"
+            },
+            {
+              "id": 227,
+              "dataSourceId": 3,
+              "value": "martial_arts",
+              "displayText": "Martial Arts",
+              "createdAt": "2025-05-18T22:49:26.027Z",
+              "updatedAt": "2025-05-18T22:49:26.027Z"
+            },
+            {
+              "id": 228,
+              "dataSourceId": 3,
+              "value": "interview",
+              "displayText": "Interview",
+              "createdAt": "2025-05-18T22:49:26.027Z",
+              "updatedAt": "2025-05-18T22:49:26.027Z"
+            },
+            {
+              "id": 229,
+              "dataSourceId": 3,
+              "value": "concert",
+              "displayText": "Concert",
+              "createdAt": "2025-05-18T22:49:26.027Z",
+              "updatedAt": "2025-05-18T22:49:26.027Z"
+            },
+            {
+              "id": 230,
+              "dataSourceId": 3,
+              "value": "others",
+              "displayText": "Others",
+              "createdAt": "2025-05-18T22:49:26.027Z",
+              "updatedAt": "2025-05-18T22:49:26.027Z"
+            }
+          ]
+        }
+      },
+      {
+        "id": 37,
+        "templateId": 3,
+        "name": "language",
+        "displayName": "Language",
+        "description": "The primary language(s) the variety show is broadcast in.",
+        "fieldType": "multiselect",
+        "isRequired": false,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 8,
+        "dataSourceId": 7,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:58:56.262Z",
+        "updatedAt": "2025-04-17T17:58:56.262Z",
+        "dataSource": {
+          "id": 7,
+          "name": "language",
+          "sourceType": "dropdown",
+          "configuration": null,
+          "createdAt": "2025-04-17T16:42:39.023Z",
+          "updatedAt": "2025-04-17T16:42:39.023Z",
+          "createdBy": null,
+          "options": [
+            {
+              "id": 160,
+              "dataSourceId": 7,
+              "value": "Mandarin",
+              "displayText": "Mandarin",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 161,
+              "dataSourceId": 7,
+              "value": "English",
+              "displayText": "English",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 162,
+              "dataSourceId": 7,
+              "value": "Cantonese",
+              "displayText": "Cantonese",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 163,
+              "dataSourceId": 7,
+              "value": "Korean",
+              "displayText": "Korean",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 164,
+              "dataSourceId": 7,
+              "value": "Japanese",
+              "displayText": "Japanese",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 165,
+              "dataSourceId": 7,
+              "value": "Thai",
+              "displayText": "Thai",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 166,
+              "dataSourceId": 7,
+              "value": "French",
+              "displayText": "French",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 167,
+              "dataSourceId": 7,
+              "value": "German",
+              "displayText": "German",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 168,
+              "dataSourceId": 7,
+              "value": "Russian",
+              "displayText": "Russian",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 169,
+              "dataSourceId": 7,
+              "value": "Swedish",
+              "displayText": "Swedish",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 170,
+              "dataSourceId": 7,
+              "value": "Portuguese",
+              "displayText": "Portuguese",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 171,
+              "dataSourceId": 7,
+              "value": "Hindi",
+              "displayText": "Hindi",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 172,
+              "dataSourceId": 7,
+              "value": "Irish",
+              "displayText": "Irish",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            }
+          ]
+        }
+      },
+      {
+        "id": 38,
+        "templateId": 3,
+        "name": "country",
+        "displayName": "Country",
+        "description": "The country of origin of the variety show.",
+        "fieldType": "multiselect",
+        "isRequired": true,
+        "isSearchable": true,
+        "isFilterable": true,
+        "displayOrder": 9,
+        "dataSourceId": 9,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:58:56.262Z",
+        "updatedAt": "2025-04-17T17:58:56.262Z",
+        "dataSource": {
+          "id": 9,
+          "name": "country",
+          "sourceType": "dropdown",
+          "configuration": null,
+          "createdAt": "2025-04-17T16:49:24.638Z",
+          "updatedAt": "2025-04-17T16:49:24.638Z",
+          "createdBy": null,
+          "options": [
+            {
+              "id": 177,
+              "dataSourceId": 9,
+              "value": "USA",
+              "displayText": "USA",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 178,
+              "dataSourceId": 9,
+              "value": "South Korea",
+              "displayText": "South Korea",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 179,
+              "dataSourceId": 9,
+              "value": "Japan",
+              "displayText": "Japan",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 180,
+              "dataSourceId": 9,
+              "value": "Thailand",
+              "displayText": "Thailand",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 181,
+              "dataSourceId": 9,
+              "value": "France",
+              "displayText": "France",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 182,
+              "dataSourceId": 9,
+              "value": "Germany",
+              "displayText": "Germany",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 183,
+              "dataSourceId": 9,
+              "value": "Russia",
+              "displayText": "Russia",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 184,
+              "dataSourceId": 9,
+              "value": "Sweden",
+              "displayText": "Sweden",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 185,
+              "dataSourceId": 9,
+              "value": "Brazil",
+              "displayText": "Brazil",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 186,
+              "dataSourceId": 9,
+              "value": "India",
+              "displayText": "India",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 187,
+              "dataSourceId": 9,
+              "value": "Canada",
+              "displayText": "Canada",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 188,
+              "dataSourceId": 9,
+              "value": "Ireland",
+              "displayText": "Ireland",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 189,
+              "dataSourceId": 9,
+              "value": "Australia",
+              "displayText": "Australia",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 190,
+              "dataSourceId": 9,
+              "value": "United Kingdom",
+              "displayText": "United Kingdom",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 191,
+              "dataSourceId": 9,
+              "value": "China",
+              "displayText": "China",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 192,
+              "dataSourceId": 9,
+              "value": "Mexico",
+              "displayText": "Mexico",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 193,
+              "dataSourceId": 9,
+              "value": "Spain",
+              "displayText": "Spain",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 194,
+              "dataSourceId": 9,
+              "value": "Italy",
+              "displayText": "Italy",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 195,
+              "dataSourceId": 9,
+              "value": "Nigeria",
+              "displayText": "Nigeria",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 196,
+              "dataSourceId": 9,
+              "value": "South Africa",
+              "displayText": "South Africa",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 197,
+              "dataSourceId": 9,
+              "value": "New Zealand",
+              "displayText": "New Zealand",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            }
+          ]
+        }
+      },
+      {
+        "id": 39,
+        "templateId": 3,
+        "name": "description",
+        "displayName": "Description",
+        "description": "A brief description of the variety show’s format or content.",
+        "fieldType": "textarea",
+        "isRequired": true,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 10,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:58:56.262Z",
+        "updatedAt": "2025-04-17T17:58:56.262Z",
+        "dataSource": null
+      },
+      {
+        "id": 40,
+        "templateId": 3,
+        "name": "content_rating",
+        "displayName": "Content Rating",
+        "description": "The age-appropriateness rating of the variety show.",
+        "fieldType": "select",
+        "isRequired": false,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 11,
+        "dataSourceId": 8,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:58:56.262Z",
+        "updatedAt": "2025-04-17T17:58:56.262Z",
+        "dataSource": {
+          "id": 8,
+          "name": "content_rating",
+          "sourceType": "dropdown",
+          "configuration": null,
+          "createdAt": "2025-04-17T16:42:39.023Z",
+          "updatedAt": "2025-04-17T16:42:39.023Z",
+          "createdBy": null,
+          "options": [
+            {
+              "id": 173,
+              "dataSourceId": 8,
+              "value": "G",
+              "displayText": "G (General Audiences)",
+              "createdAt": "2025-04-17T16:42:54.475Z",
+              "updatedAt": "2025-04-17T16:42:54.475Z"
+            },
+            {
+              "id": 174,
+              "dataSourceId": 8,
+              "value": "PG",
+              "displayText": "PG (Parental Guidance Suggested)",
+              "createdAt": "2025-04-17T16:42:54.475Z",
+              "updatedAt": "2025-04-17T16:42:54.475Z"
+            },
+            {
+              "id": 175,
+              "dataSourceId": 8,
+              "value": "PG-13",
+              "displayText": "PG-13 (Parents Strongly Cautioned)",
+              "createdAt": "2025-04-17T16:42:54.475Z",
+              "updatedAt": "2025-04-17T16:42:54.475Z"
+            },
+            {
+              "id": 176,
+              "dataSourceId": 8,
+              "value": "NC-17",
+              "displayText": "NC-17 (Adults Only)",
+              "createdAt": "2025-04-17T16:42:54.475Z",
+              "updatedAt": "2025-04-17T16:42:54.475Z"
+            },
+            {
+              "id": 198,
+              "dataSourceId": 8,
+              "value": "R",
+              "displayText": "R (Restricted)",
+              "createdAt": "2025-04-17T17:01:00.191Z",
+              "updatedAt": "2025-04-17T17:01:00.191Z"
+            }
+          ]
+        }
+      },
+      {
+        "id": 41,
+        "templateId": 3,
+        "name": "average_runtime",
+        "displayName": "Average Runtime (minutes)",
+        "description": "The average runtime of each episode in minutes.",
+        "fieldType": "number",
+        "isRequired": true,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 12,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:58:56.262Z",
+        "updatedAt": "2025-04-17T17:58:56.262Z",
+        "dataSource": null
+      },
+      {
+        "id": 42,
+        "templateId": 3,
+        "name": "episode_count",
+        "displayName": "Episode Count",
+        "description": "The total number of episodes aired.",
+        "fieldType": "number",
+        "isRequired": true,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 13,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:58:56.262Z",
+        "updatedAt": "2025-04-17T17:58:56.262Z",
+        "dataSource": null
+      },
+      {
+        "id": 43,
+        "templateId": 3,
+        "name": "status",
+        "displayName": "Status",
+        "description": "The current status of the variety show (e.g., Ongoing, Ended, Canceled).",
+        "fieldType": "select",
+        "isRequired": false,
+        "isSearchable": true,
+        "isFilterable": true,
+        "displayOrder": 14,
+        "dataSourceId": 10,
+        "validationRules": {
+          "options": [
+            "Ongoing",
+            "Ended",
+            "Canceled"
+          ]
+        },
+        "createdAt": "2025-04-17T17:58:56.262Z",
+        "updatedAt": "2025-04-17T17:58:56.262Z",
+        "dataSource": {
+          "id": 10,
+          "name": "tv_status",
+          "sourceType": "dropdown",
+          "configuration": null,
+          "createdAt": "2025-04-17T17:18:05.691Z",
+          "updatedAt": "2025-04-17T17:18:05.691Z",
+          "createdBy": null,
+          "options": [
+            {
+              "id": 199,
+              "dataSourceId": 10,
+              "value": "ongoing",
+              "displayText": "Ongoing",
+              "createdAt": "2025-04-17T17:20:11.676Z",
+              "updatedAt": "2025-04-17T17:20:11.676Z"
+            },
+            {
+              "id": 200,
+              "dataSourceId": 10,
+              "value": "ended",
+              "displayText": "Ended",
+              "createdAt": "2025-04-17T17:20:11.676Z",
+              "updatedAt": "2025-04-17T17:20:11.676Z"
+            },
+            {
+              "id": 201,
+              "dataSourceId": 10,
+              "value": "canceled",
+              "displayText": "Canceled",
+              "createdAt": "2025-04-17T17:20:11.676Z",
+              "updatedAt": "2025-04-17T17:20:11.676Z"
+            }
+          ]
+        }
+      },
+      {
+        "id": 44,
+        "templateId": 3,
+        "name": "trailer_url",
+        "displayName": "Trailer URL",
+        "description": "A URL linking to a trailer or promotional video for the variety show.",
+        "fieldType": "url",
+        "isRequired": false,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 15,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:58:56.262Z",
+        "updatedAt": "2025-04-17T17:58:56.262Z",
+        "dataSource": null
+      },
+      {
+        "id": 32,
+        "templateId": 3,
+        "name": "host",
+        "displayName": "Host",
+        "description": "The host(s) of the variety show.",
+        "fieldType": "text",
+        "isRequired": true,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 3,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:58:56.262Z",
+        "updatedAt": "2025-04-17T17:58:56.262Z",
+        "dataSource": null
+      },
+      {
+        "id": 30,
+        "templateId": 3,
+        "name": "title",
+        "displayName": "Title",
+        "description": "The official title of the variety show.",
+        "fieldType": "text",
+        "isRequired": true,
+        "isSearchable": true,
+        "isFilterable": false,
+        "displayOrder": 1,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:58:56.262Z",
+        "updatedAt": "2025-04-17T17:58:56.262Z",
+        "dataSource": null
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "book",
+    "displayName": "Book",
+    "description": "A template for capturing details of books, including novels, with metadata like title, author, genre, and source URL.",
+    "fullMarks": 10,
+    "isPublished": true,
+    "createdAt": "2025-04-17T05:48:27.857Z",
+    "updatedAt": "2025-05-19T04:40:20.630Z",
+    "createdBy": 1,
+    "updatedBy": 1,
+    "fields": [
+      {
+        "id": 48,
+        "templateId": 4,
+        "name": "publication_year",
+        "displayName": "Publication Year",
+        "description": "The year the book was first published.",
+        "fieldType": "number",
+        "isRequired": true,
+        "isSearchable": true,
+        "isFilterable": true,
+        "displayOrder": 4,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T05:48:27.871Z",
+        "updatedAt": "2025-04-17T05:48:27.871Z",
+        "dataSource": null
+      },
+      {
+        "id": 49,
+        "templateId": 4,
+        "name": "publisher",
+        "displayName": "Publisher",
+        "description": "The company that published the book.",
+        "fieldType": "text",
+        "isRequired": false,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 5,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T05:48:27.871Z",
+        "updatedAt": "2025-04-17T05:48:27.871Z",
+        "dataSource": null
+      },
+      {
+        "id": 50,
+        "templateId": 4,
+        "name": "isbn",
+        "displayName": "ISBN",
+        "description": "The International Standard Book Number (ISBN) of the book.",
+        "fieldType": "text",
+        "isRequired": false,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 6,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T05:48:27.871Z",
+        "updatedAt": "2025-04-17T05:48:27.871Z",
+        "dataSource": null
+      },
+      {
+        "id": 51,
+        "templateId": 4,
+        "name": "language",
+        "displayName": "Language",
+        "description": "The primary language(s) the book is written in.",
+        "fieldType": "multiselect",
+        "isRequired": true,
+        "isSearchable": true,
+        "isFilterable": false,
+        "displayOrder": 7,
+        "dataSourceId": 7,
+        "validationRules": null,
+        "createdAt": "2025-04-17T05:48:27.871Z",
+        "updatedAt": "2025-04-17T05:48:27.871Z",
+        "dataSource": {
+          "id": 7,
+          "name": "language",
+          "sourceType": "dropdown",
+          "configuration": null,
+          "createdAt": "2025-04-17T16:42:39.023Z",
+          "updatedAt": "2025-04-17T16:42:39.023Z",
+          "createdBy": null,
+          "options": [
+            {
+              "id": 160,
+              "dataSourceId": 7,
+              "value": "Mandarin",
+              "displayText": "Mandarin",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 161,
+              "dataSourceId": 7,
+              "value": "English",
+              "displayText": "English",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 162,
+              "dataSourceId": 7,
+              "value": "Cantonese",
+              "displayText": "Cantonese",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 163,
+              "dataSourceId": 7,
+              "value": "Korean",
+              "displayText": "Korean",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 164,
+              "dataSourceId": 7,
+              "value": "Japanese",
+              "displayText": "Japanese",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 165,
+              "dataSourceId": 7,
+              "value": "Thai",
+              "displayText": "Thai",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 166,
+              "dataSourceId": 7,
+              "value": "French",
+              "displayText": "French",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 167,
+              "dataSourceId": 7,
+              "value": "German",
+              "displayText": "German",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 168,
+              "dataSourceId": 7,
+              "value": "Russian",
+              "displayText": "Russian",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 169,
+              "dataSourceId": 7,
+              "value": "Swedish",
+              "displayText": "Swedish",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 170,
+              "dataSourceId": 7,
+              "value": "Portuguese",
+              "displayText": "Portuguese",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 171,
+              "dataSourceId": 7,
+              "value": "Hindi",
+              "displayText": "Hindi",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 172,
+              "dataSourceId": 7,
+              "value": "Irish",
+              "displayText": "Irish",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            }
+          ]
+        }
+      },
+      {
+        "id": 52,
+        "templateId": 4,
+        "name": "genre",
+        "displayName": "Genre",
+        "description": "The genre(s) or category of the book.",
+        "fieldType": "multiselect",
+        "isRequired": true,
+        "isSearchable": true,
+        "isFilterable": true,
+        "displayOrder": 8,
+        "dataSourceId": 4,
+        "validationRules": null,
+        "createdAt": "2025-04-17T05:48:27.871Z",
+        "updatedAt": "2025-04-17T05:48:27.871Z",
+        "dataSource": {
+          "id": 4,
+          "name": "book_type",
+          "sourceType": "dropdown",
+          "configuration": null,
+          "createdAt": "2025-04-17T16:34:40.099Z",
+          "updatedAt": "2025-04-17T16:34:40.099Z",
+          "createdBy": null,
+          "options": [
+            {
+              "id": 104,
+              "dataSourceId": 4,
+              "value": "Literature",
+              "displayText": "Literature",
+              "createdAt": "2025-04-17T16:35:40.331Z",
+              "updatedAt": "2025-04-17T16:35:40.331Z"
+            },
+            {
+              "id": 105,
+              "dataSourceId": 4,
+              "value": "Business",
+              "displayText": "Business",
+              "createdAt": "2025-04-17T16:35:40.331Z",
+              "updatedAt": "2025-04-17T16:35:40.331Z"
+            },
+            {
+              "id": 106,
+              "dataSourceId": 4,
+              "value": "Mystery",
+              "displayText": "Mystery",
+              "createdAt": "2025-04-17T16:35:40.331Z",
+              "updatedAt": "2025-04-17T16:35:40.331Z"
+            },
+            {
+              "id": 107,
+              "dataSourceId": 4,
+              "value": "Chinese Medicine Literature",
+              "displayText": "Chinese Medicine Literature",
+              "createdAt": "2025-04-17T16:35:40.331Z",
+              "updatedAt": "2025-04-17T16:35:40.331Z"
+            },
+            {
+              "id": 108,
+              "dataSourceId": 4,
+              "value": "E-book",
+              "displayText": "E-book",
+              "createdAt": "2025-04-17T16:35:40.331Z",
+              "updatedAt": "2025-04-17T16:35:40.331Z"
+            },
+            {
+              "id": 109,
+              "dataSourceId": 4,
+              "value": "Book",
+              "displayText": "Book",
+              "createdAt": "2025-04-17T16:35:40.331Z",
+              "updatedAt": "2025-04-17T16:35:40.331Z"
+            },
+            {
+              "id": 110,
+              "dataSourceId": 4,
+              "value": "Children's Literature",
+              "displayText": "Children's Literature",
+              "createdAt": "2025-04-17T16:35:40.331Z",
+              "updatedAt": "2025-04-17T16:35:40.331Z"
+            },
+            {
+              "id": 111,
+              "dataSourceId": 4,
+              "value": "Popular Science",
+              "displayText": "Popular Science",
+              "createdAt": "2025-04-17T16:35:40.331Z",
+              "updatedAt": "2025-04-17T16:35:40.331Z"
+            },
+            {
+              "id": 112,
+              "dataSourceId": 4,
+              "value": "Comics",
+              "displayText": "Comics",
+              "createdAt": "2025-04-17T16:35:40.331Z",
+              "updatedAt": "2025-04-17T16:35:40.331Z"
+            },
+            {
+              "id": 113,
+              "dataSourceId": 4,
+              "value": "Youth",
+              "displayText": "Youth",
+              "createdAt": "2025-04-17T16:35:40.331Z",
+              "updatedAt": "2025-04-17T16:35:40.331Z"
+            },
+            {
+              "id": 114,
+              "dataSourceId": 4,
+              "value": "Science Fiction",
+              "displayText": "Science Fiction",
+              "createdAt": "2025-04-17T16:35:40.331Z",
+              "updatedAt": "2025-04-17T16:35:40.331Z"
+            },
+            {
+              "id": 115,
+              "dataSourceId": 4,
+              "value": "Romance",
+              "displayText": "Romance",
+              "createdAt": "2025-04-17T16:35:40.331Z",
+              "updatedAt": "2025-04-17T16:35:40.331Z"
+            },
+            {
+              "id": 116,
+              "dataSourceId": 4,
+              "value": "Crossing",
+              "displayText": "Crossing",
+              "createdAt": "2025-04-17T16:35:40.331Z",
+              "updatedAt": "2025-04-17T16:35:40.331Z"
+            },
+            {
+              "id": 117,
+              "dataSourceId": 4,
+              "value": "Urban",
+              "displayText": "Urban",
+              "createdAt": "2025-04-17T16:35:40.331Z",
+              "updatedAt": "2025-04-17T16:35:40.331Z"
+            },
+            {
+              "id": 118,
+              "dataSourceId": 4,
+              "value": "Fantasy",
+              "displayText": "Fantasy",
+              "createdAt": "2025-04-17T16:35:40.331Z",
+              "updatedAt": "2025-04-17T16:35:40.331Z"
+            },
+            {
+              "id": 119,
+              "dataSourceId": 4,
+              "value": "Martial Arts",
+              "displayText": "Martial Arts",
+              "createdAt": "2025-04-17T16:35:40.331Z",
+              "updatedAt": "2025-04-17T16:35:40.331Z"
+            },
+            {
+              "id": 120,
+              "dataSourceId": 4,
+              "value": "History",
+              "displayText": "History",
+              "createdAt": "2025-04-17T16:35:40.331Z",
+              "updatedAt": "2025-04-17T16:35:40.331Z"
+            },
+            {
+              "id": 121,
+              "dataSourceId": 4,
+              "value": "Biography",
+              "displayText": "Biography",
+              "createdAt": "2025-04-17T16:35:40.331Z",
+              "updatedAt": "2025-04-17T16:35:40.331Z"
+            },
+            {
+              "id": 122,
+              "dataSourceId": 4,
+              "value": "Suspense",
+              "displayText": "Suspense",
+              "createdAt": "2025-04-17T16:35:40.331Z",
+              "updatedAt": "2025-04-17T16:35:40.331Z"
+            },
+            {
+              "id": 123,
+              "dataSourceId": 4,
+              "value": "Thriller",
+              "displayText": "Thriller",
+              "createdAt": "2025-04-17T16:35:40.331Z",
+              "updatedAt": "2025-04-17T16:35:40.331Z"
+            },
+            {
+              "id": 124,
+              "dataSourceId": 4,
+              "value": "Workplace",
+              "displayText": "Workplace",
+              "createdAt": "2025-04-17T16:35:40.331Z",
+              "updatedAt": "2025-04-17T16:35:40.331Z"
+            },
+            {
+              "id": 125,
+              "dataSourceId": 4,
+              "value": "Entrepreneurship",
+              "displayText": "Entrepreneurship",
+              "createdAt": "2025-04-17T16:35:40.331Z",
+              "updatedAt": "2025-04-17T16:35:40.331Z"
+            },
+            {
+              "id": 126,
+              "dataSourceId": 4,
+              "value": "Programming",
+              "displayText": "Programming",
+              "createdAt": "2025-04-17T16:35:40.331Z",
+              "updatedAt": "2025-04-17T16:35:40.331Z"
+            }
+          ]
+        }
+      },
+      {
+        "id": 53,
+        "templateId": 4,
+        "name": "country",
+        "displayName": "Country",
+        "description": "The country where the book was published or originated.",
+        "fieldType": "select",
+        "isRequired": true,
+        "isSearchable": true,
+        "isFilterable": false,
+        "displayOrder": 9,
+        "dataSourceId": 9,
+        "validationRules": null,
+        "createdAt": "2025-04-17T05:48:27.871Z",
+        "updatedAt": "2025-04-17T05:48:27.871Z",
+        "dataSource": {
+          "id": 9,
+          "name": "country",
+          "sourceType": "dropdown",
+          "configuration": null,
+          "createdAt": "2025-04-17T16:49:24.638Z",
+          "updatedAt": "2025-04-17T16:49:24.638Z",
+          "createdBy": null,
+          "options": [
+            {
+              "id": 177,
+              "dataSourceId": 9,
+              "value": "USA",
+              "displayText": "USA",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 178,
+              "dataSourceId": 9,
+              "value": "South Korea",
+              "displayText": "South Korea",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 179,
+              "dataSourceId": 9,
+              "value": "Japan",
+              "displayText": "Japan",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 180,
+              "dataSourceId": 9,
+              "value": "Thailand",
+              "displayText": "Thailand",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 181,
+              "dataSourceId": 9,
+              "value": "France",
+              "displayText": "France",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 182,
+              "dataSourceId": 9,
+              "value": "Germany",
+              "displayText": "Germany",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 183,
+              "dataSourceId": 9,
+              "value": "Russia",
+              "displayText": "Russia",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 184,
+              "dataSourceId": 9,
+              "value": "Sweden",
+              "displayText": "Sweden",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 185,
+              "dataSourceId": 9,
+              "value": "Brazil",
+              "displayText": "Brazil",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 186,
+              "dataSourceId": 9,
+              "value": "India",
+              "displayText": "India",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 187,
+              "dataSourceId": 9,
+              "value": "Canada",
+              "displayText": "Canada",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 188,
+              "dataSourceId": 9,
+              "value": "Ireland",
+              "displayText": "Ireland",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 189,
+              "dataSourceId": 9,
+              "value": "Australia",
+              "displayText": "Australia",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 190,
+              "dataSourceId": 9,
+              "value": "United Kingdom",
+              "displayText": "United Kingdom",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 191,
+              "dataSourceId": 9,
+              "value": "China",
+              "displayText": "China",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 192,
+              "dataSourceId": 9,
+              "value": "Mexico",
+              "displayText": "Mexico",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 193,
+              "dataSourceId": 9,
+              "value": "Spain",
+              "displayText": "Spain",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 194,
+              "dataSourceId": 9,
+              "value": "Italy",
+              "displayText": "Italy",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 195,
+              "dataSourceId": 9,
+              "value": "Nigeria",
+              "displayText": "Nigeria",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 196,
+              "dataSourceId": 9,
+              "value": "South Africa",
+              "displayText": "South Africa",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 197,
+              "dataSourceId": 9,
+              "value": "New Zealand",
+              "displayText": "New Zealand",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            }
+          ]
+        }
+      },
+      {
+        "id": 54,
+        "templateId": 4,
+        "name": "synopsis",
+        "displayName": "Synopsis",
+        "description": "A brief summary of the book’s plot or content.",
+        "fieldType": "textarea",
+        "isRequired": true,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 10,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T05:48:27.871Z",
+        "updatedAt": "2025-04-17T05:48:27.871Z",
+        "dataSource": null
+      },
+      {
+        "id": 45,
+        "templateId": 4,
+        "name": "title",
+        "displayName": "Title",
+        "description": "The official title of the book.",
+        "fieldType": "text",
+        "isRequired": true,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 1,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T05:48:27.870Z",
+        "updatedAt": "2025-04-17T05:48:27.870Z",
+        "dataSource": null
+      },
+      {
+        "id": 55,
+        "templateId": 4,
+        "name": "content_rating",
+        "displayName": "Content Rating",
+        "description": "The age-appropriateness rating of the book, if applicable.",
+        "fieldType": "select",
+        "isRequired": false,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 11,
+        "dataSourceId": 8,
+        "validationRules": null,
+        "createdAt": "2025-04-17T05:48:27.871Z",
+        "updatedAt": "2025-04-17T05:48:27.871Z",
+        "dataSource": {
+          "id": 8,
+          "name": "content_rating",
+          "sourceType": "dropdown",
+          "configuration": null,
+          "createdAt": "2025-04-17T16:42:39.023Z",
+          "updatedAt": "2025-04-17T16:42:39.023Z",
+          "createdBy": null,
+          "options": [
+            {
+              "id": 173,
+              "dataSourceId": 8,
+              "value": "G",
+              "displayText": "G (General Audiences)",
+              "createdAt": "2025-04-17T16:42:54.475Z",
+              "updatedAt": "2025-04-17T16:42:54.475Z"
+            },
+            {
+              "id": 174,
+              "dataSourceId": 8,
+              "value": "PG",
+              "displayText": "PG (Parental Guidance Suggested)",
+              "createdAt": "2025-04-17T16:42:54.475Z",
+              "updatedAt": "2025-04-17T16:42:54.475Z"
+            },
+            {
+              "id": 175,
+              "dataSourceId": 8,
+              "value": "PG-13",
+              "displayText": "PG-13 (Parents Strongly Cautioned)",
+              "createdAt": "2025-04-17T16:42:54.475Z",
+              "updatedAt": "2025-04-17T16:42:54.475Z"
+            },
+            {
+              "id": 176,
+              "dataSourceId": 8,
+              "value": "NC-17",
+              "displayText": "NC-17 (Adults Only)",
+              "createdAt": "2025-04-17T16:42:54.475Z",
+              "updatedAt": "2025-04-17T16:42:54.475Z"
+            },
+            {
+              "id": 198,
+              "dataSourceId": 8,
+              "value": "R",
+              "displayText": "R (Restricted)",
+              "createdAt": "2025-04-17T17:01:00.191Z",
+              "updatedAt": "2025-04-17T17:01:00.191Z"
+            }
+          ]
+        }
+      },
+      {
+        "id": 56,
+        "templateId": 4,
+        "name": "page_count",
+        "displayName": "Page Count",
+        "description": "The total number of pages in the book.",
+        "fieldType": "number",
+        "isRequired": true,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 12,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T05:48:27.871Z",
+        "updatedAt": "2025-04-17T05:48:27.871Z",
+        "dataSource": null
+      },
+      {
+        "id": 57,
+        "templateId": 4,
+        "name": "format",
+        "displayName": "Format",
+        "description": "The physical or digital format of the book (e.g., Hardcover, Paperback, E-book).",
+        "fieldType": "text",
+        "isRequired": false,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 13,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T05:48:27.871Z",
+        "updatedAt": "2025-04-17T05:48:27.871Z",
+        "dataSource": null
+      },
+      {
+        "id": 58,
+        "templateId": 4,
+        "name": "source_url",
+        "displayName": "Source URL",
+        "description": "A URL linking to the book’s page on its source platform (e.g., Book.com).",
+        "fieldType": "url",
+        "isRequired": false,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 14,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T05:48:27.871Z",
+        "updatedAt": "2025-04-17T05:48:27.871Z",
+        "dataSource": null
+      },
+      {
+        "id": 46,
+        "templateId": 4,
+        "name": "poster",
+        "displayName": "Cover Image",
+        "description": "URL to the book’s cover image.",
+        "fieldType": "img",
+        "isRequired": true,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 2,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T05:48:27.870Z",
+        "updatedAt": "2025-04-17T05:48:27.870Z",
+        "dataSource": null
+      },
+      {
+        "id": 47,
+        "templateId": 4,
+        "name": "author",
+        "displayName": "Author",
+        "description": "The author(s) of the book.",
+        "fieldType": "text",
+        "isRequired": true,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 3,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T05:48:27.870Z",
+        "updatedAt": "2025-04-17T05:48:27.870Z",
+        "dataSource": null
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "music",
+    "displayName": "Music",
+    "description": "A template for capturing details of music entries, such as songs or albums, including title, artist, genre, and more.",
+    "fullMarks": 10,
+    "isPublished": true,
+    "createdAt": "2025-04-17T17:51:58.250Z",
+    "updatedAt": "2025-05-19T04:41:19.821Z",
+    "createdBy": null,
+    "updatedBy": 1,
+    "fields": [
+      {
+        "id": 62,
+        "templateId": 5,
+        "name": "release_year",
+        "displayName": "Release Year",
+        "description": "The year the music was released.",
+        "fieldType": "number",
+        "isRequired": true,
+        "isSearchable": true,
+        "isFilterable": true,
+        "displayOrder": 4,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:52:34.332Z",
+        "updatedAt": "2025-04-17T17:52:34.332Z",
+        "dataSource": null
+      },
+      {
+        "id": 63,
+        "templateId": 5,
+        "name": "label",
+        "displayName": "Label",
+        "description": "The record label that released the music.",
+        "fieldType": "text",
+        "isRequired": false,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 5,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:52:34.332Z",
+        "updatedAt": "2025-04-17T17:52:34.332Z",
+        "dataSource": null
+      },
+      {
+        "id": 64,
+        "templateId": 5,
+        "name": "genre",
+        "displayName": "Genre",
+        "description": "The genre(s) or style of the music.",
+        "fieldType": "multiselect",
+        "isRequired": true,
+        "isSearchable": true,
+        "isFilterable": true,
+        "displayOrder": 6,
+        "dataSourceId": 5,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:52:34.332Z",
+        "updatedAt": "2025-04-17T17:52:34.332Z",
+        "dataSource": {
+          "id": 5,
+          "name": "music_type",
+          "sourceType": "dropdown",
+          "configuration": null,
+          "createdAt": "2025-04-17T16:34:40.099Z",
+          "updatedAt": "2025-04-17T16:34:40.099Z",
+          "createdBy": null,
+          "options": [
+            {
+              "id": 127,
+              "dataSourceId": 5,
+              "value": "Jazz",
+              "displayText": "Jazz",
+              "createdAt": "2025-04-17T16:35:47.712Z",
+              "updatedAt": "2025-04-17T16:35:47.712Z"
+            },
+            {
+              "id": 128,
+              "dataSourceId": 5,
+              "value": "Classical",
+              "displayText": "Classical",
+              "createdAt": "2025-04-17T16:35:47.712Z",
+              "updatedAt": "2025-04-17T16:35:47.712Z"
+            },
+            {
+              "id": 129,
+              "dataSourceId": 5,
+              "value": "Rock",
+              "displayText": "Rock",
+              "createdAt": "2025-04-17T16:35:47.712Z",
+              "updatedAt": "2025-04-17T16:35:47.712Z"
+            },
+            {
+              "id": 130,
+              "dataSourceId": 5,
+              "value": "Pop",
+              "displayText": "Pop",
+              "createdAt": "2025-04-17T16:35:47.712Z",
+              "updatedAt": "2025-04-17T16:35:47.712Z"
+            },
+            {
+              "id": 131,
+              "dataSourceId": 5,
+              "value": "Electronic",
+              "displayText": "Electronic",
+              "createdAt": "2025-04-17T16:35:47.712Z",
+              "updatedAt": "2025-04-17T16:35:47.712Z"
+            },
+            {
+              "id": 132,
+              "dataSourceId": 5,
+              "value": "Folk",
+              "displayText": "Folk",
+              "createdAt": "2025-04-17T16:35:47.712Z",
+              "updatedAt": "2025-04-17T16:35:47.712Z"
+            },
+            {
+              "id": 133,
+              "dataSourceId": 5,
+              "value": "Rap",
+              "displayText": "Rap",
+              "createdAt": "2025-04-17T16:35:47.712Z",
+              "updatedAt": "2025-04-17T16:35:47.712Z"
+            },
+            {
+              "id": 134,
+              "dataSourceId": 5,
+              "value": "Country",
+              "displayText": "Country",
+              "createdAt": "2025-04-17T16:35:47.712Z",
+              "updatedAt": "2025-04-17T16:35:47.712Z"
+            },
+            {
+              "id": 135,
+              "dataSourceId": 5,
+              "value": "Hip-Hop",
+              "displayText": "Hip-Hop",
+              "createdAt": "2025-04-17T16:35:47.712Z",
+              "updatedAt": "2025-04-17T16:35:47.712Z"
+            },
+            {
+              "id": 136,
+              "dataSourceId": 5,
+              "value": "Blues",
+              "displayText": "Blues",
+              "createdAt": "2025-04-17T16:35:47.712Z",
+              "updatedAt": "2025-04-17T16:35:47.712Z"
+            },
+            {
+              "id": 137,
+              "dataSourceId": 5,
+              "value": "Punk",
+              "displayText": "Punk",
+              "createdAt": "2025-04-17T16:35:47.712Z",
+              "updatedAt": "2025-04-17T16:35:47.712Z"
+            },
+            {
+              "id": 138,
+              "dataSourceId": 5,
+              "value": "Metal",
+              "displayText": "Metal",
+              "createdAt": "2025-04-17T16:35:47.712Z",
+              "updatedAt": "2025-04-17T16:35:47.712Z"
+            },
+            {
+              "id": 139,
+              "dataSourceId": 5,
+              "value": "Reggae",
+              "displayText": "Reggae",
+              "createdAt": "2025-04-17T16:35:47.712Z",
+              "updatedAt": "2025-04-17T16:35:47.712Z"
+            },
+            {
+              "id": 140,
+              "dataSourceId": 5,
+              "value": "Indie",
+              "displayText": "Indie",
+              "createdAt": "2025-04-17T16:35:47.712Z",
+              "updatedAt": "2025-04-17T16:35:47.712Z"
+            },
+            {
+              "id": 141,
+              "dataSourceId": 5,
+              "value": "Ambient",
+              "displayText": "Ambient",
+              "createdAt": "2025-04-17T16:35:47.712Z",
+              "updatedAt": "2025-04-17T16:35:47.712Z"
+            },
+            {
+              "id": 142,
+              "dataSourceId": 5,
+              "value": "Experimental",
+              "displayText": "Experimental",
+              "createdAt": "2025-04-17T16:35:47.712Z",
+              "updatedAt": "2025-04-17T16:35:47.712Z"
+            },
+            {
+              "id": 143,
+              "dataSourceId": 5,
+              "value": "Religious",
+              "displayText": "Religious",
+              "createdAt": "2025-04-17T16:35:47.712Z",
+              "updatedAt": "2025-04-17T16:35:47.712Z"
+            },
+            {
+              "id": 144,
+              "dataSourceId": 5,
+              "value": "Children's",
+              "displayText": "Children's",
+              "createdAt": "2025-04-17T16:35:47.712Z",
+              "updatedAt": "2025-04-17T16:35:47.712Z"
+            }
+          ]
+        }
+      },
+      {
+        "id": 65,
+        "templateId": 5,
+        "name": "language",
+        "displayName": "Language",
+        "description": "The primary language(s) of the lyrics, if applicable.",
+        "fieldType": "multiselect",
+        "isRequired": false,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 7,
+        "dataSourceId": 7,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:52:34.332Z",
+        "updatedAt": "2025-04-17T17:52:34.332Z",
+        "dataSource": {
+          "id": 7,
+          "name": "language",
+          "sourceType": "dropdown",
+          "configuration": null,
+          "createdAt": "2025-04-17T16:42:39.023Z",
+          "updatedAt": "2025-04-17T16:42:39.023Z",
+          "createdBy": null,
+          "options": [
+            {
+              "id": 160,
+              "dataSourceId": 7,
+              "value": "Mandarin",
+              "displayText": "Mandarin",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 161,
+              "dataSourceId": 7,
+              "value": "English",
+              "displayText": "English",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 162,
+              "dataSourceId": 7,
+              "value": "Cantonese",
+              "displayText": "Cantonese",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 163,
+              "dataSourceId": 7,
+              "value": "Korean",
+              "displayText": "Korean",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 164,
+              "dataSourceId": 7,
+              "value": "Japanese",
+              "displayText": "Japanese",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 165,
+              "dataSourceId": 7,
+              "value": "Thai",
+              "displayText": "Thai",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 166,
+              "dataSourceId": 7,
+              "value": "French",
+              "displayText": "French",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 167,
+              "dataSourceId": 7,
+              "value": "German",
+              "displayText": "German",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 168,
+              "dataSourceId": 7,
+              "value": "Russian",
+              "displayText": "Russian",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 169,
+              "dataSourceId": 7,
+              "value": "Swedish",
+              "displayText": "Swedish",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 170,
+              "dataSourceId": 7,
+              "value": "Portuguese",
+              "displayText": "Portuguese",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 171,
+              "dataSourceId": 7,
+              "value": "Hindi",
+              "displayText": "Hindi",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 172,
+              "dataSourceId": 7,
+              "value": "Irish",
+              "displayText": "Irish",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            }
+          ]
+        }
+      },
+      {
+        "id": 66,
+        "templateId": 5,
+        "name": "country",
+        "displayName": "Country",
+        "description": "The country of origin of the artist or release.",
+        "fieldType": "multiselect",
+        "isRequired": true,
+        "isSearchable": true,
+        "isFilterable": true,
+        "displayOrder": 8,
+        "dataSourceId": 9,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:52:34.332Z",
+        "updatedAt": "2025-04-17T17:52:34.332Z",
+        "dataSource": {
+          "id": 9,
+          "name": "country",
+          "sourceType": "dropdown",
+          "configuration": null,
+          "createdAt": "2025-04-17T16:49:24.638Z",
+          "updatedAt": "2025-04-17T16:49:24.638Z",
+          "createdBy": null,
+          "options": [
+            {
+              "id": 177,
+              "dataSourceId": 9,
+              "value": "USA",
+              "displayText": "USA",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 178,
+              "dataSourceId": 9,
+              "value": "South Korea",
+              "displayText": "South Korea",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 179,
+              "dataSourceId": 9,
+              "value": "Japan",
+              "displayText": "Japan",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 180,
+              "dataSourceId": 9,
+              "value": "Thailand",
+              "displayText": "Thailand",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 181,
+              "dataSourceId": 9,
+              "value": "France",
+              "displayText": "France",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 182,
+              "dataSourceId": 9,
+              "value": "Germany",
+              "displayText": "Germany",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 183,
+              "dataSourceId": 9,
+              "value": "Russia",
+              "displayText": "Russia",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 184,
+              "dataSourceId": 9,
+              "value": "Sweden",
+              "displayText": "Sweden",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 185,
+              "dataSourceId": 9,
+              "value": "Brazil",
+              "displayText": "Brazil",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 186,
+              "dataSourceId": 9,
+              "value": "India",
+              "displayText": "India",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 187,
+              "dataSourceId": 9,
+              "value": "Canada",
+              "displayText": "Canada",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 188,
+              "dataSourceId": 9,
+              "value": "Ireland",
+              "displayText": "Ireland",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 189,
+              "dataSourceId": 9,
+              "value": "Australia",
+              "displayText": "Australia",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 190,
+              "dataSourceId": 9,
+              "value": "United Kingdom",
+              "displayText": "United Kingdom",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 191,
+              "dataSourceId": 9,
+              "value": "China",
+              "displayText": "China",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 192,
+              "dataSourceId": 9,
+              "value": "Mexico",
+              "displayText": "Mexico",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 193,
+              "dataSourceId": 9,
+              "value": "Spain",
+              "displayText": "Spain",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 194,
+              "dataSourceId": 9,
+              "value": "Italy",
+              "displayText": "Italy",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 195,
+              "dataSourceId": 9,
+              "value": "Nigeria",
+              "displayText": "Nigeria",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 196,
+              "dataSourceId": 9,
+              "value": "South Africa",
+              "displayText": "South Africa",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 197,
+              "dataSourceId": 9,
+              "value": "New Zealand",
+              "displayText": "New Zealand",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            }
+          ]
+        }
+      },
+      {
+        "id": 67,
+        "templateId": 5,
+        "name": "description",
+        "displayName": "Description",
+        "description": "A brief description of the music, such as its theme or background.",
+        "fieldType": "textarea",
+        "isRequired": false,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 9,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:52:34.332Z",
+        "updatedAt": "2025-04-17T17:52:34.332Z",
+        "dataSource": null
+      },
+      {
+        "id": 68,
+        "templateId": 5,
+        "name": "content_rating",
+        "displayName": "Content Rating",
+        "description": "The age-appropriateness rating of the music, if applicable (e.g., for explicit lyrics).",
+        "fieldType": "select",
+        "isRequired": false,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 10,
+        "dataSourceId": 8,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:52:34.332Z",
+        "updatedAt": "2025-04-17T17:52:34.332Z",
+        "dataSource": {
+          "id": 8,
+          "name": "content_rating",
+          "sourceType": "dropdown",
+          "configuration": null,
+          "createdAt": "2025-04-17T16:42:39.023Z",
+          "updatedAt": "2025-04-17T16:42:39.023Z",
+          "createdBy": null,
+          "options": [
+            {
+              "id": 173,
+              "dataSourceId": 8,
+              "value": "G",
+              "displayText": "G (General Audiences)",
+              "createdAt": "2025-04-17T16:42:54.475Z",
+              "updatedAt": "2025-04-17T16:42:54.475Z"
+            },
+            {
+              "id": 174,
+              "dataSourceId": 8,
+              "value": "PG",
+              "displayText": "PG (Parental Guidance Suggested)",
+              "createdAt": "2025-04-17T16:42:54.475Z",
+              "updatedAt": "2025-04-17T16:42:54.475Z"
+            },
+            {
+              "id": 175,
+              "dataSourceId": 8,
+              "value": "PG-13",
+              "displayText": "PG-13 (Parents Strongly Cautioned)",
+              "createdAt": "2025-04-17T16:42:54.475Z",
+              "updatedAt": "2025-04-17T16:42:54.475Z"
+            },
+            {
+              "id": 176,
+              "dataSourceId": 8,
+              "value": "NC-17",
+              "displayText": "NC-17 (Adults Only)",
+              "createdAt": "2025-04-17T16:42:54.475Z",
+              "updatedAt": "2025-04-17T16:42:54.475Z"
+            },
+            {
+              "id": 198,
+              "dataSourceId": 8,
+              "value": "R",
+              "displayText": "R (Restricted)",
+              "createdAt": "2025-04-17T17:01:00.191Z",
+              "updatedAt": "2025-04-17T17:01:00.191Z"
+            }
+          ]
+        }
+      },
+      {
+        "id": 69,
+        "templateId": 5,
+        "name": "duration",
+        "displayName": "Duration (minutes)",
+        "description": "The duration of the music in minutes (total for an album, or for a single track).",
+        "fieldType": "number",
+        "isRequired": true,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 11,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:52:34.332Z",
+        "updatedAt": "2025-04-17T17:52:34.332Z",
+        "dataSource": null
+      },
+      {
+        "id": 70,
+        "templateId": 5,
+        "name": "track_count",
+        "displayName": "Track Count",
+        "description": "The number of tracks, if the music entry is an album.",
+        "fieldType": "number",
+        "isRequired": false,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 12,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:52:34.332Z",
+        "updatedAt": "2025-04-17T17:52:34.332Z",
+        "dataSource": null
+      },
+      {
+        "id": 71,
+        "templateId": 5,
+        "name": "format",
+        "displayName": "Format",
+        "description": "The release format of the music (e.g., Digital, CD, Vinyl).",
+        "fieldType": "text",
+        "isRequired": false,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 13,
+        "dataSourceId": null,
+        "validationRules": {
+          "options": [
+            "Digital",
+            "CD",
+            "Vinyl"
+          ]
+        },
+        "createdAt": "2025-04-17T17:52:34.332Z",
+        "updatedAt": "2025-04-17T17:52:34.332Z",
+        "dataSource": null
+      },
+      {
+        "id": 72,
+        "templateId": 5,
+        "name": "audio_url",
+        "displayName": "Audio URL",
+        "description": "A URL linking to a preview or streaming link for the music.",
+        "fieldType": "url",
+        "isRequired": false,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 14,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:52:34.332Z",
+        "updatedAt": "2025-04-17T17:52:34.332Z",
+        "dataSource": null
+      },
+      {
+        "id": 60,
+        "templateId": 5,
+        "name": "poster",
+        "displayName": "Album Art",
+        "description": "URL to the album artwork or cover image.",
+        "fieldType": "img",
+        "isRequired": true,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 2,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:52:34.332Z",
+        "updatedAt": "2025-04-17T17:52:34.332Z",
+        "dataSource": null
+      },
+      {
+        "id": 59,
+        "templateId": 5,
+        "name": "title",
+        "displayName": "Title",
+        "description": "The official title of the music (e.g., song or album name).",
+        "fieldType": "text",
+        "isRequired": true,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 1,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:52:34.332Z",
+        "updatedAt": "2025-04-17T17:52:34.332Z",
+        "dataSource": null
+      },
+      {
+        "id": 61,
+        "templateId": 5,
+        "name": "artist",
+        "displayName": "Artist",
+        "description": "The artist(s) or band name responsible for the music.",
+        "fieldType": "text",
+        "isRequired": true,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 3,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:52:34.332Z",
+        "updatedAt": "2025-04-17T17:52:34.332Z",
+        "dataSource": null
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "name": "podcast",
+    "displayName": "Podcast",
+    "description": "A template for capturing details of podcasts, including title, host, genre, and episode details.",
+    "fullMarks": 10,
+    "isPublished": true,
+    "createdAt": "2025-04-17T17:55:02.194Z",
+    "updatedAt": "2025-05-19T04:40:38.466Z",
+    "createdBy": null,
+    "updatedBy": 1,
+    "fields": [
+      {
+        "id": 76,
+        "templateId": 6,
+        "name": "release_year",
+        "displayName": "Release Year",
+        "description": "The year the podcast first released.",
+        "fieldType": "number",
+        "isRequired": true,
+        "isSearchable": true,
+        "isFilterable": true,
+        "displayOrder": 4,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:56:08.778Z",
+        "updatedAt": "2025-04-17T17:56:08.778Z",
+        "dataSource": null
+      },
+      {
+        "id": 77,
+        "templateId": 6,
+        "name": "network",
+        "displayName": "Network",
+        "description": "The network or platform hosting the podcast (e.g., Spotify, Apple Podcasts).",
+        "fieldType": "text",
+        "isRequired": false,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 5,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:56:08.778Z",
+        "updatedAt": "2025-04-17T17:56:08.778Z",
+        "dataSource": null
+      },
+      {
+        "id": 78,
+        "templateId": 6,
+        "name": "genre",
+        "displayName": "Genre",
+        "description": "The genre(s) or category of the podcast.",
+        "fieldType": "multiselect",
+        "isRequired": true,
+        "isSearchable": true,
+        "isFilterable": true,
+        "displayOrder": 6,
+        "dataSourceId": 6,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:56:08.778Z",
+        "updatedAt": "2025-04-17T17:56:08.778Z",
+        "dataSource": {
+          "id": 6,
+          "name": "podcast_type",
+          "sourceType": "dropdown",
+          "configuration": null,
+          "createdAt": "2025-04-17T16:34:40.099Z",
+          "updatedAt": "2025-04-17T16:34:40.099Z",
+          "createdBy": null,
+          "options": [
+            {
+              "id": 145,
+              "dataSourceId": 6,
+              "value": "Hybrid Podcasts",
+              "displayText": "Hybrid Podcasts",
+              "createdAt": "2025-04-17T16:35:55.032Z",
+              "updatedAt": "2025-04-17T16:35:55.032Z"
+            },
+            {
+              "id": 146,
+              "dataSourceId": 6,
+              "value": "Co-hosted Podcasts",
+              "displayText": "Co-hosted Podcasts",
+              "createdAt": "2025-04-17T16:35:55.032Z",
+              "updatedAt": "2025-04-17T16:35:55.032Z"
+            },
+            {
+              "id": 147,
+              "dataSourceId": 6,
+              "value": "Fiction: Storytelling",
+              "displayText": "Fiction: Storytelling",
+              "createdAt": "2025-04-17T16:35:55.032Z",
+              "updatedAt": "2025-04-17T16:35:55.032Z"
+            },
+            {
+              "id": 148,
+              "dataSourceId": 6,
+              "value": "True Crime",
+              "displayText": "True Crime",
+              "createdAt": "2025-04-17T16:35:55.032Z",
+              "updatedAt": "2025-04-17T16:35:55.032Z"
+            },
+            {
+              "id": 149,
+              "dataSourceId": 6,
+              "value": "Discussion Panel",
+              "displayText": "Discussion Panel",
+              "createdAt": "2025-04-17T16:35:55.032Z",
+              "updatedAt": "2025-04-17T16:35:55.032Z"
+            },
+            {
+              "id": 150,
+              "dataSourceId": 6,
+              "value": "Solo",
+              "displayText": "Solo",
+              "createdAt": "2025-04-17T16:35:55.032Z",
+              "updatedAt": "2025-04-17T16:35:55.032Z"
+            },
+            {
+              "id": 151,
+              "dataSourceId": 6,
+              "value": "Educational Podcasts",
+              "displayText": "Educational Podcasts",
+              "createdAt": "2025-04-17T16:35:55.032Z",
+              "updatedAt": "2025-04-17T16:35:55.032Z"
+            },
+            {
+              "id": 152,
+              "dataSourceId": 6,
+              "value": "Repurposed Content Podcasts",
+              "displayText": "Repurposed Content Podcasts",
+              "createdAt": "2025-04-17T16:35:55.032Z",
+              "updatedAt": "2025-04-17T16:35:55.032Z"
+            },
+            {
+              "id": 153,
+              "dataSourceId": 6,
+              "value": "Co-host Conversational Podcasts",
+              "displayText": "Co-host Conversational Podcasts",
+              "createdAt": "2025-04-17T16:35:55.032Z",
+              "updatedAt": "2025-04-17T16:35:55.032Z"
+            },
+            {
+              "id": 154,
+              "dataSourceId": 6,
+              "value": "Interview Podcasts",
+              "displayText": "Interview Podcasts",
+              "createdAt": "2025-04-17T16:35:55.032Z",
+              "updatedAt": "2025-04-17T16:35:55.032Z"
+            },
+            {
+              "id": 155,
+              "dataSourceId": 6,
+              "value": "LIVE Podcasts",
+              "displayText": "LIVE Podcasts",
+              "createdAt": "2025-04-17T16:35:55.032Z",
+              "updatedAt": "2025-04-17T16:35:55.032Z"
+            },
+            {
+              "id": 156,
+              "dataSourceId": 6,
+              "value": "Roundtable",
+              "displayText": "Roundtable",
+              "createdAt": "2025-04-17T16:35:55.032Z",
+              "updatedAt": "2025-04-17T16:35:55.032Z"
+            },
+            {
+              "id": 157,
+              "dataSourceId": 6,
+              "value": "Comedy",
+              "displayText": "Comedy",
+              "createdAt": "2025-04-17T16:35:55.032Z",
+              "updatedAt": "2025-04-17T16:35:55.032Z"
+            },
+            {
+              "id": 158,
+              "dataSourceId": 6,
+              "value": "The Documentary Podcast Format",
+              "displayText": "The Documentary Podcast Format",
+              "createdAt": "2025-04-17T16:35:55.032Z",
+              "updatedAt": "2025-04-17T16:35:55.032Z"
+            },
+            {
+              "id": 159,
+              "dataSourceId": 6,
+              "value": "Theatrical",
+              "displayText": "Theatrical",
+              "createdAt": "2025-04-17T16:35:55.032Z",
+              "updatedAt": "2025-04-17T16:35:55.032Z"
+            }
+          ]
+        }
+      },
+      {
+        "id": 79,
+        "templateId": 6,
+        "name": "language",
+        "displayName": "Language",
+        "description": "The primary language(s) the podcast is recorded in.",
+        "fieldType": "multiselect",
+        "isRequired": false,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 7,
+        "dataSourceId": 7,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:56:08.778Z",
+        "updatedAt": "2025-04-17T17:56:08.778Z",
+        "dataSource": {
+          "id": 7,
+          "name": "language",
+          "sourceType": "dropdown",
+          "configuration": null,
+          "createdAt": "2025-04-17T16:42:39.023Z",
+          "updatedAt": "2025-04-17T16:42:39.023Z",
+          "createdBy": null,
+          "options": [
+            {
+              "id": 160,
+              "dataSourceId": 7,
+              "value": "Mandarin",
+              "displayText": "Mandarin",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 161,
+              "dataSourceId": 7,
+              "value": "English",
+              "displayText": "English",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 162,
+              "dataSourceId": 7,
+              "value": "Cantonese",
+              "displayText": "Cantonese",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 163,
+              "dataSourceId": 7,
+              "value": "Korean",
+              "displayText": "Korean",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 164,
+              "dataSourceId": 7,
+              "value": "Japanese",
+              "displayText": "Japanese",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 165,
+              "dataSourceId": 7,
+              "value": "Thai",
+              "displayText": "Thai",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 166,
+              "dataSourceId": 7,
+              "value": "French",
+              "displayText": "French",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 167,
+              "dataSourceId": 7,
+              "value": "German",
+              "displayText": "German",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 168,
+              "dataSourceId": 7,
+              "value": "Russian",
+              "displayText": "Russian",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 169,
+              "dataSourceId": 7,
+              "value": "Swedish",
+              "displayText": "Swedish",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 170,
+              "dataSourceId": 7,
+              "value": "Portuguese",
+              "displayText": "Portuguese",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 171,
+              "dataSourceId": 7,
+              "value": "Hindi",
+              "displayText": "Hindi",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            },
+            {
+              "id": 172,
+              "dataSourceId": 7,
+              "value": "Irish",
+              "displayText": "Irish",
+              "createdAt": "2025-04-17T16:42:46.464Z",
+              "updatedAt": "2025-04-17T16:42:46.464Z"
+            }
+          ]
+        }
+      },
+      {
+        "id": 80,
+        "templateId": 6,
+        "name": "country",
+        "displayName": "Country",
+        "description": "The country of origin of the podcast.",
+        "fieldType": "multiselect",
+        "isRequired": true,
+        "isSearchable": true,
+        "isFilterable": true,
+        "displayOrder": 8,
+        "dataSourceId": 9,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:56:08.778Z",
+        "updatedAt": "2025-04-17T17:56:08.778Z",
+        "dataSource": {
+          "id": 9,
+          "name": "country",
+          "sourceType": "dropdown",
+          "configuration": null,
+          "createdAt": "2025-04-17T16:49:24.638Z",
+          "updatedAt": "2025-04-17T16:49:24.638Z",
+          "createdBy": null,
+          "options": [
+            {
+              "id": 177,
+              "dataSourceId": 9,
+              "value": "USA",
+              "displayText": "USA",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 178,
+              "dataSourceId": 9,
+              "value": "South Korea",
+              "displayText": "South Korea",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 179,
+              "dataSourceId": 9,
+              "value": "Japan",
+              "displayText": "Japan",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 180,
+              "dataSourceId": 9,
+              "value": "Thailand",
+              "displayText": "Thailand",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 181,
+              "dataSourceId": 9,
+              "value": "France",
+              "displayText": "France",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 182,
+              "dataSourceId": 9,
+              "value": "Germany",
+              "displayText": "Germany",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 183,
+              "dataSourceId": 9,
+              "value": "Russia",
+              "displayText": "Russia",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 184,
+              "dataSourceId": 9,
+              "value": "Sweden",
+              "displayText": "Sweden",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 185,
+              "dataSourceId": 9,
+              "value": "Brazil",
+              "displayText": "Brazil",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 186,
+              "dataSourceId": 9,
+              "value": "India",
+              "displayText": "India",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 187,
+              "dataSourceId": 9,
+              "value": "Canada",
+              "displayText": "Canada",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 188,
+              "dataSourceId": 9,
+              "value": "Ireland",
+              "displayText": "Ireland",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 189,
+              "dataSourceId": 9,
+              "value": "Australia",
+              "displayText": "Australia",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 190,
+              "dataSourceId": 9,
+              "value": "United Kingdom",
+              "displayText": "United Kingdom",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 191,
+              "dataSourceId": 9,
+              "value": "China",
+              "displayText": "China",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 192,
+              "dataSourceId": 9,
+              "value": "Mexico",
+              "displayText": "Mexico",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 193,
+              "dataSourceId": 9,
+              "value": "Spain",
+              "displayText": "Spain",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 194,
+              "dataSourceId": 9,
+              "value": "Italy",
+              "displayText": "Italy",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 195,
+              "dataSourceId": 9,
+              "value": "Nigeria",
+              "displayText": "Nigeria",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 196,
+              "dataSourceId": 9,
+              "value": "South Africa",
+              "displayText": "South Africa",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            },
+            {
+              "id": 197,
+              "dataSourceId": 9,
+              "value": "New Zealand",
+              "displayText": "New Zealand",
+              "createdAt": "2025-04-17T16:49:45.476Z",
+              "updatedAt": "2025-04-17T16:49:45.476Z"
+            }
+          ]
+        }
+      },
+      {
+        "id": 81,
+        "templateId": 6,
+        "name": "description",
+        "displayName": "Description",
+        "description": "A brief description of the podcast’s content or focus.",
+        "fieldType": "textarea",
+        "isRequired": true,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 9,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:56:08.778Z",
+        "updatedAt": "2025-04-17T17:56:08.778Z",
+        "dataSource": null
+      },
+      {
+        "id": 82,
+        "templateId": 6,
+        "name": "content_rating",
+        "displayName": "Content Rating",
+        "description": "The age-appropriateness rating of the podcast, if applicable (e.g., for explicit content).",
+        "fieldType": "select",
+        "isRequired": false,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 10,
+        "dataSourceId": 8,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:56:08.778Z",
+        "updatedAt": "2025-04-17T17:56:08.778Z",
+        "dataSource": {
+          "id": 8,
+          "name": "content_rating",
+          "sourceType": "dropdown",
+          "configuration": null,
+          "createdAt": "2025-04-17T16:42:39.023Z",
+          "updatedAt": "2025-04-17T16:42:39.023Z",
+          "createdBy": null,
+          "options": [
+            {
+              "id": 173,
+              "dataSourceId": 8,
+              "value": "G",
+              "displayText": "G (General Audiences)",
+              "createdAt": "2025-04-17T16:42:54.475Z",
+              "updatedAt": "2025-04-17T16:42:54.475Z"
+            },
+            {
+              "id": 174,
+              "dataSourceId": 8,
+              "value": "PG",
+              "displayText": "PG (Parental Guidance Suggested)",
+              "createdAt": "2025-04-17T16:42:54.475Z",
+              "updatedAt": "2025-04-17T16:42:54.475Z"
+            },
+            {
+              "id": 175,
+              "dataSourceId": 8,
+              "value": "PG-13",
+              "displayText": "PG-13 (Parents Strongly Cautioned)",
+              "createdAt": "2025-04-17T16:42:54.475Z",
+              "updatedAt": "2025-04-17T16:42:54.475Z"
+            },
+            {
+              "id": 176,
+              "dataSourceId": 8,
+              "value": "NC-17",
+              "displayText": "NC-17 (Adults Only)",
+              "createdAt": "2025-04-17T16:42:54.475Z",
+              "updatedAt": "2025-04-17T16:42:54.475Z"
+            },
+            {
+              "id": 198,
+              "dataSourceId": 8,
+              "value": "R",
+              "displayText": "R (Restricted)",
+              "createdAt": "2025-04-17T17:01:00.191Z",
+              "updatedAt": "2025-04-17T17:01:00.191Z"
+            }
+          ]
+        }
+      },
+      {
+        "id": 83,
+        "templateId": 6,
+        "name": "average_episode_duration",
+        "displayName": "Average Episode Duration (minutes)",
+        "description": "The average duration of podcast episodes in minutes.",
+        "fieldType": "number",
+        "isRequired": true,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 11,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:56:08.778Z",
+        "updatedAt": "2025-04-17T17:56:08.778Z",
+        "dataSource": null
+      },
+      {
+        "id": 84,
+        "templateId": 6,
+        "name": "episode_count",
+        "displayName": "Episode Count",
+        "description": "The total number of episodes released.",
+        "fieldType": "number",
+        "isRequired": true,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 12,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:56:08.778Z",
+        "updatedAt": "2025-04-17T17:56:08.778Z",
+        "dataSource": null
+      },
+      {
+        "id": 85,
+        "templateId": 6,
+        "name": "status",
+        "displayName": "Status",
+        "description": "The current status of the podcast (e.g., Active, Completed, On Hiatus).",
+        "fieldType": "text",
+        "isRequired": false,
+        "isSearchable": true,
+        "isFilterable": true,
+        "displayOrder": 13,
+        "dataSourceId": null,
+        "validationRules": {
+          "options": [
+            "Active",
+            "Completed",
+            "On Hiatus"
+          ]
+        },
+        "createdAt": "2025-04-17T17:56:08.778Z",
+        "updatedAt": "2025-04-17T17:56:08.778Z",
+        "dataSource": null
+      },
+      {
+        "id": 86,
+        "templateId": 6,
+        "name": "audio_url",
+        "displayName": "Audio URL",
+        "description": "A URL linking to a sample episode or streaming link for the podcast.",
+        "fieldType": "url",
+        "isRequired": false,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 14,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:56:08.778Z",
+        "updatedAt": "2025-04-17T17:56:08.778Z",
+        "dataSource": null
+      },
+      {
+        "id": 74,
+        "templateId": 6,
+        "name": "poster",
+        "displayName": "Cover Image",
+        "description": "URL to the podcast’s cover image.",
+        "fieldType": "img",
+        "isRequired": true,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 2,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:56:08.778Z",
+        "updatedAt": "2025-04-17T17:56:08.778Z",
+        "dataSource": null
+      },
+      {
+        "id": 73,
+        "templateId": 6,
+        "name": "title",
+        "displayName": "Title",
+        "description": "The official title of the podcast.",
+        "fieldType": "text",
+        "isRequired": true,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 1,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:56:08.778Z",
+        "updatedAt": "2025-04-17T17:56:08.778Z",
+        "dataSource": null
+      },
+      {
+        "id": 75,
+        "templateId": 6,
+        "name": "host",
+        "displayName": "Host",
+        "description": "The host(s) or creator(s) of the podcast.",
+        "fieldType": "text",
+        "isRequired": true,
+        "isSearchable": false,
+        "isFilterable": false,
+        "displayOrder": 3,
+        "dataSourceId": null,
+        "validationRules": null,
+        "createdAt": "2025-04-17T17:56:08.778Z",
+        "updatedAt": "2025-04-17T17:56:08.778Z",
+        "dataSource": null
+      }
+    ]
+  }
+]

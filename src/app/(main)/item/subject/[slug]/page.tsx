@@ -14,22 +14,16 @@ import {
   Container,
   Button,
   Rating,
-  Grid,
-  Paper,
-  Avatar,
-  Stack,
-  Alert,
+  Card,
+  CardMedia,
+  CardContent,
   Dialog,
   DialogTitle,
   DialogContent,
   TextField,
   DialogActions,
-  Card,
-  CardMedia,
-  CardContent,
 } from "@mui/material";
 
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import {
@@ -42,75 +36,25 @@ import {
   RecommendationItem,
 } from "@/api/item";
 
-// Types (same as in CreateItemPage)
-interface Item {
-  id: number;
-  templateId: number;
-  title: string;
-  slug: string;
-  createdBy: number;
-  createdAt: string;
-  updatedAt: string;
-  fieldValues: FieldValue[];
-}
+// Import template components
+import MovieTemplate from "@/components/templates/MovieTemplate";
+import TVSeriesTemplate from "@/components/templates/TVSeriesTemplate";
+import VarietyShowTemplate from "@/components/templates/VarietyShowTemplate";
+import BookTemplate from "@/components/templates/BookTemplate";
+import MusicTemplate from "@/components/templates/MusicTemplate";
+import PodcastTemplate from "@/components/templates/PodcastTemplate";
 
-interface FieldValue {
-  id: number;
-  itemId: number;
-  fieldId: number;
-  textValue: string | null;
-  numericValue: number | null;
-  dateValue: string | null;
-  booleanValue: boolean | null;
-  jsonValue: string[] | null;
-  createdAt: string;
-  updatedAt: string;
-  field: Field;
-}
+import { Item, UserRating, RatingsResponse } from "@/types/item";
 
-interface Field {
-  id: number;
-  templateId: 1;
-  name: string;
-  displayName: string;
-  description: string;
-  fieldType:
-    | "text"
-    | "textarea"
-    | "number"
-    | "select"
-    | "multiselect"
-    | "img"
-    | "url";
-  isRequired: boolean;
-  isSearchable: boolean;
-  isFilterable: boolean;
-  displayOrder: number;
-  dataSourceId: number | null;
-  validationRules: any;
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface UserRating {
-  id: number;
-  itemId: number;
-  userId: number;
-  rating: number; // Backend scale: 0-10
-  reviewText: string | null;
-  createdAt: string;
-  updatedAt: string;
-  user: {
-    id: number;
-    username: string;
-  };
-}
-
-interface RatingsResponse {
-  averageRating: number; // Backend scale: 0-10
-  ratingsCount: number;
-  ratings: UserRating[];
-}
+// Add template display names mapping
+const TEMPLATE_DISPLAY_NAMES: { [key: number]: string } = {
+  1: "Movies",
+  2: "TV Series",
+  3: "Variety Shows",
+  4: "Books",
+  5: "Music",
+  6: "Podcasts"
+};
 
 // Main Component
 const ItemDetailPage = () => {
@@ -119,15 +63,11 @@ const ItemDetailPage = () => {
   const [item, setItem] = useState<Item | null>(null);
   const [userRating, setUserRating] = useState<UserRating | null>(null);
   const [ratingsData, setRatingsData] = useState<RatingsResponse | null>(null);
-  const [templateRecommendations, setTemplateRecommendations] = useState<
-    RecommendationItem[]
-  >([]);
-  const [genreRecommendations, setGenreRecommendations] = useState<
-    RecommendationItem[]
-  >([]);
+  const [templateRecommendations, setTemplateRecommendations] = useState<RecommendationItem[]>([]);
+  const [genreRecommendations, setGenreRecommendations] = useState<RecommendationItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [openRatingDialog, setOpenRatingDialog] = useState(false);
-  const [newRating, setNewRating] = useState<number>(0); // Frontend scale: 0-5
+  const [newRating, setNewRating] = useState<number>(0);
   const [newComment, setNewComment] = useState<string>("");
 
   // Helper functions to convert between frontend (0-5) and backend (0-10) scales
@@ -137,13 +77,14 @@ const ItemDetailPage = () => {
   // Fetch non-ratings data (item and recommendations) on mount
   const loadNonRatingsData = async () => {
     try {
-      const itemData = await getItemBySlug(slug as string);
+      const itemData = await getItemBySlug(slug as string) as Item;
       setItem(itemData);
 
       // Fetch recommendations
       const templateTypeId = itemData.templateId;
       const field = itemData.fieldValues.find(
-        (fv) => fv.field.name === "type" || fv.field.displayName === "Genre"
+        (fv: { field: { name: string; displayName: string } }) => 
+          fv.field.name === "type" || fv.field.displayName === "Genre"
       );
       const { fieldId, jsonValue = [] } = field || {};
       const genreValues = jsonValue || ["Drama"];
@@ -249,189 +190,76 @@ const ItemDetailPage = () => {
     );
   }
 
-  // Extract field values for easy access
-  const title =
-    item.fieldValues.find((fv) => fv.field.name === "title")?.textValue ||
-    "N/A";
-  const poster =
-    item.fieldValues.find((fv) => fv.field.name === "poster")?.textValue || "";
-  const releaseYear =
-    item.fieldValues.find((fv) => fv.field.name === "release_year")
-      ?.numericValue || "N/A";
-  const director =
-    item.fieldValues.find((fv) => fv.field.name === "director")?.textValue ||
-    "N/A";
-  const cast =
-    item.fieldValues.find((fv) => fv.field.name === "cast")?.textValue || "N/A";
-  const language =
-    item.fieldValues
-      .find((fv) => fv.field.name === "language")
-      ?.jsonValue?.join(", ") || "N/A";
-  const genre =
-    item.fieldValues
-      .find((fv) => fv.field.name === "type")
-      ?.jsonValue?.join(", ") || "N/A";
-  const country =
-    item.fieldValues
-      .find((fv) => fv.field.name === "country")
-      ?.jsonValue?.join(", ") || "N/A";
-  const synopsis =
-    item.fieldValues.find((fv) => fv.field.name === "synopsis")?.textValue ||
-    "N/A";
-  const contentRating =
-    item.fieldValues.find((fv) => fv.field.name === "content_rating")
-      ?.textValue || "N/A";
-  const runtime =
-    item.fieldValues.find((fv) => fv.field.name === "runtime")?.numericValue ||
-    "N/A";
-  const trailerUrl =
-    item.fieldValues.find((fv) => fv.field.name === "trailer_url")?.textValue ||
-    "#";
+  // Render the appropriate template based on templateId
+  const renderTemplate = () => {
+    switch (item.templateId) {
+      case 1: // Movie
+        return (
+          <MovieTemplate
+            item={item}
+            ratingsData={ratingsData}
+            userRating={userRating}
+            onRateClick={() => setOpenRatingDialog(true)}
+          />
+        );
+      case 2: // TV Series
+        return (
+          <TVSeriesTemplate
+            item={item}
+            ratingsData={ratingsData}
+            userRating={userRating}
+            onRateClick={() => setOpenRatingDialog(true)}
+          />
+        );
+      case 3: // Variety Show
+        return (
+          <VarietyShowTemplate
+            item={item}
+            ratingsData={ratingsData}
+            userRating={userRating}
+            onRateClick={() => setOpenRatingDialog(true)}
+          />
+        );
+      case 4: // Book
+        return (
+          <BookTemplate
+            item={item}
+            ratingsData={ratingsData}
+            userRating={userRating}
+            onRateClick={() => setOpenRatingDialog(true)}
+          />
+        );
+      case 5: // Music
+        return (
+          <MusicTemplate
+            item={item}
+            ratingsData={ratingsData}
+            userRating={userRating}
+            onRateClick={() => setOpenRatingDialog(true)}
+          />
+        );
+      case 6: // Podcast
+        return (
+          <PodcastTemplate
+            item={item}
+            ratingsData={ratingsData}
+            userRating={userRating}
+            onRateClick={() => setOpenRatingDialog(true)}
+          />
+        );
+      default:
+        return (
+          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+            <Typography>Unknown template type.</Typography>
+          </Container>
+        );
+    }
+  };
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-      {/* Main Detail Section */}
-      <Grid container spacing={4}>
-        {/* Poster */}
-        <Grid item xs={12} md={4}>
-          <Box
-            component="img"
-            src={poster}
-            alt={title}
-            sx={{
-              width: "100%",
-              maxHeight: 400,
-              objectFit: "cover",
-              borderRadius: 2,
-              boxShadow: 3,
-            }}
-          />
-        </Grid>
-
-        {/* Details */}
-        <Grid item xs={12} md={8}>
-          <Typography
-            variant="h4"
-            gutterBottom
-            sx={{ fontWeight: "bold", color: "primary.main" }}
-          >
-            {title} ({releaseYear})
-          </Typography>
-          <Typography variant="subtitle1" color="text.secondary">
-            <strong>Director:</strong> {director}
-          </Typography>
-          <Typography variant="subtitle1" color="text.secondary">
-            <strong>Cast:</strong> {cast}
-          </Typography>
-          <Typography variant="subtitle1" color="text.secondary">
-            <strong>Genre:</strong> {genre}
-          </Typography>
-          <Typography variant="subtitle1" color="text.secondary">
-            <strong>Production Countries:</strong> {country}
-          </Typography>
-          <Typography variant="subtitle1" color="text.secondary">
-            <strong>Language:</strong> {language}
-          </Typography>
-          <Typography variant="subtitle1" color="text.secondary">
-            <strong>Runtime:</strong> {runtime} minutes
-          </Typography>
-          <Typography variant="subtitle1" color="text.secondary">
-            <strong>Content Rating:</strong> {contentRating}
-          </Typography>
-
-          {/* Action Buttons */}
-          <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
-            <Button
-              variant="contained"
-              color="warning"
-              startIcon={<PlayArrowIcon />}
-              href={trailerUrl}
-              target="_blank"
-              sx={{ borderRadius: 2 }}
-            >
-              Play Trailer
-            </Button>
-          </Stack>
-        </Grid>
-      </Grid>
-
-      {/* Synopsis Section */}
-      <Box sx={{ mt: 4 }}>
-        <Typography
-          variant="h6"
-          gutterBottom
-          sx={{ fontWeight: "bold", color: "primary.main" }}
-        >
-          Synopsis of {title}
-        </Typography>
-        <Typography variant="body1" paragraph sx={{ lineHeight: 1.6 }}>
-          {synopsis}
-        </Typography>
-      </Box>
-
-      {/* Rating Section */}
-      <Box sx={{ mt: 4 }}>
-        <Typography
-          variant="h5"
-          gutterBottom
-          sx={{ fontWeight: "bold", color: "primary.main" }}
-        >
-          Ratings ({ratingsData?.ratingsCount || 0})
-        </Typography>
-        <Typography variant="h6" gutterBottom>
-          Average Rating: {(ratingsData?.averageRating || 0).toFixed(1)} / 10
-          <Rating
-            value={toFrontendScale(ratingsData?.averageRating || 0)}
-            precision={0.5}
-            max={5}
-            readOnly
-            sx={{ verticalAlign: "middle", ml: 1, color: "warning.main" }}
-          />
-        </Typography>
-
-        {/* My Rating Alert */}
-        <Alert severity="info" sx={{ mt: 2, borderRadius: 2 }}>
-          {user ? (
-            userRating ? (
-              <>
-                Your Rating:{" "}
-                <Rating
-                  value={toFrontendScale(userRating.rating)}
-                  precision={0.5}
-                  max={5}
-                  readOnly
-                  size="small"
-                  sx={{ verticalAlign: "middle", ml: 1, color: "warning.main" }}
-                />
-                <Typography variant="body2" sx={{ mt: 1 }}>
-                  {userRating.reviewText}
-                </Typography>
-                <Button
-                  color="primary"
-                  onClick={() => setOpenRatingDialog(true)}
-                  sx={{ mt: 1 }}
-                >
-                  Update Rating
-                </Button>
-              </>
-            ) : (
-              <>
-                Have you watched or want to watch this movie?{" "}
-                <Button color="primary" onClick={() => setOpenRatingDialog(true)}>
-                  Rate Now
-                </Button>
-              </>
-            )
-          ) : (
-            <>
-              Want to rate this movie?{" "}
-              <Button color="primary" component={Link} href="/auth/login">
-                Login to Rate
-              </Button>
-            </>
-          )}
-        </Alert>
-      </Box>
+      {/* Render the appropriate template */}
+      {renderTemplate()}
 
       {/* Rating Dialog */}
       <Dialog
@@ -448,8 +276,6 @@ const ItemDetailPage = () => {
               value={newRating}
               onChange={(event, value) => setNewRating(value || 0)}
               precision={0.5}
-              min={0.5}
-              max={5}
               sx={{ color: "warning.main" }}
             />
             <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
@@ -476,52 +302,6 @@ const ItemDetailPage = () => {
         </DialogActions>
       </Dialog>
 
-      {/* User Ratings List */}
-      <Box sx={{ mt: 4 }}>
-        <Typography
-          variant="h6"
-          gutterBottom
-          sx={{ fontWeight: "bold", color: "primary.main" }}
-        >
-          Reviews ({ratingsData?.ratings.length || 0})
-        </Typography>
-        {ratingsData?.ratings.length === 0 ? (
-          <Typography>No reviews yet.</Typography>
-        ) : (
-          ratingsData?.ratings.map((rating) => (
-            <Paper
-              key={rating.id}
-              sx={{ p: 2, mb: 2, borderRadius: 2, boxShadow: 2 }}
-            >
-              <Stack direction="row" spacing={2} alignItems="center">
-                <Avatar sx={{ bgcolor: "primary.main" }}>
-                  {rating.user.username[0]}
-                </Avatar>
-                <Box>
-                  <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
-                    {rating.user.username}
-                  </Typography>
-                  <Typography variant="caption" color="text.secondary">
-                    {new Date(rating.createdAt).toLocaleString()}
-                  </Typography>
-                  <Rating
-                    value={toFrontendScale(rating.rating)}
-                    precision={0.5}
-                    max={5}
-                    readOnly
-                    size="small"
-                    sx={{ color: "warning.main" }}
-                  />
-                  <Typography variant="body2" sx={{ mt: 1 }}>
-                    {rating.reviewText}
-                  </Typography>
-                </Box>
-              </Stack>
-            </Paper>
-          ))
-        )}
-      </Box>
-
       {/* Recommendation Sections with Swiper */}
       <Box sx={{ mt: 6 }}>
         <Typography
@@ -529,7 +309,7 @@ const ItemDetailPage = () => {
           gutterBottom
           sx={{ fontWeight: "bold", color: "primary.main", pl: 0 }}
         >
-          Recommended Movies
+          Recommended {TEMPLATE_DISPLAY_NAMES[item.templateId] || "Items"}
         </Typography>
         {templateRecommendations.length === 0 ? (
           <Typography>No recommendations available.</Typography>
@@ -655,7 +435,7 @@ const ItemDetailPage = () => {
           gutterBottom
           sx={{ fontWeight: "bold", color: "primary.main", pl: 0 }}
         >
-          Recommended for the same type
+          Recommended {TEMPLATE_DISPLAY_NAMES[item.templateId] || "Items"} in the same genre
         </Typography>
         {genreRecommendations.length === 0 ? (
           <Typography>No recommendations available.</Typography>
