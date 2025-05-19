@@ -116,6 +116,10 @@ const TemplateSelection = ({
                 border: selectedTemplate?.id === template.id ? '2px solid' : '1px solid',
                 borderColor: selectedTemplate?.id === template.id ? 'primary.main' : 'grey.300',
                 transition: 'all 0.2s',
+                height: 220,
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
                 '&:hover': {
                   elevation: 3,
                   borderColor: 'primary.light',
@@ -126,7 +130,19 @@ const TemplateSelection = ({
               <Typography variant="h6" component="h3" gutterBottom>
                 {template.displayName}
               </Typography>
-              <Typography variant="body2" color="text.secondary" gutterBottom>
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                sx={{
+                  maxHeight: '3em',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  display: '-webkit-box',
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: 'vertical',
+                  lineHeight: 1.5,
+                }}
+              >
                 {template.description}
               </Typography>
               <Box sx={{ display: 'flex', alignItems: 'center', mt: 2 }}>
@@ -139,7 +155,7 @@ const TemplateSelection = ({
                 label={selectedTemplate?.id === template.id ? "Selected" : "Select"} 
                 color={selectedTemplate?.id === template.id ? "primary" : "default"}
                 size="small"
-                sx={{ mt: 2 }}
+                sx={{ mt: 2, width: '40%' }}
               />
             </Paper>
           </Grid>
