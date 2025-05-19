@@ -24,7 +24,6 @@ import {
   ListItemText,
   IconButton,
   useMediaQuery,
-  useTheme,
 } from "@mui/material";
 
 import DensityMediumIcon from '@mui/icons-material/DensityMedium';
@@ -50,8 +49,7 @@ interface HeaderProps {
 
 const Header = ({ user, onLogout, loading }: HeaderProps) => {
   const router = useRouter();
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md')); // Breakpoint for mobile (below medium screens)
+  const isMobile = useMediaQuery('(max-width:1064px)'); // Custom breakpoint for mobile
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [templates, setTemplates] = useState<Template[]>([]);
