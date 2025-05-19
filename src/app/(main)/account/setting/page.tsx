@@ -17,6 +17,7 @@ import {
 } from '@mui/material';
 import { getProfile, updateProfile } from '@/api/user';
 import { uploadImage } from '@/api/file';
+import Link from 'next/link';
 
 interface UserProfile {
   id: number;
@@ -261,6 +262,19 @@ const SettingsPage = () => {
                 onChange={handleAvatarChange}
               />
             </Button>
+            <Box className="flex justify-center mt-2 w-full">
+              <Link href="/user/change-password" passHref legacyBehavior>
+                <Button
+                  variant="text"
+                  color="primary"
+                  size="small"
+                  className="text-xs underline hover:no-underline"
+                  sx={{ textTransform: 'none', fontSize: 13, px: 0, minWidth: 0 }}
+                >
+                  Change Password
+                </Button>
+              </Link>
+            </Box>
           </Box>
           <Box className="flex-1 w-full">
             <TextField

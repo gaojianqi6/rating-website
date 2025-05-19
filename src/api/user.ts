@@ -1,4 +1,5 @@
 import api from "@/lib/api";
+import { User } from "@/types/user";
 
 export const login = (username: string, password: string) => api.post('auth/login', {
   json: { username, password }
@@ -9,3 +10,12 @@ export const getRatings = () => api.get('users/ratings').json();
 
 export const updateProfile = (userId: number, user: object) =>
   api.patch(`users/${userId}`, { json: user }).json();
+
+export const changePassword = (
+  oldPassword: string,
+  newPassword: string,
+  confirmPassword: string
+): Promise<User> =>
+  api.post('users/change-password', {
+    json: { oldPassword, newPassword, confirmPassword }
+  }).json();
