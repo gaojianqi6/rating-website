@@ -1,6 +1,6 @@
 # RateEverything
 
-Welcome to **RateEverything**! This project is a modern, user-friendly platform where you can rate and comment on anything—movies, music, TV series, books, podcasts, and more. Our goal is to bring all your ratings and recommendations into one place, making it easy to discover, remember, and share what you love across all types of media.
+Welcome to **RateEverything**! This project is a modern, user-friendly platform where you can rate and comment on anything—movies, music, TV series, Variety Show, books, podcasts, and more. Our goal is to bring all your ratings and recommendations into one place, making it easy to discover, remember, and share what you love across all types of media.
 
 ## 🌟 What is RateEverything?
 RateEverything is designed to:
