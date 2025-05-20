@@ -4,26 +4,12 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
 import { Google as GoogleIcon } from "@mui/icons-material";
-import { Button, TextField, Snackbar, Alert, Divider } from "@mui/material";
+import { Button, TextField, Snackbar, Alert } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { login } from "@/api/user";
 import { useUserStore } from "@/store/userStore";
 import Image from "next/image";
-
-const description = [
-  {
-    title: 'Personalized Recommendations',
-    text: "Discover shows you'll love."
-  },
-  {
-    title: 'Your Ratings',
-    text: "Rate and remember everything you've seen."
-  },
-  {
-    title: 'Contribute to Rating everything',
-    text: "Add data that will be seen by many people."
-  }
-];
+import ProjectDescription from '@/components/auth/ProjectDescription';
 
 interface LoginResponse {
   access_token: string;
@@ -123,11 +109,6 @@ const LoginPage = () => {
             </Button>
           </form>
           <Box className="mt-2 text-center w-full">
-            <Link href="/auth/forgot-password" className="text-blue-600 hover:underline text-sm">
-              Forgot Password?
-            </Link>
-          </Box>
-          <Box className="mt-2 text-center w-full">
             <Typography variant="body2" component="span">
               Don&apos;t have an account?{" "}
               <Link href="/auth/register" className="text-blue-600 hover:underline">
@@ -148,24 +129,7 @@ const LoginPage = () => {
           </Box>
         </Box>
         {/* Divider and Description Section */}
-        <Divider orientation="vertical" flexItem className="hidden md:block" />
-        <Box
-          className="hidden md:flex flex-col justify-center bg-white p-8 min-w-[320px] max-w-xs"
-        >
-          <Typography variant="h5" fontWeight={700} className="mb-4">
-            Benefits of your free Rating account
-          </Typography>
-          {description.map((item, idx) => (
-            <Box key={item.title} className={idx !== 0 ? 'mt-4' : ''}>
-              <Typography variant="subtitle1" fontWeight={700}>
-                {item.title}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {item.text}
-              </Typography>
-            </Box>
-          ))}
-        </Box>
+        <ProjectDescription />
       </Box>
       {/* Toast Notification */}
       <Snackbar
