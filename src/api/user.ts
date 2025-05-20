@@ -19,3 +19,18 @@ export const changePassword = (
   api.post('users/change-password', {
     json: { oldPassword, newPassword, confirmPassword }
   }).json();
+
+export const registerUser = ({
+  username,
+  password,
+  confirmPassword,
+  email
+}: {
+  username: string;
+  password: string;
+  confirmPassword: string;
+  email: string;
+}): Promise<User> =>
+  api.post('auth/register', {
+    json: { username, password, confirmPassword, email }
+  }).json();
