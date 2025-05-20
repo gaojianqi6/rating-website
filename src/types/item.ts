@@ -58,6 +58,8 @@ export interface UserRating {
   user: {
     id: number;
     username: string;
+    nickname: string;
+    avatar: string | null;
   };
 }
 

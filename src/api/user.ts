@@ -8,7 +8,7 @@ export const login = (username: string, password: string) => api.post('auth/logi
 export const getProfile = () => api.get('users/profile').json();
 export const getRatings = () => api.get('users/ratings').json();
 
-export const updateProfile = (userId: number, user: object) =>
+export const updateProfile = (userId: number, user: object): Promise<User> =>
   api.patch(`users/${userId}`, { json: user }).json();
 
 export const changePassword = (

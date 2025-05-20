@@ -14,7 +14,7 @@ import {
 import { Item, UserRating, RatingsResponse } from "@/types/item";
 import { useUserStore } from "@/store/userStore";
 import Link from "next/link";
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 
 interface BaseTemplateProps {
   item: Item;
@@ -41,7 +41,13 @@ const BaseTemplate: React.FC<BaseTemplateProps> = ({
     if (!field) return "N/A";
 
     const { textValue, numericValue, dateValue, jsonValue } = field;
-    return textValue || numericValue?.toString() || dateValue || jsonValue?.join(", ") || "N/A";
+    return (
+      textValue ||
+      numericValue?.toString() ||
+      dateValue ||
+      jsonValue?.join(", ") ||
+      "N/A"
+    );
   };
 
   // Get rating prompt based on content type
@@ -68,7 +74,11 @@ const BaseTemplate: React.FC<BaseTemplateProps> = ({
   const toFrontendScale = (backendRating: number) => backendRating / 2;
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }} style={{ paddingLeft: 0, paddingRight: 0 }}>
+    <Container
+      maxWidth="lg"
+      sx={{ mt: 4, mb: 4 }}
+      style={{ paddingLeft: 0, paddingRight: 0 }}
+    >
       <Grid container spacing={4}>
         {/* Poster */}
         <Grid item xs={12} md={4}>
@@ -132,20 +142,29 @@ const BaseTemplate: React.FC<BaseTemplateProps> = ({
           sx={{
             mt: 2,
             borderRadius: 2,
-            backgroundColor: 'rgba(33, 150, 243, 0.12)',
-            color: 'text.primary',
+            backgroundColor: "rgba(33, 150, 243, 0.12)",
+            color: "text.primary",
             p: 1.5,
-            alignItems: 'center',
-            '& .MuiAlert-message': { width: '100%', p: 0 },
+            alignItems: "center",
+            "& .MuiAlert-message": { width: "100%", p: 0 },
           }}
           icon={false}
         >
-          <Box display="flex" alignItems="center" gap={1} sx={{ overflow: 'hidden' }}>
+          <Box
+            display="flex"
+            alignItems="center"
+            gap={1}
+            sx={{ overflow: "hidden" }}
+          >
             <InfoOutlinedIcon color="info" fontSize="small" />
             {user ? (
               userRating ? (
                 <>
-                  <Typography variant="body1" component="span" sx={{ flexShrink: 0 }}>
+                  <Typography
+                    variant="body1"
+                    component="span"
+                    sx={{ flexShrink: 0 }}
+                  >
                     Your Rating:
                   </Typography>
                   <Rating
@@ -163,14 +182,18 @@ const BaseTemplate: React.FC<BaseTemplateProps> = ({
                       mr: 2,
                       flex: 1,
                       minWidth: 0,
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      whiteSpace: 'nowrap',
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
                     }}
                   >
                     {userRating.reviewText}
                   </Typography>
-                  <Button color="primary" onClick={onRateClick} sx={{ ml: 1, flexShrink: 0, whiteSpace: 'nowrap' }}>
+                  <Button
+                    color="primary"
+                    onClick={onRateClick}
+                    sx={{ ml: 1, flexShrink: 0, whiteSpace: "nowrap" }}
+                  >
                     Update Rating
                   </Button>
                 </>
@@ -189,7 +212,12 @@ const BaseTemplate: React.FC<BaseTemplateProps> = ({
                 <Typography variant="body1" component="span" sx={{ flex: 1 }}>
                   Want to rate this {contentType.toLowerCase()}?
                 </Typography>
-                <Button color="primary" component={Link} href="/auth/login" sx={{ ml: 1 }}>
+                <Button
+                  color="primary"
+                  component={Link}
+                  href="/auth/login"
+                  sx={{ ml: 1 }}
+                >
                   Login to Rate
                 </Button>
               </>
@@ -218,17 +246,29 @@ const BaseTemplate: React.FC<BaseTemplateProps> = ({
                 mb: 2,
                 borderRadius: 2,
                 boxShadow: 0, // flat
-                border: '1px solid #eee',
+                border: "1px solid #eee",
               }}
             >
               <Stack direction="row" spacing={2} alignItems="flex-start">
-                <Avatar sx={{ bgcolor: "primary.main", mt: 0.5 }}>
-                  {rating.user.username[0]}
-                </Avatar>
+                {rating.user.avatar ? (
+                  <Avatar
+                    src={rating.user.avatar}
+                    alt={rating.user.username}
+                  />
+                ) : (
+                  <Avatar
+                    sx={{
+                      bgcolor: "primary.main"
+                    }}
+                  >
+                    {rating.user.username[0].toUpperCase()}
+                  </Avatar>
+                )}
+
                 <Box>
                   <Box display="flex" alignItems="center" gap={1}>
                     <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
-                      {rating.user.username}
+                      {rating.user.nickname || rating.user.username}
                     </Typography>
                     <Rating
                       value={toFrontendScale(rating.rating)}
@@ -255,4 +295,4 @@ const BaseTemplate: React.FC<BaseTemplateProps> = ({
   );
 };
 
-export default BaseTemplate; 
+export default BaseTemplate;

@@ -16,6 +16,7 @@ interface UserState {
   error: string | null;
   fetchUser: () => Promise<void>;
   logout: () => void;
+  setUser: (user: User) => void;
 }
 
 export const useUserStore = create<UserState>()(
@@ -40,7 +41,8 @@ export const useUserStore = create<UserState>()(
       logout: () => {
         set({ user: null });
         toLogin();
-      }
+      },
+      setUser: (user: User) => set({ user }),
     }),
     {
       name: 'user-storage', // unique name for localStorage key

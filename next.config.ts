@@ -19,6 +19,11 @@ const nextConfig: NextConfig = {
         hostname: 'via.placeholder.com',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'cdn4.iconfinder.com',
+        pathname: '/**',
+      },
     ],
   },
 };

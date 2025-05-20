@@ -18,6 +18,8 @@ import {
 import { getProfile, updateProfile } from '@/api/user';
 import { uploadImage } from '@/api/file';
 import Link from 'next/link';
+import { useUserStore } from '@/store/userStore';
+import { SelectChangeEvent } from '@mui/material/Select';
 
 interface UserProfile {
   id: number;
@@ -44,6 +46,7 @@ const SettingsPage = () => {
     country: '',
     avatar: '',
   });
+  const { setUser } = useUserStore();
 
   // List of countries for dropdown (simplified)
   const countries = [
@@ -62,7 +65,7 @@ const SettingsPage = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const userData = await getProfile();
+        const userData = await getProfile() as UserProfile;
         setProfile(userData);
         setFormData({
           username: userData.username || '',
@@ -95,8 +98,8 @@ const SettingsPage = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleCountryChange = (e: ChangeEvent<{ value: unknown }>) => {
-    setFormData((prev) => ({ ...prev, country: e.target.value as string }));
+  const handleCountryChange = (event: SelectChangeEvent<string>) => {
+    setFormData((prev) => ({ ...prev, country: event.target.value as string }));
   };
 
   const handleAvatarChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -167,15 +170,15 @@ const SettingsPage = () => {
       // Upload new avatar if changed
       if (avatarFile) {
         const type = `avatar/${profile.id}`;
-        const { presignedUrl, publicUrl } = await uploadImage(avatarFile, type);
-        await fetch(presignedUrl, {
+        const uploadResult = await uploadImage(avatarFile, type) as { presignedUrl: string; publicUrl: string };
+        await fetch(uploadResult.presignedUrl, {
           method: 'PUT',
           body: avatarFile,
           headers: {
             'Content-Type': avatarFile.type,
           },
         });
-        updatedAvatar = publicUrl;
+        updatedAvatar = uploadResult.publicUrl;
       }
 
       // Prepare updated profile data (exclude username and email)
@@ -190,7 +193,8 @@ const SettingsPage = () => {
       console.log('Updating profile with payload:', updatedProfile);
 
       // Update profile
-      await updateProfile(profile.id, updatedProfile);
+      const user = await updateProfile(profile.id, updatedProfile);
+      setUser(user);
       setSuccess('Profile updated successfully');
       setProfile((prev) => prev ? { ...prev, ...updatedProfile } : null);
       setAvatarFile(null); // Reset avatar file after upload
