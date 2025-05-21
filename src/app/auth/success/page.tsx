@@ -1,9 +1,9 @@
 "use client";
 import { useUserStore } from "@/store/userStore";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 
-export default function Home() {
+function SuccessContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { fetchUser } = useUserStore();
@@ -25,7 +25,15 @@ export default function Home() {
     }
 
     toHome(token);
-  }, [router, searchParams]);
+  }, [router, searchParams, fetchUser]);
 
   return <div>Processing......</div>;
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <SuccessContent />
+    </Suspense>
+  );
 }

@@ -36,48 +36,7 @@ import StarIcon from '@mui/icons-material/Star';
 import { createItem } from '@/api/item';
 import { getTemplate, getTemplates } from '@/api/template';
 import { uploadImage } from '@/api/file';
-
-// Types
-interface Template {
-  id: number;
-  name: string;
-  displayName: string;
-  description: string;
-  fullMarks: number;
-  isPublished: boolean;
-  fields: TemplateField[];
-}
-
-interface TemplateField {
-  id: number;
-  templateId: number;
-  name: string;
-  displayName: string;
-  description: string;
-  fieldType: 'text' | 'textarea' | 'number' | 'select' | 'multiselect' | 'img';
-  isRequired: boolean;
-  isSearchable: boolean;
-  isFilterable: boolean;
-  displayOrder: number;
-  dataSourceId: number | null;
-  validationRules: any;
-  dataSource: DataSource | null;
-}
-
-interface DataSource {
-  id: number;
-  name: string;
-  sourceType: string;
-  configuration: any;
-  options: DataSourceOption[];
-}
-
-interface DataSourceOption {
-  id: number;
-  dataSourceId: number;
-  value: string;
-  displayText: string;
-}
+import { Template, TemplateField } from '@/types/template';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -478,7 +437,7 @@ const CreateItemPage = () => {
     setAlertMessage(null);
 
     try {
-      const data = await getTemplate(template.id);
+      const data = await getTemplate(template.id) as Template;
       setSelectedTemplate(data);
       setStep(1);
     } catch (error) {
@@ -597,7 +556,7 @@ const CreateItemPage = () => {
 
       // Submit the form with updated formValues
       const { slug } = await createItem({
-        templateId: selectedTemplate?.id,
+        templateId: selectedTemplate?.id || 0,
         formValues: updatedFormValues,
         userRating,
       });

@@ -1,4 +1,5 @@
 import api from "@/lib/api";
+import { Item } from "@/types/item";
 
 // Interface for the rating response
 interface UserRating {
@@ -12,6 +13,8 @@ interface UserRating {
   user: {
     id: number;
     username: string;
+    nickname: string;
+    avatar: string | null;
   };
 }
 
@@ -54,14 +57,20 @@ export interface DataSource {
   id: number;
   name: string;
   sourceType: string;
-  configuration: any | null;
+  configuration: Record<string, unknown> | null;
   createdAt: string;
   updatedAt: string;
   createdBy: number | null;
   options: FilterOption[];
 }
 
-export const createItem = (data) => {
+interface CreateItemData {
+  formValues: Record<string, string | number | boolean>;
+  templateId: number;
+  userRating?: number;
+}
+
+export const createItem = (data: CreateItemData): Promise<Item> => {
   const { formValues, templateId, userRating } = data;
   const title = formValues.title;
   const fieldValues = Object.entries(formValues).map((arr) => ({ fieldName: arr[0], value: arr[1] }));
@@ -100,7 +109,7 @@ export const fetchRecommendationsByGenre = async (templateId: number, fieldId: n
 // Fetch items with search parameters
 export const searchItems = async (
   templateId: number,
-  fields: { fieldId: number; fieldValue: any[] }[],
+  fields: { fieldId: number; fieldValue: (string | number | boolean)[] }[],
   sort: 'date' | 'score' | 'popularity' = 'date',
   pageSize: number = 20,
   pageNo: number = 1,
