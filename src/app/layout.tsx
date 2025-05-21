@@ -9,6 +9,10 @@ import InitColorSchemeScript from '@mui/material/InitColorSchemeScript';
 export const metadata: Metadata = {
   title: "Rating Everything",
   description: "You can rate whatever you want",
+  other: {
+    "http-equiv": "Content-Security-Policy",
+    content: "upgrade-insecure-requests"
+  }
 };
 
 export default function RootLayout(props: { children: React.ReactNode }) {
