@@ -24,6 +24,7 @@ import {
   CardContent,
   CircularProgress,
   Stack,
+  Rating,
 } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
@@ -382,6 +383,22 @@ export default function Home() {
                           >
                             {new Date(rec.createdAt).toLocaleDateString()}
                           </Typography>
+                          <Box sx={{ display: 'flex', alignItems: 'center', mt: 0.5 }}>
+                            <Rating
+                              value={rec.avgRating / 2}
+                              precision={0.5}
+                              size="small"
+                              readOnly
+                              sx={{ fontSize: 14 }}
+                            />
+                            <Typography
+                              variant="caption"
+                              color="text.secondary"
+                              sx={{ ml: 0.5, fontSize: 11 }}
+                            >
+                              {rec.avgRating.toFixed(1)}
+                            </Typography>
+                          </Box>
                         </CardContent>
                       </Card>
                     </Link>

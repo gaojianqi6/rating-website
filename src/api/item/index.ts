@@ -31,6 +31,7 @@ export interface RecommendationItem {
   slug: string;
   poster: string;
   createdAt: string;
+  avgRating: number;
 }
 
 // Interface for pagination metadata

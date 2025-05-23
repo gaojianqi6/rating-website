@@ -15,6 +15,7 @@ import {
   Card,
   CardMedia,
   CardContent,
+  Rating,
 } from "@mui/material";
 
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
@@ -296,7 +297,7 @@ const ItemDetailPage = () => {
       />
 
       {/* Recommendation Sections with Swiper */}
-      <Box sx={{ mt: 6 }}>
+      <Box sx={{ mt: 1 }}>
         <Typography
           variant="h5"
           gutterBottom
@@ -379,6 +380,22 @@ const ItemDetailPage = () => {
                       >
                         {rec.createdAt}
                       </Typography>
+                      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mt: 0.5 }}>
+                        <Rating
+                          value={rec.avgRating / 2}
+                          precision={0.5}
+                          size="small"
+                          readOnly
+                          sx={{ fontSize: 14 }}
+                        />
+                        <Typography
+                          variant="caption"
+                          color="text.secondary"
+                          sx={{ ml: 0.5, fontSize: 11 }}
+                        >
+                          {rec.avgRating.toFixed(1)}
+                        </Typography>
+                      </Box>
                     </CardContent>
                   </Card>
                 </Link>
@@ -440,7 +457,7 @@ const ItemDetailPage = () => {
         )}
       </Box>
 
-      <Box sx={{ mt: 6, mb: 6 }}>
+      <Box sx={{ mt: 2, mb: 6 }}>
         <Typography
           variant="h5"
           gutterBottom
@@ -524,6 +541,22 @@ const ItemDetailPage = () => {
                       >
                         {rec.createdAt}
                       </Typography>
+                      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mt: 0.5 }}>
+                        <Rating
+                          value={rec.avgRating / 2}
+                          precision={0.5}
+                          size="small"
+                          readOnly
+                          sx={{ fontSize: 14 }}
+                        />
+                        <Typography
+                          variant="caption"
+                          color="text.secondary"
+                          sx={{ ml: 0.5, fontSize: 11 }}
+                        >
+                          {rec.avgRating.toFixed(1)}
+                        </Typography>
+                      </Box>
                     </CardContent>
                   </Card>
                 </Link>

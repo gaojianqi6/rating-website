@@ -10,6 +10,7 @@ import {
   Alert,
   Chip,
   Pagination,
+  Rating,
 } from "@mui/material";
 import { getTemplateByName } from "@/api/template";
 import { searchItems } from "@/api/item";
@@ -22,6 +23,7 @@ interface Item {
   slug: string;
   poster: string;
   createdAt: string;
+  avgRating: number;
 }
 
 interface Pagination {
@@ -397,6 +399,22 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ categoryName }) => {
                   <Typography variant="body2" color="text.secondary">
                     {item.createdAt}
                   </Typography>
+                  <Box sx={{ display: 'flex', alignItems: 'center', mt: 0.5 }}>
+                    <Rating
+                      value={item.avgRating / 2}
+                      precision={0.5}
+                      size="small"
+                      readOnly
+                      sx={{ fontSize: 14 }}
+                    />
+                    <Typography
+                      variant="caption"
+                      color="text.secondary"
+                      sx={{ ml: 0.5, fontSize: 11 }}
+                    >
+                      {item.avgRating.toFixed(1)}
+                    </Typography>
+                  </Box>
                 </Box>
               </Paper>
             </Link>
