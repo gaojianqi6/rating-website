@@ -55,6 +55,24 @@ interface TemplateRecommendations {
   menuItem: MenuItem;
 }
 
+// Helper function to get aspect ratio by template name
+const getAspectRatio = (templateName: string) => {
+  switch (templateName.toLowerCase()) {
+    case "movie":
+    case "tv series":
+      return 2 / 3; // 1000:1500 or 2000:3000
+    case "variety show":
+      return 0.68; // 680:1000
+    case "book":
+      return 0.65; // 180:279
+    case "music":
+    case "podcast":
+      return 1; // 600:600
+    default:
+      return 2 / 3;
+  }
+};
+
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [templateRecommendations, setTemplateRecommendations] = useState<
@@ -125,7 +143,7 @@ export default function Home() {
   return (
     <Box>
       {/* Banner Section */}
-      <Box sx={{ width: "100%", overflow: "hidden", mb: 4, bgcolor: "black" }}>
+      <Box sx={{ width: "100%", overflow: "hidden", bgcolor: "black" }}>
         <Swiper
           modules={[Navigation, Autoplay, Pagination, EffectFade, Mousewheel, Keyboard]}
           spaceBetween={0}
@@ -318,8 +336,9 @@ export default function Home() {
               <Swiper
                 modules={[Navigation, Mousewheel]}
                 spaceBetween={8}
-                slidesPerView={3}
+                slidesPerView={2}
                 breakpoints={{
+                  480: { slidesPerView: 3, spaceBetween: 10 },
                   640: { slidesPerView: 4, spaceBetween: 10 },
                   768: { slidesPerView: 5, spaceBetween: 10 },
                   1024: { slidesPerView: 6, spaceBetween: 12 },
@@ -334,76 +353,88 @@ export default function Home() {
                 mousewheel={{ forceToAxis: true }}
                 style={{ padding: "8px 0px", position: "relative" }}
               >
-                {templateRec.recommendations.map((rec) => (
-                  <SwiperSlide key={rec.id}>
-                    <Link href={`/item/subject/${rec.slug}`}>
-                      <Card
-                        sx={{
-                          maxWidth: "100%",
-                          transition: "transform 0.3s, box-shadow 0.3s",
-                          "&:hover": {
-                            transform: "scale(1.05)",
-                            boxShadow: 6,
-                          },
-                          borderRadius: 1,
-                          height: "100%",
-                        }}
-                      >
-                        <ImageWithPlaceholder
-                          src={rec.poster}
-                          fallbackSrc="/placeholder.svg"
-                          alt={rec.title}
-                          height={140}
-                          sx={{ objectFit: "cover" }}
-                        />
-                        <CardContent sx={{ p: 1, pb: "8px !important" }}>
-                          <Typography
-                            variant="body2"
-                            sx={{
-                              fontWeight: "medium",
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                              display: "-webkit-box",
-                              WebkitLineClamp: 1,
-                              WebkitBoxOrient: "vertical",
-                              fontSize: 13,
-                              lineHeight: 1.2,
-                            }}
-                          >
-                            {rec.title}
-                          </Typography>
-                          <Typography
-                            variant="caption"
-                            color="text.secondary"
-                            sx={{
-                              display: "block",
-                              mt: 0.5,
-                              fontSize: 11,
-                            }}
-                          >
-                            {new Date(rec.createdAt).toLocaleDateString()}
-                          </Typography>
-                          <Box sx={{ display: 'flex', alignItems: 'center', mt: 0.5 }}>
-                            <Rating
-                              value={rec.avgRating / 2}
-                              precision={0.5}
-                              size="small"
-                              readOnly
-                              sx={{ fontSize: 14 }}
-                            />
+                {templateRec.recommendations.map((rec) => {
+                  // Card width (should match SwiperSlide/card width, e.g., 140)
+                  const cardWidth = 140;
+                  const aspectRatio = getAspectRatio(templateRec.template.displayName || templateRec.template.name);
+                  const imageHeight = Math.round(cardWidth / aspectRatio);
+                  const contentMinHeight = 80; // Increased for more space for title, date, rating
+                  const cardHeight = imageHeight + contentMinHeight;
+                  return (
+                    <SwiperSlide key={rec.id}>
+                      <Link href={`/item/subject/${rec.slug}`}>
+                        <Card
+                          sx={{
+                            maxWidth: "100%",
+                            height: cardHeight,
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "flex-start",
+                            transition: "transform 0.3s, box-shadow 0.3s",
+                            "&:hover": {
+                              transform: "scale(1.05)",
+                              boxShadow: 6,
+                            },
+                            borderRadius: 1,
+                          }}
+                        >
+                          <ImageWithPlaceholder
+                            src={rec.poster}
+                            fallbackSrc="/placeholder.svg"
+                            alt={rec.title}
+                            height={imageHeight}
+                            sx={{ objectFit: "cover", width: "100%", minHeight: imageHeight, maxHeight: imageHeight }}
+                          />
+                          <CardContent sx={{ p: 1, pb: "8px !important", flex: 1, display: 'block', flexDirection: 'column', justifyContent: 'flex-end', minHeight: contentMinHeight }}>
+                            <Typography
+                              variant="body2"
+                              sx={{
+                                fontWeight: "medium",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                                display: "-webkit-box",
+                                WebkitLineClamp: 1,
+                                WebkitBoxOrient: "vertical",
+                                fontSize: 13,
+                                lineHeight: 1.2,
+                                minHeight: 18,
+                              }}
+                            >
+                              {rec.title}
+                            </Typography>
                             <Typography
                               variant="caption"
                               color="text.secondary"
-                              sx={{ ml: 0.5, fontSize: 11 }}
+                              sx={{
+                                display: "block",
+                                mt: 0.5,
+                                fontSize: 11,
+                              }}
                             >
-                              {rec.avgRating.toFixed(1)}
+                              {new Date(rec.createdAt).toLocaleDateString()}
                             </Typography>
-                          </Box>
-                        </CardContent>
-                      </Card>
-                    </Link>
-                  </SwiperSlide>
-                ))}
+                            <Box sx={{ display: 'flex', alignItems: 'center', mt: 0.5 }}>
+                              <Rating
+                                value={rec.avgRating / 2}
+                                precision={0.5}
+                                size="small"
+                                readOnly
+                                sx={{ fontSize: 14 }}
+                              />
+                              <Typography
+                                variant="caption"
+                                color="text.secondary"
+                                sx={{ ml: 0.5, fontSize: 11 }}
+                              >
+                                {rec.avgRating.toFixed(1)}
+                              </Typography>
+                            </Box>
+                          </CardContent>
+                        </Card>
+                      </Link>
+                    </SwiperSlide>
+                  );
+                })}
                 <Box
                   className={`swiper-button-prev-${templateRec.template.name}`}
                   sx={{
