@@ -1,25 +1,14 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
-import Link from "next/link";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Mousewheel } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/navigation";
 import { useUserStore } from "@/store/userStore";
 
 import {
   Typography,
   Box,
   Container,
-  Card,
-  CardMedia,
-  CardContent,
-  Rating,
 } from "@mui/material";
 
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import {
   getItemBySlug,
   getUserRating,
@@ -40,6 +29,7 @@ import PodcastTemplate from "@/components/templates/PodcastTemplate";
 
 import { Item, UserRating, RatingsResponse } from "@/types/item";
 import RatingCommentDialog from '@/components/RatingCommentDialog';
+import Recommendations from "@/components/items/Recommendations";
 
 // Add template display names mapping
 const TEMPLATE_DISPLAY_NAMES: { [key: number]: string } = {
@@ -297,325 +287,21 @@ const ItemDetailPage = () => {
       />
 
       {/* Recommendation Sections with Swiper */}
-      <Box sx={{ mt: 1 }}>
-        <Typography
-          variant="h5"
-          gutterBottom
-          sx={{ fontWeight: "bold", color: "primary.main", pl: 0 }}
-        >
-          Recommended {TEMPLATE_DISPLAY_NAMES[item.templateId] || "Items"}
-        </Typography>
-        {templateRecommendations.length === 0 ? (
-          <Typography>No recommendations available.</Typography>
-        ) : (
-          <Swiper
-            modules={[Navigation, Mousewheel]}
-            spaceBetween={10}
-            slidesPerView={2}
-            breakpoints={{
-              480: { slidesPerView: 3 },
-              640: { slidesPerView: 4 },
-              768: { slidesPerView: 5 },
-              1024: { slidesPerView: 6 },
-            }}
-            navigation={{
-              prevEl: ".swiper-button-prev-template",
-              nextEl: ".swiper-button-next-template",
-              disabledClass: "swiper-button-disabled",
-              hiddenClass: "swiper-button-hidden",
-            }}
-            mousewheel={{ forceToAxis: true }}
-            style={{ padding: "10px 0px", position: "relative" }}
-          >
-            {templateRecommendations.map((rec, index) => (
-              <SwiperSlide
-                key={rec.id}
-                style={{ paddingLeft: index === 0 ? 0 : undefined }}
-              >
-                <Link href={`/item/subject/${rec.slug}`}>
-                  <Card
-                    sx={{
-                      minWidth: 160,
-                      maxWidth: 160,
-                      transition: "transform 0.3s, box-shadow 0.3s",
-                      "&:hover": {
-                        transform: "scale(1.05)",
-                        boxShadow: 6,
-                      },
-                      borderRadius: 2,
-                    }}
-                  >
-                    <CardMedia
-                      component="img"
-                      height={200}
-                      image={rec.poster}
-                      alt={rec.title}
-                      sx={{
-                        objectFit: "cover",
-                        width: "100%",
-                        cursor: "pointer",
-                      }}
-                    />
-                    <CardContent sx={{ p: 1.5 }}>
-                      <Typography
-                        variant="body2"
-                        sx={{
-                          fontWeight: "medium",
-                          textAlign: "center",
-                          fontSize: "0.875rem",
-                          lineHeight: 1.2,
-                          height: "2.4em",
-                          overflow: "hidden",
-                          display: "-webkit-box",
-                          WebkitLineClamp: 2,
-                          WebkitBoxOrient: "vertical",
-                        }}
-                      >
-                        {rec.title}
-                      </Typography>
-                      <Typography
-                        variant="caption"
-                        color="text.secondary"
-                        sx={{ textAlign: "center", display: "block", mt: 0.5 }}
-                      >
-                        {rec.createdAt}
-                      </Typography>
-                      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mt: 0.5 }}>
-                        <Rating
-                          value={rec.avgRating / 2}
-                          precision={0.5}
-                          size="small"
-                          readOnly
-                          sx={{ fontSize: 14 }}
-                        />
-                        <Typography
-                          variant="caption"
-                          color="text.secondary"
-                          sx={{ ml: 0.5, fontSize: 11 }}
-                        >
-                          {rec.avgRating.toFixed(1)}
-                        </Typography>
-                      </Box>
-                    </CardContent>
-                  </Card>
-                </Link>
-              </SwiperSlide>
-            ))}
-            <Box
-              className="swiper-button-prev-template"
-              sx={{
-                position: "absolute",
-                top: "50%",
-                left: 0,
-                transform: "translateY(-50%)",
-                width: 28,
-                height: 28,
-                backgroundColor: "rgba(128, 128, 128, 0.5)",
-                borderRadius: "50%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                zIndex: 10,
-                cursor: "pointer",
-                "&:after": {
-                  content: "none",
-                },
-                "&.swiper-button-disabled": {
-                  display: "none",
-                },
-              }}
-            >
-              <ArrowBackIosNewIcon sx={{ fontSize: 14, color: "white" }} />
-            </Box>
-            <Box
-              className="swiper-button-next-template"
-              sx={{
-                position: "absolute",
-                top: "50%",
-                right: 0,
-                transform: "translateY(-50%)",
-                width: 28,
-                height: 28,
-                backgroundColor: "rgba(128, 128, 128, 0.5)",
-                borderRadius: "50%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                zIndex: 10,
-                cursor: "pointer",
-                "&:after": {
-                  content: "none",
-                },
-                "&.swiper-button-disabled": {
-                  display: "none",
-                },
-              }}
-            >
-              <ArrowForwardIosIcon sx={{ fontSize: 14, color: "white" }} />
-            </Box>
-          </Swiper>
-        )}
-      </Box>
-
+      <Recommendations
+        title={`Recommended ${TEMPLATE_DISPLAY_NAMES[item.templateId] || "Items"}`}
+        recommendationsType="item"
+        recommendations={templateRecommendations}
+        templateName={TEMPLATE_DISPLAY_NAMES[item.templateId] || "movie"}
+        swiperNavigationClass="template"
+      />
       <Box sx={{ mt: 2, mb: 6 }}>
-        <Typography
-          variant="h5"
-          gutterBottom
-          sx={{ fontWeight: "bold", color: "primary.main", pl: 0 }}
-        >
-          Recommended {TEMPLATE_DISPLAY_NAMES[item.templateId] || "Items"} in
-          the same genre
-        </Typography>
-        {genreRecommendations.length === 0 ? (
-          <Typography>No recommendations available.</Typography>
-        ) : (
-          <Swiper
-            modules={[Navigation, Mousewheel]}
-            spaceBetween={10}
-            slidesPerView={2}
-            breakpoints={{
-              480: { slidesPerView: 3 },
-              640: { slidesPerView: 4 },
-              768: { slidesPerView: 5 },
-              1024: { slidesPerView: 6 },
-            }}
-            navigation={{
-              prevEl: ".swiper-button-prev-genre",
-              nextEl: ".swiper-button-next-genre",
-              disabledClass: "swiper-button-disabled",
-              hiddenClass: "swiper-button-hidden",
-            }}
-            mousewheel={{ forceToAxis: true }}
-            style={{ padding: "10px 0px", position: "relative" }}
-          >
-            {genreRecommendations.map((rec, index) => (
-              <SwiperSlide
-                key={rec.id}
-                style={{ paddingLeft: index === 0 ? 0 : undefined }}
-              >
-                <Link href={`/item/subject/${rec.slug}`}>
-                  <Card
-                    sx={{
-                      minWidth: 160,
-                      maxWidth: 160,
-                      transition: "transform 0.3s, box-shadow 0.3s",
-                      "&:hover": {
-                        transform: "scale(1.05)",
-                        boxShadow: 6,
-                      },
-                      borderRadius: 2,
-                    }}
-                  >
-                    <CardMedia
-                      component="img"
-                      height={200}
-                      image={rec.poster}
-                      alt={rec.title}
-                      sx={{
-                        objectFit: "cover",
-                        width: "100%",
-                        cursor: "pointer",
-                      }}
-                    />
-                    <CardContent sx={{ p: 1.5 }}>
-                      <Typography
-                        variant="body2"
-                        sx={{
-                          fontWeight: "medium",
-                          textAlign: "center",
-                          fontSize: "0.875rem",
-                          lineHeight: 1.2,
-                          height: "2.4em",
-                          overflow: "hidden",
-                          display: "-webkit-box",
-                          WebkitLineClamp: 2,
-                          WebkitBoxOrient: "vertical",
-                        }}
-                      >
-                        {rec.title}
-                      </Typography>
-                      <Typography
-                        variant="caption"
-                        color="text.secondary"
-                        sx={{ textAlign: "center", display: "block", mt: 0.5 }}
-                      >
-                        {rec.createdAt}
-                      </Typography>
-                      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mt: 0.5 }}>
-                        <Rating
-                          value={rec.avgRating / 2}
-                          precision={0.5}
-                          size="small"
-                          readOnly
-                          sx={{ fontSize: 14 }}
-                        />
-                        <Typography
-                          variant="caption"
-                          color="text.secondary"
-                          sx={{ ml: 0.5, fontSize: 11 }}
-                        >
-                          {rec.avgRating.toFixed(1)}
-                        </Typography>
-                      </Box>
-                    </CardContent>
-                  </Card>
-                </Link>
-              </SwiperSlide>
-            ))}
-            <Box
-              className="swiper-button-prev-genre"
-              sx={{
-                position: "absolute",
-                top: "50%",
-                left: 0,
-                transform: "translateY(-50%)",
-                width: 28,
-                height: 28,
-                backgroundColor: "rgba(128, 128, 128, 0.5)",
-                borderRadius: "50%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                zIndex: 10,
-                cursor: "pointer",
-                "&:after": {
-                  content: "none",
-                },
-                "&.swiper-button-disabled": {
-                  display: "none",
-                },
-              }}
-            >
-              <ArrowBackIosNewIcon sx={{ fontSize: 14, color: "white" }} />
-            </Box>
-            <Box
-              className="swiper-button-next-genre"
-              sx={{
-                position: "absolute",
-                top: "50%",
-                right: 0,
-                transform: "translateY(-50%)",
-                width: 28,
-                height: 28,
-                backgroundColor: "rgba(128, 128, 128, 0.5)",
-                borderRadius: "50%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                zIndex: 10,
-                cursor: "pointer",
-                "&:after": {
-                  content: "none",
-                },
-                "&.swiper-button-disabled": {
-                  display: "none",
-                },
-              }}
-            >
-              <ArrowForwardIosIcon sx={{ fontSize: 14, color: "white" }} />
-            </Box>
-          </Swiper>
-        )}
+        <Recommendations
+          title={`Recommended ${TEMPLATE_DISPLAY_NAMES[item.templateId] || "Items"} in the same genre`}
+          recommendationsType="item"
+          recommendations={genreRecommendations}
+          templateName={TEMPLATE_DISPLAY_NAMES[item.templateId] || "movie"}
+          swiperNavigationClass="genre"
+        />
       </Box>
     </Container>
   );
