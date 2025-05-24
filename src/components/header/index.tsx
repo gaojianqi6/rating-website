@@ -47,6 +47,13 @@ interface HeaderProps {
   onLogout: () => void;
 }
 
+interface HeaderMenuItem {
+  name: string;
+  displayName: string;
+  path: string;
+  icon?: React.ReactNode;
+}
+
 const Header = ({ user, onLogout, loading }: HeaderProps) => {
   const router = useRouter();
   const theme = useTheme();
@@ -54,6 +61,7 @@ const Header = ({ user, onLogout, loading }: HeaderProps) => {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [templates, setTemplates] = useState<Template[]>([]);
+  const [categories, setCategories] = useState<HeaderMenuItem[]>([]);
 
   useEffect(() => {
     const fetchTemplates = async () => {
@@ -95,19 +103,21 @@ const Header = ({ user, onLogout, loading }: HeaderProps) => {
     if (isMobile) setDrawerOpen(false);
   };
 
-  // Define categories with icons
-  const categories = [
-    { name: 'Home', displayName: 'Home', path: '/', icon: <HomeIcon /> },
-    ...MENU_ITEMS.map((menu) => {
-      const template = templates.find(t => t.name === menu.name) || { displayName: menu.displayName };
-      return {
-        name: menu.name,
-        displayName: template.displayName,
-        path: `/category/${menu.name}`,
-        icon: menu.icon ? <menu.icon /> : null,
+  useEffect(() => {
+    const menus: HeaderMenuItem[] = [{ name: 'Home', displayName: 'Home', path: '/', icon: <HomeIcon /> }];
+    MENU_ITEMS.forEach(menu => {
+      const template = templates.find(t => t.name === menu.name);
+      if (template) {
+        menus.push({
+          name: menu.name,
+          displayName: template.displayName,
+          path: `/category/${menu.name}`,
+          icon: menu.icon ? <menu.icon /> : null,
+        });
       }
-    })
-  ];
+    });
+    setCategories(menus);
+  }, [templates]);
 
   // Drawer content for mobile
   const drawerContent = (
