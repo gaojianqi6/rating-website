@@ -244,7 +244,7 @@ const SettingsPage = () => {
         </Alert>
       )}
 
-      <Box className="bg-white p-6 rounded-lg shadow-lg">
+      <Box className="p-6 rounded-lg shadow-lg">
         <Box className="flex flex-col sm:flex-row items-center sm:items-start gap-6 mb-6">
           <Box className="flex flex-col items-center">
             <Avatar

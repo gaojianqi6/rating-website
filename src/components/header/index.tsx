@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import { useTheme } from '@mui/material/styles';
 
 import {
   AppBar,
@@ -48,6 +49,7 @@ interface HeaderProps {
 
 const Header = ({ user, onLogout, loading }: HeaderProps) => {
   const router = useRouter();
+  const theme = useTheme();
   const isMobile = useMediaQuery('(max-width:1064px)'); // Custom breakpoint for mobile
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -85,7 +87,11 @@ const Header = ({ user, onLogout, loading }: HeaderProps) => {
   };
 
   const handleCategoryClick = (categoryName: string) => {
-    router.push(`/category/${categoryName}`);
+    if (categoryName === 'Home') {
+      router.push('/');
+    } else {
+      router.push(`/category/${categoryName}`);
+    }
     if (isMobile) setDrawerOpen(false);
   };
 
@@ -110,7 +116,7 @@ const Header = ({ user, onLogout, loading }: HeaderProps) => {
         {categories.map((category) => (
           <ListItem
             key={category.name}
-            onClick={() => handleCategoryClick(category.name === 'Home' ? '' : category.name)}
+            onClick={() => handleCategoryClick(category.name)}
             sx={{ cursor: 'pointer' }}
           >
             <ListItemIcon>{category.icon}</ListItemIcon>
@@ -122,7 +128,7 @@ const Header = ({ user, onLogout, loading }: HeaderProps) => {
   );
 
   return (
-    <AppBar position="sticky" color="default" elevation={0} sx={{ bgcolor: 'white', boxShadow: '0 2px 8px rgba(0,0,0,0.04)' }}>
+    <AppBar position="sticky" color="default" elevation={0} sx={{ bgcolor: theme.palette.mode === 'light' ? 'white' : theme.palette.background.paper, boxShadow: '0 2px 8px rgba(0,0,0,0.04)' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters sx={{ justifyContent: "space-between", py: 1 }}>
           {/* Mobile Drawer Toggle and Logo */}
@@ -166,7 +172,7 @@ const Header = ({ user, onLogout, loading }: HeaderProps) => {
               onClose={handleDrawerToggle}
               sx={{
                 '& .MuiDrawer-paper': {
-                  bgcolor: 'white',
+                  bgcolor: theme.palette.mode === 'light' ? 'white' : theme.palette.background.paper,
                   color: 'text.primary',
                 },
               }}

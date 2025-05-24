@@ -15,6 +15,8 @@ import {
 import { getTemplateByName } from "@/api/template";
 import { searchItems } from "@/api/item";
 import ImageWithPlaceholder from "@/components/ImageWithPlaceholder";
+import { useTheme } from '@mui/material/styles';
+
 
 // Define types for the data
 interface Item {
@@ -110,6 +112,7 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ categoryName }) => {
     Record<number, FilterOption[]>
   >({});
   const [isFiltersOpen, setIsFiltersOpen] = useState(true);
+  const theme = useTheme();
 
   useEffect(() => {
     const fetchTemplate = async () => {
@@ -223,7 +226,7 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ categoryName }) => {
       )}
 
       <Box sx={{ mb: 2 }}>
-        <Paper elevation={1} sx={{ p: 2, backgroundColor: "#f5f5f5" }}>
+        <Paper elevation={1} sx={{ p: 2, backgroundColor: theme.palette.mode === 'light' ? '#f5f5f5' : theme.palette.background.paper }}>
           <Box
             sx={{
               display: "flex",
