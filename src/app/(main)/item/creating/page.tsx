@@ -37,6 +37,7 @@ import { createItem } from '@/api/item';
 import { getTemplate, getTemplates } from '@/api/template';
 import { uploadImage } from '@/api/file';
 import { Template, TemplateField } from '@/types/template';
+import { CATEGORY_ORDER } from '@/constants/menu';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -417,7 +418,8 @@ const CreateItemPage = () => {
     const fetchTemplates = async () => {
       try {
         const data = await getTemplates();
-        setTemplates(data);
+        const sortedData = data.sort((a, b) => CATEGORY_ORDER[a.name] - CATEGORY_ORDER[b.name]);
+        setTemplates(sortedData);
       } catch (error) {
         console.error('Error fetching templates:', error);
         setAlertMessage({
