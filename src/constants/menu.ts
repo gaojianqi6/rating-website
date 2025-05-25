@@ -6,6 +6,16 @@ import SlideshowIcon from '@mui/icons-material/Slideshow';
 import TvIcon from '@mui/icons-material/Tv';
 import HeadsetMicIcon from '@mui/icons-material/HeadsetMic';
 
+
+export const CATEGORY_ORDER: Record<string, number> = {
+  movie: 1,
+  tv_series: 2,
+  variety_show: 3,
+  book: 4,
+  music: 5,
+  podcast: 6,
+};
+
 export interface MenuItem {
   name: string;
   displayName: string;

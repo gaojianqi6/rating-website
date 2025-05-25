@@ -1,4 +1,5 @@
 import api from "@/lib/api";
+import { TemplateRating } from "@/types/rating";
 import { User } from "@/types/user";
 
 export const login = (username: string, password: string) => api.post('auth/login', {
@@ -6,7 +7,7 @@ export const login = (username: string, password: string) => api.post('auth/logi
 }).json();
 
 export const getProfile = () => api.get('users/profile').json();
-export const getRatings = () => api.get('users/ratings').json();
+export const getRatings = (): Promise<TemplateRating[]> => api.get('users/ratings').json();
 
 export const updateProfile = (userId: number, user: object): Promise<User> =>
   api.patch(`users/${userId}`, { json: user }).json();

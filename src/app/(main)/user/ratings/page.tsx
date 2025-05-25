@@ -13,23 +13,8 @@ import {
   CircularProgress,
   Rating,
 } from '@mui/material';
-
-interface RatingItem {
-  id: number;
-  title: string;
-  slug: string;
-  year: number;
-  poster: string;
-  rating: number; // Backend scale: 0-10
-  comment: string;
-}
-
-interface TemplateRating {
-  templateId: number;
-  templateName: string;
-  templateDisplayName: string;
-  ratings: RatingItem[];
-}
+import { TemplateRating } from '@/types/rating';
+import { CATEGORY_ORDER } from '@/constants/menu';
 
 const RatingsPage = () => {
   const router = useRouter();
@@ -44,7 +29,8 @@ const RatingsPage = () => {
     const fetchRatings = async () => {
       try {
         const response = await getRatings();
-        setRatings(response);
+        const sortedRatings = response.sort((a, b) => CATEGORY_ORDER[a.templateName] - CATEGORY_ORDER[b.templateName]);
+        setRatings(sortedRatings);
       } catch (err) {
         setError('Failed to fetch ratings');
         console.error(err);
