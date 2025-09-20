@@ -17,6 +17,9 @@ RateEverything is designed to:
 - **Swiper** for smooth, mobile-friendly banners and carousels
 
 ## 🚀 Getting Started
+
+Rating API: https://rating-api-849855410952.australia-southeast1.run.app
+
 Follow these steps to run RateEverything locally:
 
 1. **Install dependencies** (we recommend [pnpm](https://pnpm.io/)):
