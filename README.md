@@ -18,7 +18,7 @@ RateEverything is designed to:
 
 ## 🚀 Getting Started
 
-Rating API: https://rating-api-849855410952.australia-southeast1.run.app
+Github, Rating API: https://rating-api-849855410952.australia-southeast1.run.app
 
 Follow these steps to run RateEverything locally:
 
