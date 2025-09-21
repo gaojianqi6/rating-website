@@ -29,7 +29,7 @@ Follow these steps to run RateEverything locally:
 2. **Set environment variables**
    - Create a `.env` file or set the following variable:
      ```
-     NEXT_PUBLIC_API_BASE_URL=http://localhost:8888
+     NEXT_PUBLIC_API_BASE_URL=http://localhost:8080
      ```
 3. **Start the development server**:
    ```bash
